@@ -34,8 +34,8 @@ ORDER = [
 ]
 
 SAMPLE = {
-    "first_name": "Alex",
-    "organization.full_address": "100 Example Street, Toronto, ON M5V 0A1, Canada",
+    "first_name": "Margaret",
+    "organization.full_address": "190 Roslin Avenue, Toronto, Ontario M4N 1Z6",
 }
 
 
@@ -47,7 +47,8 @@ def fill_klaviyo(src: str, first_name: str) -> str:
     src = re.sub(r"{%\s*if first_name\s*%}(.*?){%\s*else\s*%}(.*?){%\s*endif\s*%}", if_block, src, flags=re.S)
     src = re.sub(r"{{\s*first_name\|default:'[^']*'\s*}}", first_name, src)
     src = re.sub(r"{{\s*organization\.full_address\s*}}", SAMPLE["organization.full_address"], src)
-    src = re.sub(r"{%\s*unsubscribe\s*%}", '<a href="#" style="color:#8C8476;">Unsubscribe</a>', src)
+    src = re.sub(r"{%\s*unsubscribe\s*%}", '<a href="#">Unsubscribe</a>', src)
+    src = re.sub(r"{%\s*manage_preferences\s*%}", '<a href="#">Manage preferences</a>', src)
     src = re.sub(r"{{\s*[\w.]+\|default:'([^']*)'\s*}}", r"\1", src)  # any other var -> its default
     return src
 
@@ -101,12 +102,12 @@ PREVIEW = r"""<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>7th&amp;Hill Email Preview</title>
 <style>
-  :root { --bg:#0E0D0C; --panel:#171614; --line:#2A2724; --ink:#EDE6DA; --dim:#8C8476; --accent:#BFA97C; }
+  :root { --bg:#DEDAD2; --panel:#ECE8E0; --line:#CBC4B7; --ink:#1A1816; --dim:#6B655B; --accent:#7A5E30; }
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); font:300 14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
   header { position:sticky; top:0; z-index:5; display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; justify-content:space-between;
-           padding:18px 24px; background:rgba(14,13,12,.94); border-bottom:1px solid var(--line); backdrop-filter:blur(6px); }
-  h1 { margin:0; font:300 22px/1.2 Georgia, serif; letter-spacing:5px; text-transform:uppercase; }
+           padding:18px 24px; background:rgba(222,218,210,.94); border-bottom:1px solid var(--line); backdrop-filter:blur(6px); }
+  h1 { margin:0; font:400 26px/1.2 "Bodoni Moda", Didot, Georgia, serif; }
   h1 small { display:block; margin-top:4px; font:300 10px/1.4 "Helvetica Neue", Arial, sans-serif; letter-spacing:3px; color:var(--dim); }
   .controls { display:flex; flex-wrap:wrap; gap:14px; }
   .seg { display:inline-flex; border:1px solid var(--line); }
@@ -122,7 +123,7 @@ PREVIEW = r"""<!DOCTYPE html>
   .meta .subject { margin-top:6px; font:400 18px/1.3 Georgia, serif; color:var(--ink); }
   .meta .pre { color:var(--dim); font-size:12px; }
   .frame { border:1px solid var(--line); background:var(--panel); }
-  iframe { display:block; border:0; width:600px; height:900px; background:#131210; }
+  iframe { display:block; border:0; width:600px; height:900px; background:#DEDAD2; }
   footer { padding:0 24px 40px; color:var(--dim); font-size:12px; }
   @media (max-width:700px) { main { flex-direction:column; } iframe { width:100% !important; } .card { width:100%; } }
 </style>

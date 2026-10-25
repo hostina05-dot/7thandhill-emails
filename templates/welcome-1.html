@@ -1,10 +1,11 @@
 <!--
-  7th&Hill · Welcome to 7th&amp;Hill
-  Subject:   Welcome to 7th&Hill
-  Preheader: Jewelry meant to be kept. A few words about who we are.
-  Flow: Welcome series · email 1 of 3 · send immediately after signup.
+  7th & Hill · Welcome to 7th &amp; Hill
+  Subject:   Welcome to 7th & Hill
+  Preheader: A corner in Los Angeles, and the story behind our name.
+  From:      Sally at 7th & Hill <hello@7thandhilljewelry.ca>
+  Flow: Welcome series · email 1 of 3 · immediately after signup.
   Images use relative paths (../assets/images/) for local preview.
-  Before uploading to Klaviyo run: python3 scripts/build.py --base-url https://YOUR-IMAGE-HOST/
+  Before uploading to Klaviyo run: python3 scripts/build.py with the base-url option (see README).
 -->
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -16,16 +17,17 @@
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark">
-<title>Welcome to 7th&amp;Hill</title>
+<title>Welcome to 7th &amp; Hill</title>
 <!--[if mso]>
 <noscript><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
 <style>
-  .serif { font-family: Georgia, 'Times New Roman', serif !important; }
+  .display, .serif, .script { font-family: Georgia, 'Times New Roman', serif !important; }
+  .script { font-style: italic !important; }
   .sans { font-family: Arial, Helvetica, sans-serif !important; }
 </style>
 <![endif]-->
 <!--[if !mso]><!-->
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&amp;family=Jost:wght@400;500&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
 <!--<![endif]-->
 <style>
   :root { color-scheme: light dark; supported-color-schemes: light dark; }
@@ -35,110 +37,157 @@
   img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
   a { text-decoration: none; }
   a[x-apple-data-detectors], u + #body a, #MessageViewBody a { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
-  .legal a { color: #8C8476 !important; text-decoration: underline !important; }
-  .btn-td:hover { background-color: #1F1D1A !important; }
-  .btn-td:hover a { color: #F6F3EE !important; }
+  .legal a { color: #A9B8AE !important; text-decoration: underline !important; }
 
   @media screen and (max-width: 599px) {
-    .px { padding-left: 28px !important; padding-right: 28px !important; }
-    .pt { padding-top: 52px !important; }
-    .h1 { font-size: 34px !important; line-height: 40px !important; }
-    .h2 { font-size: 27px !important; line-height: 33px !important; }
+    .px { padding-left: 24px !important; padding-right: 24px !important; }
+    .h1 { font-size: 31px !important; line-height: 36px !important; }
+    .h2 { font-size: 25px !important; line-height: 31px !important; }
+    .lead { font-size: 16px !important; line-height: 27px !important; }
     .stack { display: block !important; width: 100% !important; max-width: 100% !important; }
+    .cards { padding-left: 14px !important; padding-right: 14px !important; }
     .card-img { width: 100% !important; max-width: 100% !important; height: auto !important; }
-    .cards { padding-left: 18px !important; padding-right: 18px !important; }
   }
 
-  /* Dark mode (Apple Mail, iOS Mail, Outlook for Mac). Logo sits on a solid dark band, so it never changes. */
+  /* Dark mode (Apple Mail, iOS Mail, Outlook for Mac). The round logo is black with white lettering,
+     so it reads on light and dark backgrounds alike. Green bands are already dark and stay as they are. */
   @media (prefers-color-scheme: dark) {
-    .bg-page { background-color: #1B1916 !important; }
-    .t-ink { color: #EDE6DA !important; }
-    .t-muted { color: #A9A091 !important; }
-    .t-accent { color: #BFA97C !important; }
+    .bg-outer { background-color: #121110 !important; }
+    .bg-page { background-color: #1D1B18 !important; }
+    .t-ink { color: #F5EEDF !important; }
+    .t-body { color: #D9D2C4 !important; }
+    .t-soft { color: #A9A091 !important; }
+    .t-gold { color: #CDAA6D !important; }
     .bd-line { border-color: #3A3631 !important; }
-    .btn-td { border-color: #EDE6DA !important; }
-    .btn-a { color: #EDE6DA !important; }
+    .frame { background-color: #2A2723 !important; }
   }
-  /* Outlook.com / Outlook apps dark mode */
-  [data-ogsb] .bg-page { background-color: #1B1916 !important; }
-  [data-ogsc] .t-ink { color: #EDE6DA !important; }
-  [data-ogsc] .t-muted { color: #A9A091 !important; }
-  [data-ogsc] .t-accent { color: #BFA97C !important; }
-  [data-ogsc] .btn-a { color: #EDE6DA !important; }
+  [data-ogsb] .bg-outer { background-color: #121110 !important; }
+  [data-ogsb] .bg-page { background-color: #1D1B18 !important; }
+  [data-ogsc] .t-ink { color: #F5EEDF !important; }
+  [data-ogsc] .t-body { color: #D9D2C4 !important; }
+  [data-ogsc] .t-soft { color: #A9A091 !important; }
+  [data-ogsc] .t-gold { color: #CDAA6D !important; }
 </style>
 </head>
-<body id="body" style="margin:0; padding:0; background-color:#131210;">
-  <!-- PREHEADER: the grey line after the subject in the inbox -->
-  <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">Jewelry meant to be kept. A few words about who we are.</div>
-  <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</div>
+<body id="body" class="bg-outer" style="margin:0; padding:0; background-color:#DEDAD2;">
+  <!-- PREHEADER: the line shown after the subject in the inbox -->
+  <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all; color:#ECE8E0;">A corner in Los Angeles, and the story behind our name.</div>
+  <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;</div>
 
-  <div role="article" aria-roledescription="email" aria-label="Welcome to 7th&amp;Hill" lang="en" style="background-color:#131210;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#131210" style="background-color:#131210;">
+  <div role="article" aria-roledescription="email" aria-label="Welcome to 7th &amp; Hill" lang="en" class="bg-outer" style="background-color:#DEDAD2;">
+  <table role="presentation" class="bg-outer" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#DEDAD2" style="background-color:#DEDAD2;">
     <tr>
       <td align="center" style="padding:0;">
         <!--[if mso]><table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px; margin:0 auto;">
+        <table role="presentation" class="bg-page" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ECE8E0" style="width:100%; max-width:600px; margin:0 auto; background-color:#ECE8E0;">
 
-          <!-- ═══════════ BLOCK: HEADER / LOGO ═══════════
-               Logo: ivory mark baked onto a solid #131210 background (no transparency),
-               so dark-mode inversion can never hide it. Displayed at 220×40, file is 2x. -->
+          <!-- ═══════════ BLOCK: HEADER · logo + menu ═══════════ -->
           <tr>
-            <td align="center" bgcolor="#131210" style="padding:44px 24px 40px; background-color:#131210;">
-              <a href="https://7thandhilljewelry.ca" target="_blank" style="display:inline-block; text-decoration:none;">
-                <img src="../assets/images/logo.png" width="220" height="40" alt="7th&amp;Hill" style="display:block; width:220px; max-width:220px; height:auto; border:0; color:#EDE6DA; font-family:Georgia, serif; font-size:20px; letter-spacing:6px; text-align:center;">
+            <td align="center" style="padding:28px 24px 0;">
+              <a href="https://www.7thandhilljewelry.ca" target="_blank" style="display:inline-block; text-decoration:none;">
+                <img src="../assets/images/logo.png" width="66" height="66" alt="7th &amp; Hill Jewelry" style="display:block; width:66px; height:66px; border:0; margin:0 auto; color:#1A1816; font-family:Georgia, serif; font-size:14px;">
               </a>
             </td>
           </tr>
-
-          <!-- ═══════════ BLOCK: HERO IMAGE ═══════════
-               Swap src (file is 2x: 1200×800). Keep width="600"; update height to match ratio. -->
           <tr>
-            <td bgcolor="#131210" style="padding:0; background-color:#131210;">
-              <a href="https://7thandhilljewelry.ca" target="_blank" style="display:block; text-decoration:none;">
-                <img src="../assets/images/welcome-1-hero.jpg" width="600" height="400" alt="7th&amp;Hill jewelry" style="display:block; width:100%; max-width:600px; height:auto; border:0; background-color:#2A2723; color:#8C8476; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px;">
-              </a>
-            </td>
-          </tr>
-
-          <!-- ═══════════ BLOCK: INTRO / BRAND STORY ═══════════ -->
-          <tr>
-            <td class="bg-page px pt" bgcolor="#F6F3EE" align="center" style="padding:72px 64px 24px; background-color:#F6F3EE;">
-              <p class="sans t-accent" style="margin:0 0 22px; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:16px; letter-spacing:4px; text-transform:uppercase; color:#8F7A52;">Welcome to 7th&amp;Hill</p>
-              <h1 class="serif t-ink h1" style="margin:0 0 28px; font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-size:42px; line-height:48px; font-weight:300; color:#1F1D1A;">{% if first_name %}{{ first_name|default:'' }}, you&rsquo;ve found us.{% else %}You&rsquo;ve found us.{% endif %}</h1>
-              <p class="sans t-muted" style="margin:0 0 18px; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#5E584F;">7th&amp;Hill began with a quiet idea: jewelry should feel personal long before anyone else notices it. Not loud, not fleeting. Simply yours.</p>
-              <p class="sans t-muted" style="margin:0 0 0px; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#5E584F;">Each piece is designed to be worn close and kept for years. Clean lines, considered materials, and a little mystery left in the details.</p>
-              <p class="t-accent" style="margin:40px 0 30px; font-family:Georgia, serif; font-size:11px; line-height:14px; color:#8F7A52;">&#10022;</p>
-              <p class="serif t-ink" style="margin:0 0 40px; font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-size:21px; line-height:30px; font-style:italic; font-weight:300; color:#1F1D1A;">We&rsquo;re glad you&rsquo;re here.</p>
-              <!-- BUTTON: edit label and href. Thin outline on purpose: quiet, not pushy. -->
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0px auto 72px;">
+            <td class="px" align="center" style="padding:16px 40px 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td class="btn-td" align="center" style="border:1px solid #1F1D1A; mso-padding-alt:0;">
-                    <a class="btn-a sans" href="https://7thandhilljewelry.ca/collections/all" target="_blank" style="display:inline-block; padding:17px 40px; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:14px; letter-spacing:3.5px; text-transform:uppercase; font-weight:400; color:#1F1D1A; text-decoration:none; mso-padding-alt:0;"><!--[if mso]><i style="letter-spacing:40px; mso-font-width:-100%; mso-text-raise:25pt;" hidden>&nbsp;</i><![endif]--><span style="mso-text-raise:13pt;">Shop the collection</span><!--[if mso]><i style="letter-spacing:40px; mso-font-width:-100%;" hidden>&nbsp;</i><![endif]--></a>
+                  <td class="sans bd-line" align="center" style="padding:0 0 16px; border-bottom:1px solid #D6CDBD; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:2.5px; text-transform:uppercase;">
+                    <a class="t-ink" href="https://www.7thandhilljewelry.ca/collections" target="_blank" style="color:#1A1816; text-decoration:none;">New</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<a class="t-ink" href="https://www.7thandhilljewelry.ca/collections/design-your-own-jewelry" target="_blank" style="color:#1A1816; text-decoration:none;">Design your own</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<a class="t-ink" href="https://www.7thandhilljewelry.ca/pages/about-salt" target="_blank" style="color:#1A1816; text-decoration:none;">Our story</a>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- ═══════════ BLOCK: FOOTER (keep: CASL requires sender name, address, contact and unsubscribe) ═══════════ -->
+          <!-- ═══════════ BLOCK: INTRO · greeting ═══════════ -->
           <tr>
-            <td align="center" bgcolor="#131210" class="px" style="padding:60px 48px 64px; background-color:#131210;">
-              <a href="https://7thandhilljewelry.ca" target="_blank" style="display:inline-block; text-decoration:none;">
-                <img src="../assets/images/logo-footer.png" width="140" height="26" alt="7th&amp;Hill" style="display:block; width:140px; max-width:140px; height:auto; border:0; margin:0 auto; color:#8C8476; font-family:Georgia, serif; font-size:14px; letter-spacing:4px;">
-              </a>
-              <p class="sans" style="margin:30px 0 0; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:16px; letter-spacing:3px; text-transform:uppercase; color:#8C8476;">
-                <a href="https://7thandhilljewelry.ca/collections/all" target="_blank" style="color:#8C8476; text-decoration:none;">Shop</a><span style="color:#4A453E;">&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span><a href="https://7thandhilljewelry.ca/pages/about" target="_blank" style="color:#8C8476; text-decoration:none;">About</a><span style="color:#4A453E;">&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span><a href="https://7thandhilljewelry.ca/pages/contact" target="_blank" style="color:#8C8476; text-decoration:none;">Contact</a>
-              </p>
-              <table role="presentation" width="40" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:32px auto 28px;">
-                <tr><td height="1" style="height:1px; border-top:1px solid #2E2B27; font-size:0; line-height:0;">&nbsp;</td></tr>
+            <td class="px" align="center" style="padding:36px 48px 0px;">
+              <p class="sans t-gold" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:16px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#7A5E30;">Welcome</p>
+              <h1 class="display t-ink h1" style="margin:0 0 26px; font-family:'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif; font-size:38px; line-height:43px; font-weight:400; color:#1A1816;">{% if first_name %}Welcome, {{ first_name|default:'' }}{% else %}Welcome to 7th &amp; Hill{% endif %}</h1>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: PHOTO · Sally ═══════════ -->
+          <tr>
+            <td class="px" align="center" style="padding:0px 48px 28px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:416px; margin:0 auto 0px;">
+                <tr>
+                  <td class="frame" bgcolor="#FFFFFF" style="background-color:#FFFFFF; padding:8px; box-shadow:0 8px 22px rgba(40,30,15,.10);">
+                    <img src="../assets/images/welcome-1-sally.jpg" width="400" height="500" alt="Sally Brooks, founder and designer of 7th &amp; Hill" style="display:block; width:100%; max-width:400px; height:auto; border:0; background-color:#D9D2C4; color:#6B655B; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px;">
+                  </td>
+                </tr>
               </table>
-              <p class="sans" style="margin:0 0 14px; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:20px; font-weight:300; color:#8C8476;">
-                Questions? Simply reply, or write to <a href="mailto:hello@7thandhilljewelry.ca" style="color:#EDE6DA; text-decoration:none;">hello@7thandhilljewelry.ca</a>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: TEXT · hello ═══════════ -->
+          <tr>
+            <td class="px" align="center" style="padding:0px 48px 40px;">
+              <p class="serif t-body lead" style="margin:0 0 0px; font-family:Georgia, 'Times New Roman', serif; font-size:17px; line-height:29px; color:#2C2925;">I&rsquo;m Sally. I design modern heirlooms, timeless classics and personalized jewelry, one piece, one story at a time. I&rsquo;m so glad you found us.</p>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: STORY · where the name comes from ═══════════ -->
+          <tr>
+            <td class="px" align="center" style="padding:0px 48px 28px;">
+              <p class="sans t-gold" style="margin:0 0 18px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:16px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#7A5E30;">Where our name comes from</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px; margin:0 auto 0px;">
+                <tr>
+                  <td class="frame" bgcolor="#FFFFFF" style="background-color:#FFFFFF; padding:8px; box-shadow:0 8px 22px rgba(40,30,15,.10);">
+                    <img src="../assets/images/welcome-1-corner.jpg" width="504" height="378" alt="The corner of 7th and Hill in downtown Los Angeles" style="display:block; width:100%; max-width:504px; height:auto; border:0; background-color:#D9D2C4; color:#6B655B; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px;">
+                  </td>
+                </tr>
+              </table>
+              <p class="sans t-soft" style="margin:12px 0 0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:15px; letter-spacing:2px; text-transform:uppercase; color:#6B655B;">The corner of 7th &amp; Hill, downtown Los Angeles</p>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: STORY · text + quote ═══════════ -->
+          <tr>
+            <td class="px" align="center" style="padding:0px 48px 34px;">
+              <p class="serif t-body lead" style="margin:0 0 26px; font-family:Georgia, 'Times New Roman', serif; font-size:17px; line-height:29px; color:#2C2925;">My dad was a gold leaf letterer at the St. Vincent&rsquo;s Jewelry Center, on the corner of 7th and Hill. I was nine when I watched gold poured into a necklace he had sketched. My sister and I still wear those necklaces today.</p>
+              <p class="display t-ink" style="margin:0 0 30px; font-family:'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif; font-size:22px; line-height:32px; font-style:italic; color:#1A1816;">&ldquo;Jewelry is more than metal and stone. It is a wearable memory.&rdquo;</p>
+              <!-- BUTTON: edit label and href -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:8px auto 0px;">
+                <tr>
+                  <td bgcolor="#1F3A30" style="background-color:#1F3A30; padding:3px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" style="border:1px solid #CDAA6D; mso-padding-alt:0;">
+                          <a class="sans" href="https://www.7thandhilljewelry.ca/collections" target="_blank" style="display:inline-block; padding:15px 34px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:14px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#F5EEDF; text-decoration:none; mso-padding-alt:0;"><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%; mso-text-raise:22pt;" hidden>&nbsp;</i><![endif]--><span style="mso-text-raise:11pt;">Shop the collection</span><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%;" hidden>&nbsp;</i><![endif]--></a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: SIGNATURE · Sally ═══════════ -->
+          <tr>
+            <td class="px" align="left" style="padding:0px 48px 44px;">
+              <p class="serif t-body lead" style="margin:0 0 6px; font-family:Georgia, 'Times New Roman', serif; font-size:15px; line-height:25px; color:#2C2925; text-align:left;">Reply to this letter anytime. It comes straight to me.</p>
+              <p class="script t-gold" style="margin:0; font-family:'Pinyon Script', 'Snell Roundhand', 'Apple Chancery', cursive; font-size:44px; line-height:56px; color:#7A5E30;">Sally</p>
+              <p class="sans t-soft" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:15px; letter-spacing:2.5px; text-transform:uppercase; color:#6B655B;">Sally Brooks &middot; Founder &amp; designer</p>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: FOOTER (keep: CASL needs sender name, mailing address, contact and unsubscribe) ═══════════ -->
+          <tr>
+            <td class="px" bgcolor="#1F3A30" align="center" style="padding:40px 40px 44px; background-color:#1F3A30;">
+              <p class="display" style="margin:0 0 6px; font-family:'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif; font-size:24px; line-height:30px; color:#F5EEDF;">7th &amp; Hill</p>
+              <p class="sans" style="margin:0 0 22px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:3px; text-transform:uppercase; color:#CDAA6D;">Modern Heirlooms. Timeless Classics.</p>
+              <p class="sans" style="margin:0 0 18px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:16px; letter-spacing:2.5px; text-transform:uppercase; color:#F5EEDF;">
+                <a href="https://www.7thandhilljewelry.ca/collections" target="_blank" style="color:#F5EEDF; text-decoration:none;">Shop</a>&nbsp;&middot;&nbsp;<a href="https://www.7thandhilljewelry.ca/collections/design-your-own-jewelry" target="_blank" style="color:#F5EEDF; text-decoration:none;">Design your own</a>&nbsp;&middot;&nbsp;<a href="https://www.7thandhilljewelry.ca/pages/about-salt" target="_blank" style="color:#F5EEDF; text-decoration:none;">Our story</a>&nbsp;&middot;&nbsp;<a href="https://www.7thandhilljewelry.ca/pages/contact" target="_blank" style="color:#F5EEDF; text-decoration:none;">Contact</a>
               </p>
-              <p class="sans legal" style="margin:0; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:19px; font-weight:300; color:#6F685D;">
-                You are receiving this email because you connected with 7th&amp;Hill at 7thandhilljewelry.ca.<br>
-                7th&amp;Hill &middot; {{ organization.full_address }}<br>
-                {% unsubscribe %}
+              <p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:13px; line-height:20px;"><a href="mailto:hello@7thandhilljewelry.ca" style="color:#F5EEDF; text-decoration:none;">hello@7thandhilljewelry.ca</a></p>
+              <p class="sans legal" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:19px; color:#A9B8AE;">
+                7th &amp; Hill Jewelry &middot; {{ organization.full_address }}<br>
+                You're receiving this because you subscribed at 7thandhilljewelry.ca or shopped with us.<br>
+                {% unsubscribe %} &nbsp;&middot;&nbsp; {% manage_preferences %}
               </p>
             </td>
           </tr>
