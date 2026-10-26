@@ -36,7 +36,7 @@ SHOTS = {
     "hero-edit-collage.jpg":   ("rings-table-bag.jpg",       "hero",    (0, 0.30, 1, 0.88)),
     "hero-edit-spotlight.jpg": ("locket-closeup.jpg",        "hero",    (0, 0.18, 1, 0.92)),
     "hero-edit-pieces.jpg":    ("pendant-red-book.jpg",      "hero",    (0, 0.04, 1, 1)),
-    "sally-avatar.png":        ("sally-velvet.jpg",          "avatar",  (0.080, 0.098, 1.000, 0.612)),
+    "sally-avatar.png":        ("sally-velvet.jpg",          "avatar",  (0.000, 0.045, 1.000, 0.603)),
     "story-corner.jpg":        ("corner-7th-hill-1920s.jpg", "story",   None),
     "bookbox.jpg":             ("bookbox-library.jpg",       "story",   None),
 }
