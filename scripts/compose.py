@@ -651,7 +651,7 @@ doc("s1-w3-find-your-piece.html", **W, code="W3", pos="email 3 of 5", when="Send
     preheader="Charms, rings and a locket, chosen by Sally.", reason=VAULT,
     status="Waiting for Sally: nine pieces",
     notes=["Placeholder nine until Sally sends hers (needed by Oct 29). Only pieces with a real price on the site."],
-    body=hero("hero-model-sweater.jpg", "A woman between old books wearing a gold enamel pendant, a heart charm necklace and a marquise ring")
+    body=hero("hero-model-library.jpg", "A woman in a library wearing a gold locket and a diamond necklace")
     + title_block("Sally&rsquo;s edit", "Find the piece that feels like you.",
         "Some women start with a charm. Some with a ring they never take off. These are the nine pieces I would start with.")
     + grid("SALLY'S NINE", [(26, "Marquise Art Deco Ring"), 101, 102, 103, (8, "The Working Scissors"),
