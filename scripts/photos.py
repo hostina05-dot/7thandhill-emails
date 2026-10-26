@@ -37,7 +37,7 @@ SHOTS = {
     "hero-edit-spotlight.jpg": ("locket-closeup.jpg",        "hero",    (0, 0.18, 1, 0.92)),
     "hero-edit-split.jpg":     ((("model-green-armchair.jpg", (0.12, 0.0, 0.88, 0.76)),
                                  ("pendant-red-book.jpg", (0.22, 0.0, 0.81, 1.0))), "split", None),
-    "sally-avatar.png":        ("sally-avatar.jpg",          "avatar",  None),
+    "sally-avatar.png":        ("sally-velvet.jpg",          "avatar",  (0.215, 0.084, 0.955, 0.496)),
     "story-corner.jpg":        ("corner-7th-hill-1920s.jpg", "story",   None),
     "bookbox.jpg":             ("bookbox-library.jpg",       "story",   None),
 }
@@ -95,7 +95,7 @@ def main():
         im = grade(crop(Image.open(PHOTOS / src).convert("RGB"), box))
         if kind == "avatar":  # round portrait with a cream ring, transparent corners
             size, ring = 112, 4
-            face = ImageOps.fit(im, (size - 2 * ring,) * 2, Image.LANCZOS, centering=(0.5, 0.35))
+            face = ImageOps.fit(im, (size - 2 * ring,) * 2, Image.LANCZOS, centering=(0.5, 0.5))
             out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
             ImageDraw.Draw(out).ellipse([0, 0, size - 1, size - 1], fill=(247, 245, 241, 255))
             mask = Image.new("L", face.size, 0); ImageDraw.Draw(mask).ellipse([0, 0, face.size[0] - 1, face.size[1] - 1], fill=255)
