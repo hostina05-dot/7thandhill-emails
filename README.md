@@ -14,28 +14,30 @@ templates/              6 готових шаблонів (кожен — сам
 blocks/cards-3-up.html  блок «3 картки в ряд» для campaign-master
 assets/images/          лого і фото, підготовлені з ваших файлів
 preview.html            усі шаблони поруч (desktop / mobile / dark mode / з іменем і без)
-scripts/build.py        оновлює preview.html і збирає dist/ для Klaviyo
+klaviyo/               ті самі шаблони, готові до вставки в Klaviyo
+scripts/build.py        оновлює preview.html і klaviyo/
 ```
 
 Вихідні файли, з яких узято лого, фото і факти (`7th & Hill Launch Emails.zip`, PDF-каталог, PNG), лежать у корені репозиторію.
 
 ## Як переглянути
-Відкрийте `preview.html` у браузері. Після будь-яких змін у шаблонах або фото:
+Відкрийте `preview.html` у браузері (на GitHub: файл → кнопка «Download raw file» → відкрити завантажений файл).
+
+## Як вставити в Klaviyo
+Готові до вставки файли лежать у папці **`klaviyo/`**. Картинки в них підтягуються з цього репозиторію (гілка `main`) через jsDelivr, тож нічого окремо завантажувати не треба.
+
+1. Відкрийте потрібний файл у `klaviyo/` на GitHub і натисніть **Copy raw file** (значок копіювання над кодом).
+2. Klaviyo → **Content → Templates → Create template → HTML** (або *Code your own*).
+3. Виділіть увесь стартовий код у редакторі, вставте скопійоване, натисніть **Save**, назвіть шаблон.
+4. У флоу або кампанії: відкрийте лист → **Change template / Select template** → **Saved templates** → виберіть свій.
+
+Після правок у `templates/` оновіть і `preview.html`, і `klaviyo/` однією командою:
 
 ```
 python3 scripts/build.py
 ```
 
-## Як завантажити в Klaviyo
-1. Завантажте файли з `assets/images/` у Klaviyo → Content → Images (або Shopify → Content → Files). Імена файлів не міняйте.
-2. Зберіть версії з абсолютними шляхами:
-   ```
-   python3 scripts/build.py --base-url https://cdn.shopify.com/s/files/XXXX/files/
-   ```
-   `--base-url` — адреса папки, де лежать файли.
-3. Klaviyo → Content → Templates → Create template → **HTML** → вставте вміст файлу з `dist/`.
-
-Без кроку 2 картинки в Klaviyo не відобразяться: у `templates/` шляхи відносні (`../assets/images/…`), лише для локального перегляду.
+Якщо картинки колись переїдуть на інший хостинг (наприклад, Shopify Files): `python3 scripts/build.py --base-url https://…/files/`.
 
 ## Що де міняти
 Кожен шаблон починається з коментаря з **Subject**, **Preheader**, **From** і рекомендованим тригером флоу. Блоки позначені коментарями `BLOCK: …` і є цілими рядками `<tr>…</tr>`: їх можна дублювати, переставляти й видаляти цілком.

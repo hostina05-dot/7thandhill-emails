@@ -5,8 +5,8 @@
         Rebuilds preview.html: every template side by side, images embedded,
         Klaviyo tags filled with sample data. Open it in any browser.
 
-    python3 scripts/build.py --base-url https://cdn.shopify.com/s/files/.../files/
-        Also writes dist/*.html with image paths pointed at your image host,
+        Also writes klaviyo/*.html: the same templates with image paths pointed
+        at the image host (by default this public repo's main branch via jsDelivr),
         ready to paste into Klaviyo (Content > Templates > Create > HTML).
 
 No dependencies beyond Python 3.8+.
@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TEMPLATES = ROOT / "templates"
 IMAGES = ROOT / "assets" / "images"
 LOCAL_PREFIX = "../assets/images/"
+DEFAULT_BASE = "https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/"
 
 # Order and labels in the preview
 ORDER = [
@@ -87,12 +88,14 @@ def build_preview():
 
 def build_dist(base_url: str):
     base = base_url if base_url.endswith("/") else base_url + "/"
-    out = ROOT / "dist"
+    out = ROOT / "klaviyo"
     out.mkdir(exist_ok=True)
     for path in sorted(TEMPLATES.glob("*.html")):
         src = path.read_text(encoding="utf-8").replace(LOCAL_PREFIX, base)
+        src = re.sub(r"  Images use relative paths.*?\n.*?\(see README\)\.\n",
+                     "  Ready to paste into Klaviyo: images load from %s\n" % base, src)
         (out / path.name).write_text(src, encoding="utf-8")
-        print("dist/%s" % path.name)
+        print("klaviyo/%s" % path.name)
 
 
 PREVIEW = r"""<!DOCTYPE html>
@@ -197,8 +200,8 @@ PREVIEW = r"""<!DOCTYPE html>
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--base-url", help="public folder URL where assets/images/* are hosted")
+    ap.add_argument("--base-url", default=DEFAULT_BASE,
+                    help="public folder URL where assets/images/* are hosted (default: %(default)s)")
     args = ap.parse_args()
     build_preview()
-    if args.base_url:
-        build_dist(args.base_url)
+    build_dist(args.base_url)
