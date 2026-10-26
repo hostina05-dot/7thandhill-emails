@@ -5,7 +5,7 @@
     python3 scripts/build.py     # preview.html grouped by stage + klaviyo/ copies
 
     build.py rebuilds preview.html: every template grouped by launch stage, with labels,
-        status tags and the "Waiting for Sally" list, images embedded, Klaviyo tags filled
+        a plain overview of each stage on top, images embedded, Klaviyo tags filled
         with sample data. Open it in any browser.
 
         Also writes klaviyo/*.html: the same templates with image paths pointed
@@ -40,14 +40,22 @@ STAGES = {
     3: "STAGE 3 · Goes live Mon, Nov 9",
     4: "STAGE 4 · By Tue, Nov 24",
 }
-WAITING = [
-    "Free resizing for rings: real or not. Until confirmed, no resize claims anywhere.",
-    "Which pieces are subscriber-only in the Vault (the popup headline promises them).",
-    "Holiday order dates for K3 (suggested: Nov 6, Nov 30, Dec 17).",
-    "The nine pieces for W3 (needed by Oct 29).",
-    "The six collection tiles in W1: OK or not.",
-    "14k vs \"Solid gold\" (one 10k bracelet on the site).",
-    "Complimentary cleaning in the GTA as a Vault perk: keep or remove.",
+# Plain overview at the top of the preview
+OVERVIEW = [
+    ("Етап 1 · запуск у вівторок, 27 жовтня",
+     "Усе, що потрібно з першого дня. Попап на сайті запрошує в 7H Vault. Хто підписався, отримує 5 вітальних листів: "
+     "одразу лист із кодом на 15%, потім історію бренду, добірку Sally, головне про золото й доставку і пропозицію допомогти з вибором "
+     "(дні 0, 1, 3, 5, 8). Окремо 3 листи для старих клієнтів SALT: Sally представляє 7th & Hill і питає, чи писати їм далі. "
+     "Хто натиснув «Yes», отримує ті самі вітальні листи. Хто мовчить, отримує ще одне нагадування, а потім прощальний лист."),
+    ("Етап 2 · запуск у понеділок, 2 листопада",
+     "Листи, що повертають покупців. Розсилка K3 у вівторок, 3 листопада: до яких дат замовляти подарунки на свята. "
+     "Хто поклав виріб у кошик і пішов, отримує 2 листи (через 2 години і через добу). Хто дійшов до оплати й не завершив, "
+     "отримує 3 листи (через 2 години, добу і 2 доби). Якщо сума від $5,500, замість них приходять 2 особисті записки від Sally."),
+    ("Етапи 3 і 4 · з 9 листопада, усе готово до 24 листопада",
+     "Етап 3: хто переглядав виріб, отримує 2 листи. Після покупки йдуть 3 листи: подяка одразу, догляд за прикрасою на 21-й день, "
+     "нові вироби на 35-й день. Привітання з річницею покупки. Щотижнева розсилка «New in the studio». "
+     "Етап 4: Black Friday (25, 27 і 30 листопада), Design Your Own (17 листопада), гід подарунків (3 грудня), Sally’s edit (8 грудня), "
+     "останній день замовлень (15 грудня) і святкова записка від Sally (24 грудня)."),
 ]
 
 SAMPLE = {
@@ -119,10 +127,8 @@ def build_preview():
             "file": path.name,
             "stage": stage,
             "label": meta(head, "Card"),
-            "status": meta(head, "Status"),
             "subject": meta(head, "Subject"),
             "preheader": meta(head, "Preheader"),
-            "logic": re.findall(r"^\s*Logic:\s*(.+)$", head, flags=re.M),
             "kb": round(len(raw.encode("utf-8")) / 1024, 1),
             "named": fill_klaviyo(raw, SAMPLE["first_name"]),
             "anon": fill_klaviyo(raw, ""),
@@ -130,7 +136,7 @@ def build_preview():
     page = (PREVIEW.replace("/*DATA*/[]", json.dumps(cards))
             .replace("/*IMAGES*/{}", json.dumps(image_map(used)))
             .replace("/*STAGES*/{}", json.dumps(STAGES))
-            .replace("/*WAITING*/[]", json.dumps(WAITING)))
+            .replace("/*OVERVIEW*/[]", json.dumps(OVERVIEW, ensure_ascii=False)))
     (ROOT / "preview.html").write_text(page, encoding="utf-8")
     print("preview.html written (%d templates)" % len(cards))
 
@@ -169,9 +175,10 @@ PREVIEW = r"""<!DOCTYPE html>
                 font:400 10px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing:2.5px; text-transform:uppercase; }
   .seg button[aria-pressed="true"] { background:var(--ink); color:var(--bg); }
   .seg button:focus-visible { outline:1px solid var(--accent); outline-offset:2px; }
-  .waiting { margin:24px 24px 0; padding:18px 22px; border:1px solid var(--accent); max-width:760px; }
-  .waiting h2 { margin:0 0 8px; font:400 11px/1.4 "Helvetica Neue", Arial, sans-serif; letter-spacing:3px; text-transform:uppercase; color:var(--accent); }
-  .waiting ol { margin:0; padding-left:20px; color:var(--ink); font-size:13px; line-height:21px; }
+  .overview { margin:24px 24px 0; display:flex; flex-wrap:wrap; gap:18px; }
+  .overview div { flex:1 1 300px; max-width:520px; padding:18px 22px; border:1px solid var(--line); }
+  .overview h2 { margin:0 0 8px; font:400 11px/1.5 "Helvetica Neue", Arial, sans-serif; letter-spacing:2.5px; text-transform:uppercase; color:var(--accent); }
+  .overview p { margin:0; color:var(--ink); font-size:14px; line-height:22px; }
   .stage { padding:28px 0 8px; }
   .stage h2 { margin:0 24px 16px; font:400 12px/1.4 "Helvetica Neue", Arial, sans-serif; letter-spacing:3.5px; color:var(--accent);
               border-bottom:1px solid var(--line); padding-bottom:10px; }
@@ -182,12 +189,6 @@ PREVIEW = r"""<!DOCTYPE html>
   .meta .file { font:11px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); margin-top:2px; }
   .meta .subject { margin-top:6px; font:400 17px/1.3 Georgia, serif; color:var(--ink); }
   .meta .pre { color:var(--dim); font-size:12px; }
-  .tag { display:inline-block; margin-top:8px; padding:3px 8px; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; border:1px solid var(--dim); color:var(--dim); }
-  .tag.ready { border-color:var(--ok); color:var(--ok); }
-  .tag.wait { border-color:var(--accent); color:var(--accent); }
-  .logic { margin-top:10px; padding:10px 12px; background:var(--panel); border-left:2px solid var(--accent); font-size:12px; line-height:18px; color:var(--ink); }
-  .logic b { display:block; font-weight:400; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:4px; }
-  .logic ol { margin:0; padding-left:18px; }
   .frame { border:1px solid var(--line); background:var(--panel); }
   iframe { display:block; border:0; width:600px; height:900px; background:#101613; }
   footer { padding:8px 24px 40px; color:var(--dim); font-size:12px; }
@@ -209,17 +210,22 @@ PREVIEW = r"""<!DOCTYPE html>
     </div>
   </div>
 </header>
-<section class="waiting"><h2>Waiting for Sally</h2><ol id="waiting"></ol></section>
+<section class="overview" id="overview"></section>
 <main id="stages"></main>
 <footer>Generated by scripts/build.py. Sample name, address, coupon and bag contents are placeholders; Klaviyo fills the real ones.</footer>
 <script>
   const DATA = /*DATA*/[];
   const IMAGES = /*IMAGES*/{};
   const STAGES = /*STAGES*/{};
-  const WAITING = /*WAITING*/[];
+  const OVERVIEW = /*OVERVIEW*/[];
   const state = { width: "600", name: "named", zoom: "0.5" };
   const root = document.getElementById("stages");
-  WAITING.forEach(w => { const li = document.createElement("li"); li.textContent = w; document.getElementById("waiting").appendChild(li); });
+  OVERVIEW.forEach(([t, d]) => {
+    const box = document.createElement("div");
+    box.innerHTML = "<h2></h2><p></p>";
+    box.querySelector("h2").textContent = t; box.querySelector("p").textContent = d;
+    document.getElementById("overview").appendChild(box);
+  });
 
   function source(c) {
     return c[state.name].replace(/\.\.\/assets\/images\/([\w.-]+)/g, (m, f) => IMAGES[f] || m);
@@ -227,7 +233,6 @@ PREVIEW = r"""<!DOCTYPE html>
   function fit(f) {
     try { f.style.height = f.contentDocument.documentElement.scrollHeight + "px"; } catch (e) {}
   }
-  function tagClass(s) { return /^Ready/.test(s) ? "tag ready" : /^Waiting/.test(s) ? "tag wait" : "tag"; }
   function render() {
     root.innerHTML = "";
     Object.keys(STAGES).forEach(n => {
@@ -243,20 +248,11 @@ PREVIEW = r"""<!DOCTYPE html>
         card.className = "card";
         card.style.zoom = state.zoom;
         card.innerHTML = '<div class="meta" style="width:' + state.width + 'px"><div class="label"></div><div class="file"></div>' +
-                         '<div class="subject"></div><div class="pre"></div><span></span></div><div class="frame"><iframe></iframe></div>';
+                         '<div class="subject"></div><div class="pre"></div></div><div class="frame"><iframe></iframe></div>';
         card.querySelector(".label").textContent = c.label;
         card.querySelector(".file").textContent = c.file + " · " + c.kb + " KB";
         card.querySelector(".subject").textContent = c.subject;
         card.querySelector(".pre").textContent = c.preheader;
-        const tag = card.querySelector(".meta span");
-        tag.className = tagClass(c.status); tag.textContent = c.status;
-        if (c.logic.length) {
-          const box = document.createElement("div");
-          box.className = "logic";
-          box.innerHTML = "<b>What happens</b><ol></ol>";
-          c.logic.forEach(l => { const li = document.createElement("li"); li.textContent = l; box.querySelector("ol").appendChild(li); });
-          card.querySelector(".meta").appendChild(box);
-        }
         const f = card.querySelector("iframe");
         f.title = c.label;
         f.style.width = state.width + "px";
