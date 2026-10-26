@@ -864,7 +864,7 @@ doc("s2-c1-piece-waiting.html", **C, code="C1", flow="Cart flow 06", pos="email 
 doc("s2-c2-sizing-question.html", **C, code="C2", flow="Cart flow 06", pos="email 2 of 2", when="+24 h after Added to Cart",
     card="Cart · email 2 of 2 · +24 h", title="A question about sizing?", subject="A question about sizing?",
     preheader="Send me a photo of what you already wear.",
-    body=hero("hero-model-library.jpg", "A woman in a library wearing a gold locket and a diamond necklace", CART_URL)
+    body=hero("hero-sweater-hand.jpg", "A hand wearing a Marquise Art Deco ring, beside a gold enamel pendant", CART_URL)
     + title_block(None, "A question about sizing?")
     + letter([HI,
               "Not sure about size? Send me a photo of what you already wear, and I&rsquo;ll help you choose.",
