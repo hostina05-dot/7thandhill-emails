@@ -43,4 +43,4 @@ Number = key in `assets/catalog.json`, used in `scripts/compose.py`. 1 to 32: ph
 | 105 | Custom Date Ring | product-105.jpg | https://www.7thandhilljewelry.ca/search?q=custom+date+ring |
 | 201 | Talisman Keepsake Locket | tile-talisman-locket.jpg | https://www.7thandhilljewelry.ca/search?q=talisman+keepsake+locket |
 | 202 | Lovers Tarot Pendant | product-01.jpg | https://www.7thandhilljewelry.ca/products/14k-gold-and-diamond-lovers-tarot-pendant |
-| 203 | Marquise Art Deco Ring | tile-marquise-ring.jpg | https://www.7thandhilljewelry.ca/products/the-marquise-art-deco-enamel-statement-ring |
+| 203 | Marquise Art Deco Ring | product-26.jpg | https://www.7thandhilljewelry.ca/products/the-marquise-art-deco-enamel-statement-ring |

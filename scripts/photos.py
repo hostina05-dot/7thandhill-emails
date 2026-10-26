@@ -33,7 +33,7 @@ SHOTS = {
     "hero-rings-table.jpg":      ("rings-table-bag.jpg",             "hero",    (0, 0.30, 1, 0.88)),
     "hero-locket-closeup.jpg":   ("locket-closeup.jpg",              "hero",    (0, 0.18, 1, 0.92)),
     "hero-pendant-book.jpg":     ("pendant-red-book.jpg",            "hero",    (0, 0.04, 1, 1)),
-    "hero-necklaces-book.jpg":   ("necklaces-green-book-hires.jpg",  "hero",    (0, 0.0, 1, 0.60)),
+    "hero-necklaces-book.jpg":   ("necklaces-green-book.jpg",        "hero",    None),
     "hero-hand-rings.jpg":       ("hand-rings.jpg",                  "hero",    (0, 0.12, 1, 0.88)),
     "hero-archive-corner.jpg":   ("corner-7th-hill-1920s.jpg",       "hero",    None),
     "hero-archive-building.jpg": ("archive-st-vincent-building.jpg",  "hero",    (0, 0.08, 1, 0.70)),
@@ -44,7 +44,6 @@ SHOTS = {
     "feature-compass.jpg":       ("compass-horn-velvet.jpg",         "feature", (0, 0.06, 1, 0.86)),
     # small squares of worn pieces, same size as product tiles (tile)
     "tile-talisman-locket.jpg":  ("locket-closeup.jpg",              "tile",    (0.10, 0.44, 0.90, 0.90)),
-    "tile-marquise-ring.jpg":    ("hand-rings.jpg",                  "tile",    (0.10, 0.18, 0.78, 0.70)),
     # photos inside a block, no seal (story)
     "story-bookbox.jpg":         ("bookbox-library.jpg",             "story",   None),
     "popup-locket.jpg":          ("locket-closeup.jpg",              "story",   (0, 0.28, 1, 0.78)),

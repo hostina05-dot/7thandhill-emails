@@ -643,7 +643,7 @@ doc("s1-w1-welcome.html", **W, code="W1", pos="email 1 of 5", when="Sends immedi
     + title_block("The 7H Vault", "Welcome to 7th &amp; Hill",
         "Welcome! I&rsquo;m Sally, I design modern heirlooms, timeless classics, and personalized jewelry, one piece, one story at a time. From now on, you&rsquo;ll be among the first to see what leaves the workbench.")
     + heading("First looks from the workbench", pad="0 40px 18px")
-    + collage("FIRST LOOKS", (202, 203), ("feature-locket.jpg", "Talisman Keepsake Locket, worn", P[201]["url"]), ("rings", 13, "earrings"), feature_side="left")
+    + collage("FIRST LOOKS", (202, "charms"), ("feature-hands.jpg", "Marquise Art Deco rings worn on the hand", P[203]["url"]), ("rings", 16, "necklaces"), feature_side="left")
     + vault_key()
     + cta("Step inside", SHOP, pad="34px 64px 30px")
     + find_your_piece("Find your place", CATS_W1)
@@ -708,7 +708,7 @@ doc("s1-w5-help-finding.html", **W, code="W5", pos="email 5 of 5", when="Sends o
               "And if what you have in mind doesn&rsquo;t exist yet, we can design it together, one on one.",
               "No pressure, and no follow-up barrage. One honest shortlist."],
              ps="If nothing fits, I&rsquo;m happy to suggest other options.")
-    + checker("THREE TO START", [105, 1, 103])
+    + collage("THREE TO START", (105, 1), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), (103, "charms", "necklaces"))
     + cta("Reply to Sally", MAIL + "?subject=Help%20me%20find%20the%20one", pad="4px 64px 8px",
           extra=text_link("Or start with Design Your Own", DYO, mt=18))
     + block("SPACER", "", pad="22px 0 0")
