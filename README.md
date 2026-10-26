@@ -13,7 +13,7 @@ templates/               7 шаблонов (исходники)
   abandoned-cart.html    мягкое напоминание о корзине + несколько любимых изделий
   salt-welcome.html      приветствие для контактов SALT («A note from Sally»)
   sallys-edit-collage.html    Sally's edit · еженедельная серия · вариант 1: фото, записка Sally, коллаж
-  sallys-edit-pieces.html     Sally's edit · вариант 2: двойное фото, записка, изделия с названиями
+  sallys-edit-pieces.html     Sally's edit · вариант 2: фото, записка, изделия с названиями
   sallys-edit-spotlight.html  Sally's edit · вариант 3: изделие недели, история, «Wear it with»
 klaviyo/                 те же шаблоны, готовые к вставке в Klaviyo
 blocks/                  готовые блоки: collage, pieces-with-names, three-pieces, night-quote, find-your-piece
@@ -65,7 +65,7 @@ python3 scripts/build.py
 - Подвал (обязательно для CASL): «7th & Hill Jewelry», `{{ organization.full_address }}`, email, `{% unsubscribe %}` и `{% manage_preferences %}`. Адрес (190 Roslin Avenue, Toronto, Ontario M4N 1Z6) укажите один раз в Klaviyo → Settings → Organization.
 
 ## Sally's edit (каждую неделю)
-У всех трёх вариантов одна «шапка» серии (Sally's edit · No. 01 · тема недели), записка Sally с её портретом и подписью и одинаковый подвал: так серию узнают с первого взгляда. Каждую неделю меняйте номер выпуска и тему в блоке `MASTHEAD`, фото, изделия и текст записки. Варианты можно чередовать, чтобы выпуски не повторялись. Тема письма: `Sally's edit · No. 05: [тема]`.
+У всех трёх вариантов одна «шапка» (Sally's edit и золотая линия), записка Sally с её портретом и подписью и одинаковый подвал: так серию узнают с первого взгляда. Номер выпуска и тема недели — только в теме письма: `Sally's edit · No. 05: [тема]`. Каждую неделю меняйте фото, изделия и текст записки. Варианты можно чередовать.
 
 ## Список SALT
 `salt-welcome.html` для контактов, перенесённых из SALT Fine Jewelry. Отправляйте волнами по 200–300 и следите за жалобами на спам (держите их ниже 0,1%).
