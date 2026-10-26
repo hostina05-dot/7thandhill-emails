@@ -61,7 +61,7 @@ def grade(im: Image.Image) -> Image.Image:
 
 # animated GIFs cut from short videos: name -> (video, start s, length s, hold last frame s, width, crop as fractions)
 CLIPS = {
-    "unboxing.gif": ("unboxing.mov", 0.0, 3.0, 2.5, 320, (0.06, 0.20, 0.94, 0.72)),
+    "unboxing.gif": ("unboxing.mov", 0.0, 3.0, 2.5, 300, (0.145, 0.26, 0.865, 0.80)),
 }
 
 
