@@ -7,9 +7,9 @@
 ## Где что лежит
 
 ```
-templates/        34 письма по этапам запуска (исходники, их пишет scripts/compose.py)
+templates/        34 письма в трёх группах: flow-, salt-, camp- (исходники, их пишет scripts/compose.py)
 klaviyo/          те же письма, готовые к вставке в Klaviyo (картинки с хостинга)
-preview.html      все письма, сгруппированные по этапам, с метками, статусами и списком «Waiting for Sally»
+preview.html      все письма в трёх группах (Flows, SALT consent, Campaigns) с коротким описанием каждой
 blocks/           готовые блоки для вставки + catalog.md (все изделия с номерами и ссылками)
 assets/photos/    оригиналы фото и видео
 assets/images/    готовые картинки для писем (после цветокоррекции)
