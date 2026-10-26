@@ -38,6 +38,13 @@ SHOTS = {
     "hero-hand-rings.jpg":       ("hand-rings.jpg",                  "hero",    (0, 0.12, 1, 0.88)),
     "hero-archive-corner.jpg":   ("corner-7th-hill-1920s.jpg",       "hero",    None),
     "hero-archive-building.jpg": ("archive-st-vincent-building.jpg",  "hero",    (0, 0.08, 1, 0.70)),
+    # frames from our videos (video name, second)
+    "hero-reel-open-book.jpg":   (("library-reel.mov", 1.6),         "frame",   (0, 0.22, 1, 0.70)),
+    "hero-reel-rings-book.jpg":  (("library-reel.mov", 2.4),         "frame",   (0, 0.30, 1, 0.78)),
+    "hero-box-closed.jpg":       (("unboxing.mov", 0.2),             "frame",   (0, 0.20, 1, 0.68)),
+    "hero-box-open.jpg":         (("unboxing.mov", 6.8),             "frame",   (0, 0.22, 1, 0.70)),
+    "hero-spines.jpg":           ("pendants-book-spines.jpg",        "hero",    (0, 0.04, 1, 0.62)),
+    "hero-compass.jpg":          ("compass-horn-velvet.jpg",         "hero",    (0, 0.10, 1, 0.80)),
     # large square photos inside collages (feature)
     "feature-hands.jpg":         ("hand-rings.jpg",                  "feature", (0, 0, 1, 1)),
     "feature-locket.jpg":        ("locket-closeup.jpg",              "feature", (0, 0.30, 1, 1)),
@@ -51,6 +58,24 @@ SHOTS = {
     # round portrait for Sally's notes
     "sally-avatar.png":          ("sally-velvet.jpg",                "avatar",  (0.000, 0.045, 1.000, 0.603)),
 }
+
+# covers made of pieces on the moonlit backdrop: name -> catalog photo numbers (assets/photos/catalog/NN.jpg
+# or packshots/ for 101+). One piece = large and centred; two or three = side by side.
+PIECE_HEROES = {
+    "hero-pieces-checkout.jpg": [21, 16],
+    "hero-pieces-browse.jpg":   [14, 4, 26],
+    "hero-pieces-next.jpg":     [17, 31, 20],
+    "hero-pieces-studio.jpg":   [10],
+    "hero-pieces-vault.jpg":    [25],
+    "hero-pieces-sale.jpg":     [24, 13, 18],
+    "hero-pieces-lastday.jpg":  [19],
+    "hero-pieces-dyo.jpg":      [5, 12, 15],
+    "hero-pieces-gifts.jpg":    [1, 26, 28],
+    "hero-pieces-edit.jpg":     [3, 6, 9],
+    "hero-pieces-spotlight.jpg": [30],
+    "hero-pieces-lastcall.jpg": [2, 22, 29],
+}
+PACK = {101: "ring-sunburst.jpg", 102: "heart-sunburst.jpg", 103: "charm-baby.jpg", 104: "charm-butterfly.jpg", 105: "ring-date.jpg"}
 
 # white-background packshots -> product tiles on the soft moonlit backdrop all catalog pieces share
 PACKSHOTS = {
@@ -139,6 +164,29 @@ def packshots():
         print(f"{name:26} 600x600 (moonlit)")
 
 
+def piece_heroes():
+    """Pieces multiplied onto one wide moonlit canvas, so the backdrop runs seamlessly behind them."""
+    from PIL import ImageChops
+    disc = seal_disc()
+    for name, ids in PIECE_HEROES.items():
+        W, H = 1200, 860
+        canvas = moonlit(W, H)
+        n = len(ids)
+        size = 820 if n == 1 else (560 if n == 2 else 400)
+        gap = (W - n * size) // (n + 1)
+        layer = Image.new("RGB", (W, H), "white")
+        for i, k in enumerate(ids):
+            src = PHOTOS / ("packshots/" + PACK[k] if k in PACK else f"catalog/{k:02d}.jpg")
+            im = ImageOps.fit(Image.open(src).convert("RGB"), (size, size), Image.LANCZOS)
+            layer.paste(im, (gap + i * (size + gap), (H - size) // 2 - 20))
+        im = ImageChops.multiply(layer, canvas)
+        out = Image.new("RGB", (W, H + disc.size[1] // 2), "white")
+        out.paste(im, (0, 0))
+        out.paste(disc, ((W - disc.size[0]) // 2, H - disc.size[1] // 2), disc)
+        out.save(OUT / name, quality=84, optimize=True, progressive=True)
+        print(f"{name:26} {W}x{out.size[1]}  ({n} piece{'s' if n > 1 else ''})")
+
+
 def seal_png():
     """The seal on its own, for letters that open without a photo."""
     seal_disc().save(OUT / "seal.png", optimize=True)
@@ -155,7 +203,15 @@ def main():
             out.save(OUT / name, quality=82, optimize=True, progressive=True)
             print(f"{name:26} {out.size[0]}x{out.size[1]}")
             continue
-        im = grade(crop(Image.open(PHOTOS / src).convert("RGB"), box))
+        if kind == "frame":  # a still from one of our videos, then treated like a hero
+            import subprocess, tempfile
+            video, t = src
+            tmp = Path(tempfile.mkdtemp()) / "f.png"
+            subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", str(t), "-i", str(PHOTOS / video), "-frames:v", "1", str(tmp)], check=True)
+            im = grade(crop(Image.open(tmp).convert("RGB"), box))
+            kind = "hero"
+        else:
+            im = grade(crop(Image.open(PHOTOS / src).convert("RGB"), box))
         if kind == "avatar":  # round portrait with a cream ring, transparent corners
             size, ring = 112, 4
             face = ImageOps.fit(im, (size - 2 * ring,) * 2, Image.LANCZOS, centering=(0.5, 0.5))
@@ -250,6 +306,7 @@ def cells(size=260, hold=24, fade=3):
 
 if __name__ == "__main__":
     main()
+    piece_heroes()
     cells()
     packshots()
     seal_png()
