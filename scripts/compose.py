@@ -203,6 +203,7 @@ ANIM = {  # animated grid cells: cross-fade between pieces (GIF; Outlook for Win
     "charms": ("anim-charms.gif", "Charms", SITE + "/search?q=charm"),
     "pendants": ("anim-pendants.gif", "Pendants", SITE + "/search?q=pendant"),
     "earrings": ("anim-earrings.gif", "Earrings", SITE + "/search?q=earrings"),
+    "necklaces": ("anim-necklaces.gif", "Necklaces", SITE + "/search?q=necklace"),
 }
 
 def piece(n):
@@ -210,6 +211,9 @@ def piece(n):
     if isinstance(n, tuple):
         d = dict(P[n[0]]); d["name"] = n[1]
         return d
+    if isinstance(n, str):   # animated cell: named after the kind of piece it cycles through
+        src, alt, url = ANIM[n]
+        return {"name": alt, "url": url, "img": src}
     return P[n]
 
 def pimg(n, w):
@@ -657,7 +661,7 @@ doc("s1-w2-story.html", **W, code="W2", pos="email 2 of 5", when="Sends on day 1
               "One afternoon in the eighties, my sister Jen and I watched him sketch a necklace. A jeweler friend carved the wax, and the gold poured like lava. I was nine. We still wear those necklaces today."], sign=False)
     + night("QUOTE", quote("&ldquo;Jewelry is more than metal and stone. It is a work of art, and a wearable memory.&rdquo;"), pad="34px 56px 40px")
     + line("That corner gave the brand its name, and it is still how I work. I listen to your story first, then I design around it.", pad="34px 64px 30px")
-    + picture("BOOK BOX", "story-bookbox.jpg", 488, 364, "The green 7th &amp; Hill book box, lined in velvet",
+    + picture("BOOK BOX · animation", "unboxing.gif", 300, 403, "A 7th &amp; Hill book box opening to show diamond earrings and a ring",
               cap="Every piece arrives in our green book box, lined in velvet")
     + heading("Modern Heirlooms. Timeless Classics.", pad="0 40px 22px")
     + cta("Meet Sally", STORY)
@@ -688,7 +692,7 @@ doc("s1-w4-worn-and-kept.html", **W, code="W4", pos="email 4 of 5", when="Sends 
         "My grandmother Lily wore her charm bracelet from 1913 to 2013. It&rsquo;s why I make pieces for every day, not for a drawer.")
     + facts_band(FACTS_W4)
     + heading("Made personal", pad="34px 40px 18px")
-    + checker("MADE PERSONAL", [5, 12, 7])
+    + checker("MADE PERSONAL", [5, "charms", 7])
     + cta("Ask Sally anything", MAIL + "?subject=A%20question%20for%20Sally", pad="4px 64px 12px")
     + line("Or simply reply to this email.", pad="0 64px 30px", size_=13, color=SOFT)
     + cat_line())
@@ -740,6 +744,7 @@ doc("s1-t2-keep-writing.html", **T, code="T2", pos="email 2 of 3",
     + letter([HI,
               "Last week I wrote to tell you about 7th &amp; Hill, my own line after SALT. I only want to write to people who&rsquo;d like to hear from me, so I&rsquo;m asking once more.",
               "One click, either way."])
+    + picture("FROM THE LIBRARY · slideshow", "library-reel.gif", 300, 373, "Gold rings and pendants resting on old books in a library", pad="0 64px 28px")
     + line("The welcome gift still stands: 15% off your first piece.", pad="0 56px 24px", color=INK)
     + cta("Yes, keep me posted", utm(VAULT_PAGE, "salt_t2", "yes"), pad="0 64px 8px",
           extra=text_link("No, thank you", "{% unsubscribe_url %}", mt=20))
@@ -851,6 +856,8 @@ doc("s2-c1-piece-waiting.html", **C, code="C1", flow="Cart flow 06", pos="email 
         "Some pieces are ready to ship, others are made for you over a few weeks. Starting now means yours arrives when you need it.")
     + dyn_cart()
     + cta("Return to your bag", CART_URL, pad="4px 64px 34px")
+    + heading("From the workbench", pad="0 40px 18px")
+    + grid("FROM THE WORKBENCH", ["rings", 13, "earrings"])
     + trust_strip())
 
 doc("s2-c2-sizing-question.html", **C, code="C2", flow="Cart flow 06", pos="email 2 of 2", when="+24 h after Added to Cart",
@@ -874,6 +881,8 @@ doc("s2-co1-one-step-away.html", **C, code="CO1", flow="Checkout flow 07", pos="
     + title_block("Saved for you", "You were one step away",
         "Your order is saved, just as you left it. When you&rsquo;re ready, it&rsquo;s one click away.")
     + cta("Return to your bag", CHECKOUT, pad="4px 64px 36px")
+    + heading("If you&rsquo;re still deciding", "A few favourites", pad="0 40px 22px")
+    + checker("FAVOURITES", ["necklaces", 21, 2])
     + trust_strip())
 
 doc("s2-co2-questions.html", **C, code="CO2", flow="Checkout flow 07", pos="email 2 of 3", when="+22 h after CO1",
@@ -882,7 +891,9 @@ doc("s2-co2-questions.html", **C, code="CO2", flow="Checkout flow 07", pos="emai
     body=hero("hero-necklaces-book.jpg", "Gold necklaces resting on an old green leather book", CHECKOUT)
     + title_block("Short answers", "Any questions before you decide?", "For anything else, simply reply.")
     + facts_band([("Sizing", FACT_SIZING), ("Timing", FACT_TIMING), ("Delivery", FACT_DELIVERY)])
-    + cta("Return to your bag", CHECKOUT, pad="34px 64px 36px"))
+    + block("SPACER", "", pad="30px 0 0")
+    + grid("WORTH A LOOK", ["pendants", 16, "rings"])
+    + cta("Return to your bag", CHECKOUT, pad="12px 64px 36px"))
 
 doc("s2-co3-meant-for-a-date.html", **C, code="CO3", flow="Checkout flow 07", pos="email 3 of 3", when="+48 h after CO1",
     card="Checkout · email 3 of 3 · +48 h", title="If it's meant for a date", subject="If it's meant for a date",
@@ -894,7 +905,8 @@ doc("s2-co3-meant-for-a-date.html", **C, code="CO3", flow="Checkout flow 07", po
                   ("7th &amp; Hill Exclusives", "Made in 2 to 4 weeks."),
                   ("Curated designs", "Made in 6 to 8 weeks.")])
     + sally_note("Tell me the date and I&rsquo;ll tell you what&rsquo;s possible.")
-    + cta("Return to your bag", CHECKOUT, pad="0 64px 8px", extra=text_link("Reply to Sally", MAIL, mt=20))
+    + grid("IN TIME", [23, "charms", 9])
+    + cta("Return to your bag", CHECKOUT, pad="12px 64px 8px", extra=text_link("Reply to Sally", MAIL, mt=20))
     + block("SPACER", "", pad="24px 0 0"))
 
 doc("s2-cc1-concierge-note.html", **C, code="CC1", flow="Checkout flow 07 · concierge", pos="note 1 of 2",
@@ -948,7 +960,7 @@ doc("s3-b2-worth-knowing.html", **B, code="B2", flow="Browse flow 05", pos="emai
     + title_block("The quiet, important part", "Worth knowing before you choose")
     + facts_band(FACTS_W4)
     + block("SPACER", "", pad="30px 0 0")
-    + checker("WORTH A LOOK", [14, 4, 26])
+    + checker("WORTH A LOOK", [14, "pendants", 26])
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
 
@@ -961,6 +973,7 @@ doc("s3-pp1-thank-you.html", **B, code="PP1", flow="After-purchase flow 10", pos
     + picture("UNBOXING · animation", "unboxing.gif", 300, 403, "A 7th &amp; Hill book box opening to show diamond earrings and a ring",
               cap="Every piece arrives in our green book box, lined in velvet", pad="0 64px 10px")
     + sally_note("Thank you for choosing a piece of mine. I hope it becomes one you never take off.")
+    + grid("ALONGSIDE", ["necklaces", 31, "earrings"])
     + cat_line())
 
 doc("s3-pp2-care.html", **B, code="PP2", flow="After-purchase flow 10", pos="email 2 of 3", when="Day 21 after Placed Order",
@@ -982,6 +995,8 @@ doc("s3-pp2-care.html", **B, code="PP2", flow="After-purchase flow 10", pos="ema
         + text_link("Read the Jewelry Care page", CARE, mt=24, color=IVORY, line=GOLD_L))
     + picture("THE BOOK BOX", "story-bookbox.jpg", 488, 364, "The green 7th &amp; Hill book box, lined in velvet",
               cap="Store it in its book box between wears", pad="34px 64px 30px")
+    + heading("To wear alongside it", "Charms to add over time", pad="0 40px 22px")
+    + grid("ALONGSIDE", [(23, "Signature Toggle Charm"), "charms", 9])
     + cat_line())
 
 doc("s3-pp3-next-piece.html", **B, code="PP3", flow="After-purchase flow 10", pos="email 3 of 3", when="Day 35 after Placed Order",
@@ -1046,7 +1061,7 @@ doc("s4-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:00 
     + title_block("For the Vault, first", "Before anyone else")
     + sally_note("Black Friday opens to the Vault tonight, a little before everyone else. I wanted you to see these first.").replace("padding:28px 56px 34px", "padding:0 56px 30px")
     + offer_light("20% off", "Every piece marked A 7th &amp; Hill Exclusive.<br>Each is made in 2 to 4 weeks, in time for the holidays.")
-    + grid("EXCLUSIVES", [26, 21, 14])
+    + grid("EXCLUSIVES", [26, "rings", 14])
     + cta("Step inside", SHOP, pad="16px 64px 40px"))
 
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
@@ -1073,7 +1088,7 @@ doc("s4-s3-last-day.html", **SALE, code="S3", when="Mon Nov 30, 10:00 Toronto",
     + title_block("The last day", "Today is the last day",
         "The 20% on our Exclusives ends tonight. If one has been on your mind, this is the moment.")
     + offer_light("Until midnight", "20% off every piece marked A 7th &amp; Hill Exclusive.")
-    + checker("STILL HERE", [21, 14, 1])
+    + checker("STILL HERE", ["rings", 14, "pendants"])
     + cta("Step inside", SHOP, pad="0 64px 40px"))
 
 doc("s4-dyo-design-your-own.html", stage=4, status=DRAFT, code="DYO", flow="Campaign", pos="whole list",
@@ -1089,7 +1104,7 @@ doc("s4-dyo-design-your-own.html", stage=4, status=DRAFT, code="DYO", flow="Camp
             ("Adorn", "It&rsquo;s made to order, just for you."),
           ], numerals=["i", "ii", "iii"]), pad="34px 56px 40px")
     + heading("Made personal", pad="34px 40px 18px")
-    + checker("MADE PERSONAL", [5, 12, 105])
+    + checker("MADE PERSONAL", [5, "charms", 105])
     + cta("Start your design", MAIL + "?subject=Design%20my%20own", pad="4px 64px 8px",
           extra=text_link("See Design Your Own", DYO, mt=20))
     + block("SPACER", "", pad="24px 0 0")
@@ -1102,7 +1117,7 @@ doc("s4-k4-gift-guide.html", stage=4, status="Draft, not yet approved by Sally �
     body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
     + title_block("The 7H gift guide", "Gifts that arrive in time",
         "Every piece here is in stock or one of our Exclusives, so it can still arrive before the holidays.")
-    + grid("GIFTS", [201, 202, 203, (28, "iLove Smartphone Charm")], cols=2,
+    + grid("GIFTS", [201, "necklaces", "rings", "charms"], cols=2,
            captions=["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"])
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
     + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 34px", size_=13, color=SOFT)
@@ -1126,7 +1141,7 @@ doc("s4-k2-sallys-edit-pieces.html", **EDIT, when="Alternative layout", card="Ca
     body=masthead("", "")
     + hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", SITE + "/search?q=pendant")
     + sally_note("Every pendant here holds something: a name, a date, a small superstition. These are the ones I&rsquo;d give, and the ones I&rsquo;d keep.")
-    + checker("THE EDIT", [1, 12, 4, 3])
+    + checker("THE EDIT", [1, 12, "pendants", 3])
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
 doc("s4-k2-sallys-edit-spotlight.html", **EDIT, when="Alternative layout", card="Campaign · Sally's edit · one piece",
@@ -1137,7 +1152,7 @@ doc("s4-k2-sallys-edit-spotlight.html", **EDIT, when="Alternative layout", card=
     + title_block("The piece of the week", "[Name of the piece]", "[Two lines from Sally about this piece.]", pt=18)
     + cta("View the piece", SITE + "/search?q=locket", pad="0 64px 34px")
     + heading("Wear it with")
-    + grid("WEAR IT WITH", [13, 16, (23, "Signature Toggle Charm")])
+    + grid("WEAR IT WITH", [13, "earrings", (23, "Signature Toggle Charm")])
     + cat_line())
 
 doc("s4-lc-last-call.html", stage=4, status=DRAFT, code="LC", flow="Campaign", pos="whole list", when="Sends Tue Dec 15",
@@ -1147,7 +1162,7 @@ doc("s4-lc-last-call.html", stage=4, status=DRAFT, code="LC", flow="Campaign", p
     body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
     + title_block("Last call", "Last call for in-stock pieces",
         "In-stock pieces ordered by [date] ship in 1 to 2 business days and arrive in time for the holidays.")
-    + collage("IN STOCK", (16, 13), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), (2, 28, 31))
+    + collage("IN STOCK", (16, 13), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), ("rings", 28, 31))
     + cta("Start a gift", SHOP, pad="6px 64px 16px")
     + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 30px", size_=13, color=SOFT)
     + trust_strip())

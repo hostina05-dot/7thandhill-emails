@@ -92,6 +92,16 @@ SLIDES = {
 }
 
 
+# animated grid cells: one square that cross-fades between catalog pieces (numbers from assets/catalog.json)
+CELLS = {
+    "anim-rings.gif":     ([21, 20, 19], 0),
+    "anim-charms.gif":    ([2, 28, 31], 12),
+    "anim-pendants.gif":  ([25, 1, 15], 0),
+    "anim-earrings.gif":  ([16, 17, 11], 12),
+    "anim-necklaces.gif": ([13, 14, 29], 6),
+}
+
+
 def crop(im, box):
     if not box:
         return im
@@ -216,8 +226,31 @@ def slides():
         print(f"{name:26} {width}x{frames[0].size[1]}  {(OUT / name).stat().st_size // 1024} KB  ({len(frames)} slides)")
 
 
+def cells(size=260, hold=24, fade=3):
+    """Each piece holds about 2.5 s, then fades into the next. lead = extra frames before the first fade,
+    so two cells in one letter do not change at the same moment."""
+    import json, subprocess, tempfile
+    cat = json.load(open(ROOT / "assets" / "catalog.json"))
+    for name, (ids, lead) in CELLS.items():
+        tmp = Path(tempfile.mkdtemp())
+        imgs = [Image.open(OUT / cat[str(n)]["img"]).convert("RGB").resize((size, size), Image.LANCZOS) for n in ids]
+        k = 0
+        for i, a in enumerate(imgs):
+            b = imgs[(i + 1) % len(imgs)]
+            for _ in range(hold + (lead if i == 0 else 0)):
+                a.save(tmp / f"{k:04d}.png"); k += 1
+            for st in range(1, fade + 1):
+                Image.blend(a, b, st / (fade + 1)).save(tmp / f"{k:04d}.png"); k += 1
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-framerate", "10", "-i", str(tmp / "%04d.png"),
+                        "-vf", "palettegen=max_colors=96:stats_mode=full", str(tmp / "pal.png")], check=True)
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-framerate", "10", "-i", str(tmp / "%04d.png"), "-i", str(tmp / "pal.png"),
+                        "-lavfi", "paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle", "-loop", "0", str(OUT / name)], check=True)
+        print(f"{name:26} {size}x{size}  {(OUT / name).stat().st_size // 1024} KB")
+
+
 if __name__ == "__main__":
     main()
+    cells()
     packshots()
     seal_png()
     clips()
