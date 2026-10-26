@@ -32,6 +32,11 @@ SHOTS = {
     "feature-locket.jpg":      ("locket-closeup.jpg",        "feature", (0, 0.30, 1, 1)),
     "feature-tusk.jpg":        ("necklaces-green-book-hires.jpg", "feature", (0.14, 0.49, 0.72, 0.92)),
     "feature-rings-table.jpg": ("rings-table-bag.jpg",       "feature", (0, 0.20, 1, 0.95)),
+    "hero-edit-collage.jpg":   ("rings-table-bag.jpg",       "hero",    (0, 0.30, 1, 0.88)),
+    "hero-edit-spotlight.jpg": ("locket-closeup.jpg",        "hero",    (0, 0.18, 1, 0.92)),
+    "hero-edit-split.jpg":     ((("model-green-armchair.jpg", (0.12, 0.0, 0.88, 0.76)),
+                                 ("pendants-book-spines.jpg", (0.08, 0.06, 0.92, 0.78))), "split", None),
+    "sally-avatar.png":        ("sally-avatar.jpg",          "avatar",  None),
     "story-corner.jpg":        ("corner-7th-hill-1920s.jpg", "story",   None),
     "bookbox.jpg":             ("bookbox-library.jpg",       "story",   None),
 }
@@ -78,7 +83,25 @@ def seal_disc(d=144, ring=6):
 def main():
     disc = seal_disc()
     for name, (src, kind, box) in SHOTS.items():
+        if kind == "split":  # two photos side by side, one seal across the seam
+            halves = [ImageOps.fit(grade(crop(Image.open(PHOTOS / f).convert("RGB"), b)), (600, 760), Image.LANCZOS) for f, b in src]
+            out = Image.new("RGB", (1200, 760 + disc.size[1] // 2), "white")
+            out.paste(halves[0], (0, 0)); out.paste(halves[1], (600, 0))
+            out.paste(disc, ((1200 - disc.size[0]) // 2, 760 - disc.size[1] // 2), disc)
+            out.save(OUT / name, quality=82, optimize=True, progressive=True)
+            print(f"{name:26} {out.size[0]}x{out.size[1]}")
+            continue
         im = grade(crop(Image.open(PHOTOS / src).convert("RGB"), box))
+        if kind == "avatar":  # round portrait with a cream ring, transparent corners
+            size, ring = 112, 4
+            face = ImageOps.fit(im, (size - 2 * ring,) * 2, Image.LANCZOS, centering=(0.5, 0.35))
+            out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+            ImageDraw.Draw(out).ellipse([0, 0, size - 1, size - 1], fill=(247, 245, 241, 255))
+            mask = Image.new("L", face.size, 0); ImageDraw.Draw(mask).ellipse([0, 0, face.size[0] - 1, face.size[1] - 1], fill=255)
+            out.paste(face, (ring, ring), mask)
+            out.save(OUT / name, optimize=True)
+            print(f"{name:26} {size}x{size}")
+            continue
         if kind == "hero":
             w = 1200
             im = im.resize((w, round(im.size[1] * w / im.size[0])), Image.LANCZOS)

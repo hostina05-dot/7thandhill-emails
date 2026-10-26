@@ -33,6 +33,9 @@ ORDER = [
     ("thank-you.html", "Post-purchase"),
     ("abandoned-cart.html", "Abandoned cart"),
     ("salt-welcome.html", "SALT list · welcome"),
+    ("sallys-edit-collage.html", "Sally's edit · collage"),
+    ("sallys-edit-pieces.html", "Sally's edit · pieces"),
+    ("sallys-edit-spotlight.html", "Sally's edit · spotlight"),
 ]
 
 SAMPLE = {
