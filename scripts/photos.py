@@ -28,6 +28,7 @@ SHOTS = {
     "hero-lily-bracelet.jpg":    ("sally-lily-bracelet.jpg",         "hero",    (0, 0.10, 1, 0.90)),
     "hero-model-library.jpg":    ("model-library-locket.jpg",        "hero",    (0, 0, 1, 0.92)),
     "hero-model-sweater.jpg":    ("model-green-sweater.jpg",         "hero",    None),
+    "hero-model-sweater-bag.jpg": ("model-sweater-bag.jpg",          "hero",    (0.04, 0, 1, 1)),
     "hero-model-armchair.jpg":   ("model-green-armchair.jpg",        "hero",    (0, 0.02, 1, 0.64)),
     "hero-bookbox-library.jpg":  ("bookbox-library.jpg",             "hero",    (0, 0.06, 1, 1)),
     "hero-envelope-rings.jpg":   ("envelope-rings.jpg",              "hero",    (0, 0.08, 1, 1)),
@@ -98,6 +99,8 @@ CELLS = {
     "anim-pendants.gif":  ([25, 1, 15], 0),
     "anim-earrings.gif":  ([16, 17, 11], 12),
     "anim-necklaces.gif": ([13, 14, 29], 6),
+    "anim-w3-rings.gif":  ([26, 101, 105], 0),
+    "anim-w3-hearts.gif": ([102, 103], 12),
 }
 
 

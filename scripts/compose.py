@@ -204,6 +204,8 @@ ANIM = {  # animated grid cells: cross-fade between pieces (GIF; Outlook for Win
     "pendants": ("anim-pendants.gif", "Pendants", SITE + "/search?q=pendant"),
     "earrings": ("anim-earrings.gif", "Earrings", SITE + "/search?q=earrings"),
     "necklaces": ("anim-necklaces.gif", "Necklaces", SITE + "/search?q=necklace"),
+    "w3-rings": ("anim-w3-rings.gif", "Marquise Art Deco Ring, Art Deco Sunburst Ring, Custom Date Ring", SITE + "/search?q=ring"),
+    "w3-hearts": ("anim-w3-hearts.gif", "Radiant Sunburst Heart, Hand &amp; Footprint Heart", SITE + "/search?q=heart"),
 }
 
 def piece(n):
@@ -673,11 +675,12 @@ doc("s1-w3-find-your-piece.html", **W, code="W3", pos="email 3 of 5", when="Send
     preheader="Charms, rings and a locket, chosen by Sally.", reason=VAULT,
     status="Waiting for Sally: nine pieces",
     notes=["Placeholder nine until Sally sends hers (needed by Oct 29). Only pieces with a real price on the site."],
-    body=hero("hero-model-library.jpg", "A woman in a library wearing a gold locket and a diamond necklace")
+    body=hero("hero-model-sweater-bag.jpg", "A woman in a green sweater wearing a gold enamel pendant, a heart charm necklace and a marquise ring, beside a 7th &amp; Hill bag")
     + title_block("Sally&rsquo;s edit", "Find the piece that feels like you.",
         "Some women start with a charm. Some with a ring they never take off. These are the nine pieces I would start with.")
-    + grid("SALLY'S NINE", [(26, "Marquise Art Deco Ring"), 101, 102, 103, (8, "The Working Scissors"),
-                            (28, "The iLove Smartphone"), 104, 105, 201])
+    + collage("SALLY'S NINE · all nine pieces, the two top cells change", ("w3-rings", "w3-hearts"),
+              ("feature-locket.jpg", "Talisman Keepsake Locket, worn", P[201]["url"]),
+              ((8, "The Working Scissors"), (28, "The iLove Smartphone"), 104), feature_side="left")
     + cta("See every piece", SHOP, pad="16px 64px 10px")
     + sally_note("Not sure where to start? Reply and tell me who it&rsquo;s for.")
     + cat_line())
