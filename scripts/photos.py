@@ -23,7 +23,7 @@ SHOTS = {
     "hero-welcome-1.jpg":      ("sally-home.jpg",            "hero",    (0, 0, 1, 0.68)),
     "hero-welcome-2.jpg":      ("sally-lily-bracelet.jpg",   "hero",    (0, 0.10, 1, 0.90)),
     "hero-welcome-3.jpg":      ("model-library-locket.jpg",  "hero",    (0, 0, 1, 0.92)),
-    "hero-campaign.jpg":       ("pendant-red-book.jpg",      "hero",    (0, 0.04, 1, 1)),
+    "hero-campaign.jpg":       ("model-green-armchair.jpg",  "hero",    (0, 0.02, 1, 0.80)),
     "hero-thank-you.jpg":      ("bookbox-library.jpg",       "hero",    (0, 0.06, 1, 1)),
     "hero-abandoned-cart.jpg": ("envelope-rings.jpg",        "hero",    (0, 0.08, 1, 1)),
     "hero-salt.jpg":           ("sally-home.jpg",            "hero",    (0, 0.04, 1, 0.62)),
@@ -31,6 +31,7 @@ SHOTS = {
     "feature-spines.jpg":      ("pendants-book-spines.jpg",  "feature", (0.10, 0.10, 0.96, 0.74)),
     "feature-locket.jpg":      ("locket-closeup.jpg",        "feature", (0, 0.30, 1, 1)),
     "feature-tusk.jpg":        ("necklaces-green-book-hires.jpg", "feature", (0.14, 0.49, 0.72, 0.92)),
+    "feature-rings-table.jpg": ("rings-table-bag.jpg",       "feature", (0, 0.20, 1, 0.95)),
     "story-corner.jpg":        ("corner-7th-hill-1920s.jpg", "story",   None),
     "bookbox.jpg":             ("bookbox-library.jpg",       "story",   None),
 }
@@ -51,6 +52,12 @@ def grade(im: Image.Image) -> Image.Image:
     high = np.clip((lum - 0.55) * 2.2, 0, 1)
     a = a + shadow * np.array([-0.012, 0.010, 0.004]) + high * np.array([0.040, 0.016, -0.034])
     return Image.fromarray((np.clip(a, 0, 1) * 255).astype(np.uint8))
+
+
+# animated GIFs cut from short videos: name -> (video, start s, length s, hold last frame s, width, crop as fractions)
+CLIPS = {
+    "unboxing.gif": ("unboxing.mov", 0.0, 3.0, 2.5, 320, (0.06, 0.20, 0.94, 0.72)),
+}
 
 
 def crop(im, box):
@@ -87,5 +94,28 @@ def main():
         print(f"{name:26} {out.size[0]}x{out.size[1]}")
 
 
+def clips():
+    """Video -> graded GIF. First frame is what Outlook for Windows shows, so start on a good frame."""
+    import subprocess, tempfile
+    for name, (video, start, length, hold, width, box) in CLIPS.items():
+        tmp = Path(tempfile.mkdtemp())
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", str(start), "-t", str(length), "-i", str(PHOTOS / video),
+                        "-vf", "fps=8,hqdn3d=6:6:12:12", str(tmp / "raw%04d.png")], check=True)
+        raw = sorted(tmp.glob("raw*.png"))
+        frames = []
+        for f in raw:
+            im = crop(Image.open(f).convert("RGB"), box)
+            frames.append(grade(im.resize((width, round(im.size[1] * width / im.size[0])), Image.LANCZOS)))
+        frames += [frames[-1]] * int(hold * 8)
+        for i, im in enumerate(frames):
+            im.save(tmp / f"g{i:04d}.png")
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-framerate", "8", "-i", str(tmp / "g%04d.png"),
+                        "-vf", "palettegen=max_colors=96:stats_mode=full", str(tmp / "pal.png")], check=True)
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-framerate", "8", "-i", str(tmp / "g%04d.png"), "-i", str(tmp / "pal.png"),
+                        "-lavfi", "paletteuse=dither=none:diff_mode=rectangle", "-loop", "0", str(OUT / name)], check=True)
+        print(f"{name:26} {frames[0].size[0]}x{frames[0].size[1]}  {(OUT / name).stat().st_size // 1024} KB")
+
+
 if __name__ == "__main__":
     main()
+    clips()

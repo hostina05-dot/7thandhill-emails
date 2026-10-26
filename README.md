@@ -51,6 +51,7 @@ python3 scripts/build.py
 | Изделия | `BLOCK: … collage` и `… pieces with names`. У каждого изделия: картинка `product-NN.jpg`, название и ссылка. Номера и ссылки всех 32 изделий: `blocks/catalog.md`, картинки всех 32 уже лежат в `assets/images/` |
 | Анимированные ячейки | `anim-rings.gif`, `anim-charms.gif`, `anim-pendants.gif`, `anim-earrings.gif`: 1–2 ячейки коллажа плавно перебирают 3 изделия. Работает в Gmail, Apple Mail и на телефонах; Outlook для Windows показывает первый кадр. Новый набор изделий для такой ячейки: напишите, какие номера из `blocks/catalog.md`, я соберу GIF (150–290 КБ) |
 | Фото для оформления | оригиналы в `assets/photos/`. `python3 scripts/photos.py` даёт всем фото единую цветокоррекцию (тёплый приглушённый тон, мягкие тени с зелёным оттенком), кадрирует их и ставит лого на нижний край. Новое фото: положите оригинал в `assets/photos/`, впишите его в `SHOTS` в `scripts/photos.py` и запустите скрипт, затем `scripts/build.py` |
+| Видео → анимация | `unboxing.gif` в thank-you сделан из `assets/photos/unboxing.mov`: те же цвета, что у фото, первый кадр — закрытая коробка с лого (его покажет Outlook для Windows). Новое видео: положите его в `assets/photos/` и впишите в `CLIPS` в `scripts/photos.py`. Держите такие GIF до ~700 КБ: 3 секунды движения и пауза на последнем кадре |
 | Кнопка | комментарий `BUTTON`: текст в `<span>`, ссылка в `href` |
 | Тёмный блок | `… (night band)`: цитата, список с ✦ |
 | Подвал | `BLOCK: FOOTER`: сайт, Instagram, TikTok, адрес, отписка |
