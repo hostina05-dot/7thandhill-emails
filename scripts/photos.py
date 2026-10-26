@@ -47,7 +47,7 @@ SHOTS = {
     "tile-talisman-locket.jpg":  ("locket-closeup.jpg",              "tile",    (0.10, 0.44, 0.90, 0.90)),
     # photos inside a block, no seal (story)
     "story-bookbox.jpg":         ("bookbox-library.jpg",             "story",   None),
-    "popup-locket.jpg":          ("locket-closeup.jpg",              "story",   (0, 0.28, 1, 0.78)),
+    "popup-locket.jpg":          ("locket-closeup.jpg",              "story",   (0, 0.36, 1, 0.86)),
     # round portrait for Sally's notes
     "sally-avatar.png":          ("sally-velvet.jpg",                "avatar",  (0.000, 0.045, 1.000, 0.603)),
 }
@@ -88,7 +88,6 @@ CLIPS = {
 # slideshows from a video: name -> (video, [frame times in s], seconds per slide, width, crop)
 # A whole video as a GIF is too heavy for email; a few sharp frames hold up better and weigh far less.
 SLIDES = {
-    "library-reel.gif": ("library-reel.mov", [1.6, 4.8, 2.4, 3.2, 5.6, 6.4], 1.6, 300, (0.0, 0.15, 1.0, 0.85)),
 }
 
 

@@ -744,7 +744,6 @@ doc("s1-t2-keep-writing.html", **T, code="T2", pos="email 2 of 3",
     + letter([HI,
               "Last week I wrote to tell you about 7th &amp; Hill, my own line after SALT. I only want to write to people who&rsquo;d like to hear from me, so I&rsquo;m asking once more.",
               "One click, either way."])
-    + picture("FROM THE LIBRARY · slideshow", "library-reel.gif", 300, 373, "Gold rings and pendants resting on old books in a library", pad="0 64px 28px")
     + line("The welcome gift still stands: 15% off your first piece.", pad="0 56px 24px", color=INK)
     + cta("Yes, keep me posted", utm(VAULT_PAGE, "salt_t2", "yes"), pad="0 64px 8px",
           extra=text_link("No, thank you", "{% unsubscribe_url %}", mt=20))
@@ -760,7 +759,6 @@ doc("s1-t3-goodbye.html", **T, code="T3", pos="email 3 of 3", when="7 days after
     + letter([HI,
               "I haven&rsquo;t heard back, so this is the last letter you&rsquo;ll get from me. Thank you for the years with SALT. They meant a great deal to me.",
               "If you ever want to see what I&rsquo;m making, the door is open, and the Vault is one click away."])
-    + picture("FROM THE LIBRARY · slideshow", "library-reel.gif", 300, 373, "Gold rings and pendants resting on old books in a library", pad="0 64px 28px")
     + cta("Join the Vault", utm(VAULT_PAGE, "salt_t3", "join"), pad="0 64px 36px"))
 
 # P0 popup: a layout mock and spec (the live popup is built in Klaviyo Forms)
@@ -1130,8 +1128,6 @@ doc("s4-k2-sallys-edit.html", **EDIT, when="Sends Tue Dec 8", card="Campaign · 
     body=masthead("", "")
     + hero("hero-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring")
     + sally_note("This week I kept reaching for small talismans: a compass, a horseshoe, a crown. Pieces that carry a wish, worn every day.")
-    + picture("FROM THE LIBRARY · slideshow (GIF, 6 scenes; Outlook for Windows shows the first)", "library-reel.gif", 300, 373,
-              "Gold rings and pendants resting on old books in a library", pad="0 64px 30px")
     + collage("THE EDIT", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/search?q=pendant"), (7, 3, "rings"))
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
@@ -1177,7 +1173,7 @@ doc("s4-hn-holiday-note.html", stage=4, status=DRAFT, code="HN", flow="Campaign"
               "This year, thank you. For the stories you shared with me, for the pieces you chose for the people you love, and for every note you sent back.",
               "Whatever you celebrate, I hope these days are warm and unhurried.",
               "See you in the new year."])
-    + picture("FROM THE LIBRARY · slideshow", "library-reel.gif", 300, 373, "Gold rings and pendants resting on old books in a library", pad="0 64px 40px"))
+    + picture("THE BOOK BOX", "story-bookbox.jpg", 488, 364, "The green 7th &amp; Hill book box, lined in velvet", pad="0 64px 40px"))
 
 
 # ───────── blocks/ (paste-ready snippets) and the catalog list
