@@ -1114,7 +1114,7 @@ doc("s4-k4-gift-guide.html", stage=4, status="Draft, not yet approved by Sally �
     code="K4", flow="Campaign", pos="whole list", when="Sends Thu Dec 3", card="Campaign · gift guide · Thu Dec 3",
     title="The 7H gift guide", subject="The 7H gift guide", preheader="Pieces that can still arrive in time.",
     notes=["Show only pieces that can still arrive: in stock and 7th & Hill Exclusives. Grid below is a placeholder."],
-    body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
+    body=hero("hero-model-sweater.jpg", "A woman between old books wearing a gold enamel pendant, a heart charm necklace and a marquise ring, holding a 7th &amp; Hill bag")
     + title_block("The 7H gift guide", "Gifts that arrive in time",
         "Every piece here is in stock or one of our Exclusives, so it can still arrive before the holidays.")
     + grid("GIFTS", [201, "necklaces", "rings", "charms"], cols=2,
@@ -1159,7 +1159,7 @@ doc("s4-lc-last-call.html", stage=4, status=DRAFT, code="LC", flow="Campaign", p
     card="Campaign · last call · Tue Dec 15", title="Last call for in-stock pieces", subject="Last call for in-stock pieces",
     preheader="Order by [date] and it arrives in time.",
     notes=["Pieces: in-stock only (placeholders below)."],
-    body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
+    body=hero("hero-model-sweater.jpg", "A woman between old books wearing a gold enamel pendant, a heart charm necklace and a marquise ring, holding a 7th &amp; Hill bag")
     + title_block("Last call", "Last call for in-stock pieces",
         "In-stock pieces ordered by [date] ship in 1 to 2 business days and arrive in time for the holidays.")
     + collage("IN STOCK", (16, 13), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), ("rings", 28, 31))

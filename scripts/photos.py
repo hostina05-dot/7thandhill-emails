@@ -27,6 +27,7 @@ SHOTS = {
     "hero-sally-velvet.jpg":     ("sally-velvet.jpg",                "hero",    (0, 0.03, 1, 0.48)),
     "hero-lily-bracelet.jpg":    ("sally-lily-bracelet.jpg",         "hero",    (0, 0.10, 1, 0.90)),
     "hero-model-library.jpg":    ("model-library-locket.jpg",        "hero",    (0, 0, 1, 0.92)),
+    "hero-model-sweater.jpg":    ("model-green-sweater.jpg",         "hero",    None),
     "hero-model-armchair.jpg":   ("model-green-armchair.jpg",        "hero",    (0, 0.02, 1, 0.64)),
     "hero-bookbox-library.jpg":  ("bookbox-library.jpg",             "hero",    (0, 0.06, 1, 1)),
     "hero-envelope-rings.jpg":   ("envelope-rings.jpg",              "hero",    (0, 0.08, 1, 1)),
