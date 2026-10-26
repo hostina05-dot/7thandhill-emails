@@ -1,76 +1,78 @@
 # 7th & Hill · email templates for Klaviyo
 
-Стиль Collector's Edition (за макетом YAKO Digital Studio): кремова сторінка, темно-зелені смуги, Bodoni Moda + Jost, фото в білих «паспарту», підпис Sally.
-Відправник: **Sally at 7th & Hill** &lt;hello@7thandhilljewelry.ca&gt; · сайт: https://www.7thandhilljewelry.ca
+Дизайн: современный, с нотками мистики, по макету K2 / 01.1. Белая страница в тёмно-зелёной «ночной» рамке, чёрная полоса 7 T H & H I L L, фото во всю ширину с круглым лого на нижнем краю, изделия на светлом «лунном» градиенте, тёмные ночные блоки с золотыми звёздочками ✦. Шрифты: Cormorant Garamond и Jost.
+Отправитель: **Sally at 7th & Hill** &lt;hello@7thandhilljewelry.ca&gt; · сайт: https://www.7thandhilljewelry.ca
 
 ```
-templates/              6 готових шаблонів (кожен — самодостатній HTML)
-  welcome-1.html        Welcome 1/3 · привітання, Sally, історія назви
-  welcome-2.html        Welcome 2/3 · філософія і матеріали (solid gold, made to order, book box)
-  welcome-3.html        Welcome 3/3 · як обрати прикрасу
-  campaign-master.html  базовий шаблон розсилки (заголовок, банер, текст, 2–4 картки, кнопка)
-  thank-you.html        після покупки + догляд за прикрасами
-  abandoned-cart.html   м'яке нагадування про кошик
-blocks/cards-3-up.html  блок «3 картки в ряд» для campaign-master
-assets/images/          лого і фото, підготовлені з ваших файлів
-preview.html            усі шаблони поруч (desktop / mobile / dark mode / з іменем і без)
-klaviyo/               ті самі шаблони, готові до вставки в Klaviyo
-scripts/build.py        оновлює preview.html і klaviyo/
+templates/               7 шаблонов (исходники)
+  welcome-1.html         Welcome 1/3 · приветствие Sally, подборка, история названия
+  welcome-2.html         Welcome 2/3 · философия и материалы, персонализированные изделия
+  welcome-3.html         Welcome 3/3 · как выбрать, «Six pieces I'd start with»
+  campaign-master.html   базовая рассылка (баннер, заголовок, текст, коллаж изделий, кнопка)
+  thank-you.html         после покупки: уход за украшениями + шармы «в пару»
+  abandoned-cart.html    мягкое напоминание о корзине + несколько любимых изделий
+  salt-welcome.html      приветствие для контактов SALT (макет K2, «Sally's edit»)
+klaviyo/                 те же шаблоны, готовые к вставке в Klaviyo
+blocks/                  готовые блоки: collage, pieces-with-names, three-pieces, night-quote, find-your-piece
+blocks/catalog.md        все 32 изделия из каталога со ссылками
+assets/images/           фото с лого (hero-*), изделия (product-01…32), фото для коллажей (feature-*)
+preview.html             все шаблоны рядом (desktop / mobile, с именем и без)
+scripts/build.py         обновляет preview.html и klaviyo/
 ```
 
-Вихідні файли, з яких узято лого, фото і факти (`7th & Hill Launch Emails.zip`, PDF-каталог, PNG), лежать у корені репозиторію.
+## Как посмотреть
+https://raw.githack.com/hostina05-dot/7thandhill-emails/main/preview.html
+или скачайте `preview.html` с GitHub (Download raw file) и откройте в браузере.
 
-## Як переглянути
-Відкрийте `preview.html` у браузері (на GitHub: файл → кнопка «Download raw file» → відкрити завантажений файл).
+## Как вставить в Klaviyo
+Готовые к вставке файлы лежат в папке **`klaviyo/`**. Картинки подгружаются из этого репозитория (ветка `main`) через jsDelivr, отдельно ничего загружать не нужно.
 
-## Як вставити в Klaviyo
-Готові до вставки файли лежать у папці **`klaviyo/`**. Картинки в них підтягуються з цього репозиторію (гілка `main`) через jsDelivr, тож нічого окремо завантажувати не треба.
+1. Откройте нужный файл в `klaviyo/` на GitHub и нажмите **Copy raw file** (значок копирования над кодом).
+2. Klaviyo → **Content → Templates → Create template → HTML** (или *Code your own*).
+3. Выделите весь стартовый код в редакторе, вставьте скопированный, нажмите **Save**, назовите шаблон.
+4. Во флоу или кампании: откройте письмо → **Change template / Select template** → **Saved templates** → выберите свой.
 
-1. Відкрийте потрібний файл у `klaviyo/` на GitHub і натисніть **Copy raw file** (значок копіювання над кодом).
-2. Klaviyo → **Content → Templates → Create template → HTML** (або *Code your own*).
-3. Виділіть увесь стартовий код у редакторі, вставте скопійоване, натисніть **Save**, назвіть шаблон.
-4. У флоу або кампанії: відкрийте лист → **Change template / Select template** → **Saved templates** → виберіть свій.
-
-Після правок у `templates/` оновіть і `preview.html`, і `klaviyo/` однією командою:
+После правок в `templates/` обновите `preview.html` и `klaviyo/` одной командой:
 
 ```
 python3 scripts/build.py
 ```
 
-Якщо картинки колись переїдуть на інший хостинг (наприклад, Shopify Files): `python3 scripts/build.py --base-url https://…/files/`.
+Если картинки когда-нибудь переедут на другой хостинг (например, Shopify Files): `python3 scripts/build.py --base-url https://…/files/`.
 
-## Що де міняти
-Кожен шаблон починається з коментаря з **Subject**, **Preheader**, **From** і рекомендованим тригером флоу. Блоки позначені коментарями `BLOCK: …` і є цілими рядками `<tr>…</tr>`: їх можна дублювати, переставляти й видаляти цілком.
+## Что где менять
+Каждый шаблон начинается с комментария: **Subject**, **Preheader**, **From** и когда отправлять. Блоки подписаны `BLOCK: …` и являются целыми строками `<tr>…</tr>`: их можно копировать, переставлять и удалять целиком. Готовые блоки для вставки лежат в `blocks/`.
 
-| Що | Де |
+| Что | Где |
 |---|---|
-| Прехедер | перший `<div style="display:none…">` після `<body>` |
-| Лого | `assets/images/logo.png` — кругле чорне лого з білим написом, показується 66×66. Читається і на світлому, і на темному фоні, тому темна тема його не ламає |
-| Фото | блоки `PHOTO · …` / `BANNER` — фото в білій рамці. При заміні оновіть `width`/`height` під пропорції (вказані в атрибутах) |
-| Заголовок / текст | блоки `INTRO`, `TEXT`, теги `<h1>`, `<p>` |
-| Кнопка | коментар `BUTTON` — текст у `<span>`, посилання в `href` |
-| Картки (campaign) | `CARDS · ROW A` і `ROW B`, по 2 картки, квадратні фото. 2 картки — видаліть ROW B; 3 — замініть обидва рядки на `blocks/cards-3-up.html`. Посилання карток зараз ведуть на `/collections` — підставте потрібні колекції |
-| Зелена смуга | блоки `… (green band)` — список з римськими цифрами або три «обіцянки» (Solid gold · Book box · Duties) |
-| Підпис | блок `SIGNATURE · Sally` |
-| Футер | `BLOCK: FOOTER` — меню, email, адреса, відписка |
-| Кольори | #ECE8E0 сторінка · #DEDAD2 фон · #1A1816 заголовки · #2C2925 текст · #7A5E30 золото · #1F3A30 зелений · #CDAA6D світле золото |
+| Прехедер | первый `<div style="display:none…">` после `<body>` |
+| Главное фото с лого | `BLOCK: HERO`. Лого «впечатано» в картинку `hero-*.jpg`, поэтому никакой почтовый клиент его не сдвинет и не перекрасит. Новое фото с лого: пришлите фото, я подготовлю, или сделайте сами: 1200 px шириной, снизу белая полоса 80 px, лого 128 px по центру на границе фото и полосы |
+| Заголовок и текст | `BLOCK: TITLE` |
+| Изделия | `BLOCK: … collage` и `… pieces with names`. У каждого изделия: картинка `product-NN.jpg`, название и ссылка. Номера и ссылки всех 32 изделий: `blocks/catalog.md`, картинки всех 32 уже лежат в `assets/images/` |
+| Кнопка | комментарий `BUTTON`: текст в `<span>`, ссылка в `href` |
+| Тёмный блок | `… (night band)`: цитата, список с ✦ |
+| Подвал | `BLOCK: FOOTER`: сайт, Instagram, TikTok, адрес, отписка |
 
-## Змінні Klaviyo
-- `{{ first_name|default:'' }}` — у привітаннях, обгорнуто в `{% if first_name %}…{% else %}…{% endif %}`, щоб без імені текст лишався правильним.
-- `{{ event.extra.checkout_url|default:'…/cart' }}` — кнопка в abandoned-cart (подія Shopify *Started Checkout*).
-- Футер (обов'язково для CASL): «7th & Hill Jewelry», `{{ organization.full_address }}`, email для зв'язку, `{% unsubscribe %}` і `{% manage_preferences %}`. Адресу (190 Roslin Avenue, Toronto, Ontario M4N 1Z6) задайте в Klaviyo → Settings → Organization.
+## Переменные Klaviyo
+- `{{ first_name|default:'' }}` в приветствиях, обёрнуто в `{% if first_name %}…{% else %}…{% endif %}`.
+- `{{ event.extra.checkout_url|default:'…/cart' }}` в abandoned-cart (событие Shopify *Started Checkout*).
+- Подвал (обязательно для CASL): «7th & Hill Jewelry», `{{ organization.full_address }}`, email, `{% unsubscribe %}` и `{% manage_preferences %}`. Адрес (190 Roslin Avenue, Toronto, Ontario M4N 1Z6) укажите один раз в Klaviyo → Settings → Organization.
 
-## Факти, використані в текстах
-Узяті з погодженого документа YAKO: Sally Brooks, founder & designer; Modern Heirlooms. Timeless Classics.; назва від перехрестя 7th & Hill у Лос-Анджелесі (батько — gold leaf letterer у St. Vincent's Jewelry Center); браслет бабусі Lily 1913–2013; solid gold, не тьмяніє; made to order у Торонто, Лос-Анджелесі та Італії; зелена book box з оксамитом; in stock — 1–2 робочі дні; безкоштовний resize кілець; доставка по світу, мита покриваються.
-Поради з догляду в `thank-you.html` загальні — звірте з вашою сторінкою Jewelry Care.
+## Список SALT
+`salt-welcome.html` для контактов, перенесённых из SALT Fine Jewelry. Отправляйте волнами по 200–300 и следите за жалобами на спам (держите их ниже 0,1%).
+По CASL согласие, полученное другой компанией, не всегда переходит к новой. Надёжнее всего попросить подтверждение: добавить кнопку «Yes, keep me posted» и дальше писать только тем, кто нажал (как в письмах T1–T3 из документа YAKO). Проверьте это до запуска.
 
-## Сумісність
-- Таблична верстка, інлайн-стилі, контейнер 600px, гібридні колонки (картки складаються в стовпчик на мобільному навіть без media queries).
-- Outlook (Windows): ghost-таблиці `<!--[if mso]>`, шрифти примусово Georgia/Arial, кнопка з відступами через `mso-text-raise`. Тіні рамок Outlook не показує — це нормально.
-- Шрифти: Bodoni Moda → Didot / Bodoni 72 → Georgia; Jost → Helvetica Neue → Arial; Pinyon Script (підпис) → Snell Roundhand → Georgia italic.
-- Темна тема: стилі для Apple Mail і Outlook.com; зелені смуги і лого лишаються як є.
-- Кожен шаблон < 26 KB (Gmail обрізає листи від 102 KB).
+## Темная тема
+Шаблоны объявлены как светлые (`color-scheme: light`): Apple Mail показывает их как есть. Gmail и Outlook в тёмной теме могут затемнить белый фон, но фото, лого и изделия — это картинки, они не меняются.
+
+## Совместимость
+- Таблицы, инлайн-стили, 600 px. Коллажи и ряды изделий в процентах, поэтому на телефоне просто уменьшаются, ничего не разваливается.
+- Outlook (Windows): ghost-таблицы, шрифты Georgia/Arial, кнопка с отступами через `mso-text-raise`.
+- Шрифты: Cormorant Garamond → Georgia; Jost → Helvetica Neue → Arial.
+- Каждый шаблон меньше 25 KB (Gmail обрезает письма от 102 KB).
 
 ## Перед запуском
-- Перевірте посилання (`/collections`, `/collections/design-your-own-jewelry`, `/pages/about-salt`, `/pages/jewelry-care`, `/pages/contact`).
-- Надішліть тестові листи в Gmail, Apple Mail, Outlook (Klaviyo → Preview & test).
+- Проверьте ссылки на Instagram (`instagram.com/7thandhilljewelry`) и TikTok (`tiktok.com/@7thandhilljewelry`): я поставил их наугад.
+- Кнопки категорий ведут на поиск по сайту (`/search?q=rings` и т. п.). Если есть отдельные страницы коллекций, подставьте их адреса.
+- Советы по уходу в `thank-you.html` сверьте со страницей Jewelry Care.
+- Отправьте тестовые письма в Gmail, Apple Mail, Outlook (Klaviyo → Preview & test).

@@ -4,9 +4,9 @@
   Preheader: Your bag is saved. There's no rush.
   From:      Sally at 7th & Hill <hello@7thandhilljewelry.ca>
   Flow: Started Checkout (Shopify) · about 4 hours later. The button opens the saved checkout;
-  outside the flow it falls back to /cart. No product details on purpose.
+  outside the flow it falls back to /cart. No details of the bag on purpose.
   Images use relative paths (../assets/images/) for local preview.
-  Before uploading to Klaviyo run: python3 scripts/build.py with the base-url option (see README).
+  Ready-to-paste copy with hosted images: klaviyo/abandoned-cart.html
 -->
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -16,131 +16,87 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="x-apple-disable-message-reformatting">
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
 <title>Take your time</title>
 <!--[if mso]>
 <noscript><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
 <style>
-  .display, .serif, .script { font-family: Georgia, 'Times New Roman', serif !important; }
-  .script { font-style: italic !important; }
+  .display { font-family: Georgia, 'Times New Roman', serif !important; }
   .sans { font-family: Arial, Helvetica, sans-serif !important; }
 </style>
 <![endif]-->
 <!--[if !mso]><!-->
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&amp;family=Jost:wght@400;500&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
 <!--<![endif]-->
 <style>
-  :root { color-scheme: light dark; supported-color-schemes: light dark; }
+  :root { color-scheme: light; supported-color-schemes: light; }
   html, body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
   body { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
   table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
   img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
   a { text-decoration: none; }
   a[x-apple-data-detectors], u + #body a, #MessageViewBody a { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
-  .legal a { color: #A9B8AE !important; text-decoration: underline !important; }
-
+  .legal a { color: #9A9A9A !important; text-decoration: underline !important; }
   @media screen and (max-width: 599px) {
-    .px { padding-left: 24px !important; padding-right: 24px !important; }
-    .h1 { font-size: 31px !important; line-height: 36px !important; }
-    .h2 { font-size: 25px !important; line-height: 31px !important; }
-    .lead { font-size: 16px !important; line-height: 27px !important; }
-    .stack { display: block !important; width: 100% !important; max-width: 100% !important; }
-    .cards { padding-left: 14px !important; padding-right: 14px !important; }
-    .card-img { width: 100% !important; max-width: 100% !important; height: auto !important; }
+    .px { padding-left: 28px !important; padding-right: 28px !important; }
+    .pxs { padding-left: 16px !important; padding-right: 16px !important; }
+    .h1 { font-size: 31px !important; line-height: 37px !important; }
+    .t-sm { font-size: 10px !important; letter-spacing: 1.5px !important; }
   }
-
-  /* Dark mode (Apple Mail, iOS Mail, Outlook for Mac). The round logo is black with white lettering,
-     so it reads on light and dark backgrounds alike. Green bands are already dark and stay as they are. */
-  @media (prefers-color-scheme: dark) {
-    .bg-outer { background-color: #121110 !important; }
-    .bg-page { background-color: #1D1B18 !important; }
-    .t-ink { color: #F5EEDF !important; }
-    .t-body { color: #D9D2C4 !important; }
-    .t-soft { color: #A9A091 !important; }
-    .t-gold { color: #CDAA6D !important; }
-    .bd-line { border-color: #3A3631 !important; }
-    .frame { background-color: #2A2723 !important; }
-  }
-  [data-ogsb] .bg-outer { background-color: #121110 !important; }
-  [data-ogsb] .bg-page { background-color: #1D1B18 !important; }
-  [data-ogsc] .t-ink { color: #F5EEDF !important; }
-  [data-ogsc] .t-body { color: #D9D2C4 !important; }
-  [data-ogsc] .t-soft { color: #A9A091 !important; }
-  [data-ogsc] .t-gold { color: #CDAA6D !important; }
 </style>
 </head>
-<body id="body" class="bg-outer" style="margin:0; padding:0; background-color:#DEDAD2;">
+<body id="body" style="margin:0; padding:0; background-color:#101613;">
   <!-- PREHEADER: the line shown after the subject in the inbox -->
-  <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all; color:#ECE8E0;">Your bag is saved. There's no rush.</div>
+  <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">Your bag is saved. There's no rush.</div>
   <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;</div>
 
-  <div role="article" aria-roledescription="email" aria-label="Take your time" lang="en" class="bg-outer" style="background-color:#DEDAD2;">
-  <table role="presentation" class="bg-outer" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#DEDAD2" style="background-color:#DEDAD2;">
+  <div role="article" aria-roledescription="email" aria-label="Take your time" lang="en" style="background-color:#101613;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#101613" style="background-color:#101613;">
     <tr>
       <td align="center" style="padding:0;">
         <!--[if mso]><table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
-        <table role="presentation" class="bg-page" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ECE8E0" style="width:100%; max-width:600px; margin:0 auto; background-color:#ECE8E0;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="width:100%; max-width:600px; margin:0 auto; background-color:#FFFFFF;">
 
-          <!-- ═══════════ BLOCK: HEADER · logo + menu ═══════════ -->
+          <!-- ═══════════ BLOCK: TOP BAR ═══════════ -->
           <tr>
-            <td align="center" style="padding:28px 24px 0;">
-              <a href="https://www.7thandhilljewelry.ca" target="_blank" style="display:inline-block; text-decoration:none;">
-                <img src="../assets/images/logo.png" width="66" height="66" alt="7th &amp; Hill Jewelry" style="display:block; width:66px; height:66px; border:0; margin:0 auto; color:#1A1816; font-family:Georgia, serif; font-size:14px;">
-              </a>
+            <td bgcolor="#111111" align="center" style="padding:14px 24px; background-color:#111111;">
+              <a class="sans" href="https://www.7thandhilljewelry.ca" target="_blank" style="font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:14px; letter-spacing:5px; text-transform:uppercase; color:#FFFFFF; text-decoration:none;">7th &amp; Hill</a>
             </td>
           </tr>
+
+          <!-- ═══════════ BLOCK: HERO · photo with the round logo on its lower edge ═══════════
+               The logo is part of the image (hero-abandoned-cart.jpg), so no email client can move or hide it.
+               New photo: see README, "Hero images". -->
           <tr>
-            <td class="px" align="center" style="padding:16px 40px 0;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td class="sans bd-line" align="center" style="padding:0 0 16px; border-bottom:1px solid #D6CDBD; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:2.5px; text-transform:uppercase;">
-                    <a class="t-ink" href="https://www.7thandhilljewelry.ca/collections" target="_blank" style="color:#1A1816; text-decoration:none;">New</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<a class="t-ink" href="https://www.7thandhilljewelry.ca/collections/design-your-own-jewelry" target="_blank" style="color:#1A1816; text-decoration:none;">Design your own</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<a class="t-ink" href="https://www.7thandhilljewelry.ca/pages/about-salt" target="_blank" style="color:#1A1816; text-decoration:none;">Our story</a>
-                  </td>
-                </tr>
+            <td style="padding:0;">
+              <a href="{{ event.extra.checkout_url|default:'https://www.7thandhilljewelry.ca/cart' }}" target="_blank" style="display:block; text-decoration:none;"><img src="../assets/images/hero-abandoned-cart.jpg" width="600" height="439" alt="Gold pendants on green leather" style="display:block; width:100%; max-width:600px; height:auto; border:0; background-color:#EEEEEE; color:#8A857C; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px;"></a>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: TITLE · eyebrow + headline + text ═══════════ -->
+          <tr>
+            <td class="px" align="center" style="padding:18px 64px 34px;">
+              <p class="sans" style="margin:0 0 12px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:16px; font-weight:400; letter-spacing:3.5px; text-transform:uppercase; color:#9C7E4A;">Saved for you</p>
+              <h1 class="display h1" style="margin:0 0 16px; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:34px; line-height:40px; font-weight:400; color:#2E2A26;">Take your time.</h1>
+              <table role="presentation" width="36" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0px auto 22px;">
+                <tr><td height="1" style="height:1px; border-top:1px solid #9C7E4A; font-size:0; line-height:0;">&nbsp;</td></tr>
               </table>
+              <p class="sans" style="margin:0 0 0px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F; text-align:center;">{% if first_name %}{{ first_name|default:'' }}, your{% else %}Your{% endif %} bag is just as you left it. A piece you&rsquo;ll keep for years is worth a second thought, so there&rsquo;s no rush.</p>
             </td>
           </tr>
 
-          <!-- ═══════════ BLOCK: INTRO · reminder ═══════════ -->
+          <!-- ═══════════ BLOCK: CTA · button ═══════════ -->
           <tr>
-            <td class="px" align="center" style="padding:36px 48px 0px;">
-              <p class="sans t-gold" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:16px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#7A5E30;">Saved for you</p>
-              <h1 class="display t-ink h1" style="margin:0 0 26px; font-family:'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif; font-size:38px; line-height:43px; font-weight:400; color:#1A1816;">Take your time.</h1>
-            </td>
-          </tr>
-
-          <!-- ═══════════ BLOCK: PHOTO · mood ═══════════ -->
-          <tr>
-            <td class="px" align="center" style="padding:0px 48px 28px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:456px; margin:0 auto 0px;">
-                <tr>
-                  <td class="frame" bgcolor="#FFFFFF" style="background-color:#FFFFFF; padding:8px; box-shadow:0 8px 22px rgba(40,30,15,.10);">
-                    <a href="{{ event.extra.checkout_url|default:'https://www.7thandhilljewelry.ca/cart' }}" target="_blank" style="display:block; text-decoration:none;"><img src="../assets/images/abandoned-cart-hero.jpg" width="440" height="360" alt="A woman wearing layered gold necklaces in a library" style="display:block; width:100%; max-width:440px; height:auto; border:0; background-color:#D9D2C4; color:#6B655B; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px;"></a>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- ═══════════ BLOCK: TEXT · gentle ═══════════ -->
-          <tr>
-            <td class="px" align="center" style="padding:0px 48px 30px;">
-              <p class="serif t-body lead" style="margin:0 0 0px; font-family:Georgia, 'Times New Roman', serif; font-size:17px; line-height:29px; color:#2C2925;">{% if first_name %}{{ first_name|default:'' }}, your{% else %}Your{% endif %} bag is just as you left it. A piece you&rsquo;ll keep for years is worth a second thought, so there&rsquo;s no rush.</p>
-            </td>
-          </tr>
-
-          <!-- ═══════════ BLOCK: CTA ═══════════ -->
-          <tr>
-            <td class="px" align="center" style="padding:0px 48px 40px;">
+            <td class="px" align="center" style="padding:0 64px 38px;">
               <!-- BUTTON: edit label and href -->
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0px auto 0px;">
                 <tr>
-                  <td bgcolor="#1F3A30" style="background-color:#1F3A30; padding:3px;">
+                  <td bgcolor="#1C3A2E" style="background-color:#1C3A2E; padding:3px;">
                     <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                       <tr>
-                        <td align="center" style="border:1px solid #CDAA6D; mso-padding-alt:0;">
-                          <a class="sans" href="{{ event.extra.checkout_url|default:'https://www.7thandhilljewelry.ca/cart' }}" target="_blank" style="display:inline-block; padding:15px 34px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:14px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#F5EEDF; text-decoration:none; mso-padding-alt:0;"><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%; mso-text-raise:22pt;" hidden>&nbsp;</i><![endif]--><span style="mso-text-raise:11pt;">Return to your bag</span><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%;" hidden>&nbsp;</i><![endif]--></a>
+                        <td align="center" style="border:1px solid #8FA79B; mso-padding-alt:0;">
+                          <a class="sans" href="{{ event.extra.checkout_url|default:'https://www.7thandhilljewelry.ca/cart' }}" target="_blank" style="display:inline-block; padding:16px 40px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:14px; font-weight:400; letter-spacing:3px; text-transform:uppercase; color:#F7F5F1; text-decoration:none; mso-padding-alt:0;"><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%; mso-text-raise:20pt;" hidden>&nbsp;</i><![endif]--><span style="mso-text-raise:10pt;">Return to your bag</span><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%;" hidden>&nbsp;</i><![endif]--></a>
                         </td>
                       </tr>
                     </table>
@@ -150,48 +106,90 @@
             </td>
           </tr>
 
-          <!-- ═══════════ BLOCK: PROMISES (green band) ═══════════ -->
+          <!-- ═══════════ BLOCK: FAVOURITES · heading ═══════════ -->
           <tr>
-            <td class="px" bgcolor="#1F3A30" align="center" style="padding:30px 48px 30px; background-color:#1F3A30;">
+            <td class="px" align="center" style="padding:0 40px 22px;">
+              <p class="sans" style="margin:0 0 8px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:16px; font-weight:400; letter-spacing:3.5px; text-transform:uppercase; color:#9C7E4A;">If you&rsquo;re still deciding</p>
+              <h1 class="display h1" style="margin:0 0 0px; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:26px; line-height:32px; font-weight:400; color:#2E2A26;">A few favourites</h1>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: FAVOURITES · pieces with names ═══════════
+               Each row: photo + name, sides alternate. Add or delete whole <tr> rows. -->
+          <tr>
+            <td class="pxs" align="center" style="padding:0 30px 30px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td width="33%" align="center" valign="top" style="padding:4px 8px;">
-                    <p class="display" style="margin:0 0 4px; font-family:'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif; font-size:17px; line-height:22px; color:#F5EEDF;">Solid gold</p>
-                    <p class="sans" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:2px; text-transform:uppercase; color:#CDAA6D;">Never tarnishes</p>
+                    <td width="50%" valign="middle" style="padding:0;"><a href="https://www.7thandhilljewelry.ca/products/14k-gold-pinky-promise-necklace" target="_blank" style="display:block; text-decoration:none;"><img src="../assets/images/product-13.jpg" width="270" height="270" alt="Pinky Promise Necklace" style="display:block; width:100%; max-width:270px; height:auto; border:0; background-color:#E9EDF1; color:#8A857C; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;"></a></td>
+                    <td width="50%" valign="middle" align="center" style="padding:10px 18px;">
+                      <p class="display" style="margin:0 0 12px; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:20px; line-height:25px; color:#2E2A26;"><a href="https://www.7thandhilljewelry.ca/products/14k-gold-pinky-promise-necklace" target="_blank" style="color:#2E2A26; text-decoration:none;">Pinky Promise Necklace</a></p>
+                      <p class="sans t-sm" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:2.5px; text-transform:uppercase;"><a href="https://www.7thandhilljewelry.ca/products/14k-gold-pinky-promise-necklace" target="_blank" style="color:#2E2A26; text-decoration:none; border-bottom:1px solid #9C7E4A; padding-bottom:2px;">View piece</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="middle" align="center" style="padding:10px 18px;">
+                      <p class="display" style="margin:0 0 12px; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:20px; line-height:25px; color:#2E2A26;"><a href="https://www.7thandhilljewelry.ca/products/14k-gold-marquise-diamond-open-wing-ring" target="_blank" style="color:#2E2A26; text-decoration:none;">Marquise Open Wing Ring</a></p>
+                      <p class="sans t-sm" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:2.5px; text-transform:uppercase;"><a href="https://www.7thandhilljewelry.ca/products/14k-gold-marquise-diamond-open-wing-ring" target="_blank" style="color:#2E2A26; text-decoration:none; border-bottom:1px solid #9C7E4A; padding-bottom:2px;">View piece</a></p>
+                    </td>
+                    <td width="50%" valign="middle" style="padding:0;"><a href="https://www.7thandhilljewelry.ca/products/14k-gold-marquise-diamond-open-wing-ring" target="_blank" style="display:block; text-decoration:none;"><img src="../assets/images/product-21.jpg" width="270" height="270" alt="Marquise Open Wing Ring" style="display:block; width:100%; max-width:270px; height:auto; border:0; background-color:#E9EDF1; color:#8A857C; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;"></a></td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="middle" style="padding:0;"><a href="https://www.7thandhilljewelry.ca/products/the-fortune-horseshoe-medallion-charm" target="_blank" style="display:block; text-decoration:none;"><img src="../assets/images/product-02.jpg" width="270" height="270" alt="Fortune Horseshoe Charm" style="display:block; width:100%; max-width:270px; height:auto; border:0; background-color:#E9EDF1; color:#8A857C; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;"></a></td>
+                    <td width="50%" valign="middle" align="center" style="padding:10px 18px;">
+                      <p class="display" style="margin:0 0 12px; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:20px; line-height:25px; color:#2E2A26;"><a href="https://www.7thandhilljewelry.ca/products/the-fortune-horseshoe-medallion-charm" target="_blank" style="color:#2E2A26; text-decoration:none;">Fortune Horseshoe Charm</a></p>
+                      <p class="sans t-sm" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:2.5px; text-transform:uppercase;"><a href="https://www.7thandhilljewelry.ca/products/the-fortune-horseshoe-medallion-charm" target="_blank" style="color:#2E2A26; text-decoration:none; border-bottom:1px solid #9C7E4A; padding-bottom:2px;">View piece</a></p>
+                    </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: PROMISES (night band) ═══════════ -->
+          <tr>
+            <td class="px" bgcolor="#111815" align="center" style="padding:28px 30px 28px; background-color:#111815;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td width="33%" align="center" valign="top" style="padding:2px 6px;">
+                    <p class="display" style="margin:0 0 4px; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:18px; line-height:22px; color:#EDE8DF;">Solid gold</p>
+                    <p class="sans t-sm" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:9px; line-height:13px; letter-spacing:2px; text-transform:uppercase; color:#C9A96A;">Never tarnishes</p>
                   </td>
-                  <td width="33%" align="center" valign="top" style="border-left:1px solid #3B5449; padding:4px 8px;">
-                    <p class="display" style="margin:0 0 4px; font-family:'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif; font-size:17px; line-height:22px; color:#F5EEDF;">Free resizing</p>
-                    <p class="sans" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:2px; text-transform:uppercase; color:#CDAA6D;">For rings</p>
+                  <td width="33%" align="center" valign="top" style="border-left:1px solid #26302B; padding:2px 6px;">
+                    <p class="display" style="margin:0 0 4px; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:18px; line-height:22px; color:#EDE8DF;">Free resizing</p>
+                    <p class="sans t-sm" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:9px; line-height:13px; letter-spacing:2px; text-transform:uppercase; color:#C9A96A;">For rings</p>
                   </td>
-                  <td width="33%" align="center" valign="top" style="border-left:1px solid #3B5449; padding:4px 8px;">
-                    <p class="display" style="margin:0 0 4px; font-family:'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif; font-size:17px; line-height:22px; color:#F5EEDF;">Duties</p>
-                    <p class="sans" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:2px; text-transform:uppercase; color:#CDAA6D;">Covered worldwide</p>
+                  <td width="33%" align="center" valign="top" style="border-left:1px solid #26302B; padding:2px 6px;">
+                    <p class="display" style="margin:0 0 4px; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:18px; line-height:22px; color:#EDE8DF;">Duties</p>
+                    <p class="sans t-sm" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:9px; line-height:13px; letter-spacing:2px; text-transform:uppercase; color:#C9A96A;">Covered worldwide</p>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
-          <tr><td height="36" style="height:36px; font-size:0; line-height:0;">&nbsp;</td></tr>
 
-          <!-- ═══════════ BLOCK: SIGNATURE · Sally ═══════════ -->
+          <!-- ═══════════ BLOCK: P.S. · Sally ═══════════ -->
           <tr>
-            <td class="px" align="left" style="padding:0px 48px 44px;">
-              <p class="serif t-body lead" style="margin:0 0 6px; font-family:Georgia, 'Times New Roman', serif; font-size:15px; line-height:25px; color:#2C2925; text-align:left;">A question about sizing, timing or gifting? Reply and I&rsquo;ll answer personally.</p>
-              <p class="script t-gold" style="margin:0; font-family:'Pinyon Script', 'Snell Roundhand', 'Apple Chancery', cursive; font-size:44px; line-height:56px; color:#7A5E30;">Sally</p>
-              <p class="sans t-soft" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:15px; letter-spacing:2.5px; text-transform:uppercase; color:#6B655B;">Sally Brooks &middot; Founder &amp; designer</p>
+            <td class="px" align="center" style="padding:28px 40px 26px;">
+              <p class="sans" style="margin:0 0 0px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:14px; line-height:23px; font-weight:300; color:#4A463F; text-align:left;"><span style="font-weight:400; color:#2E2A26;">P.S.</span> A question about sizing, timing or gifting? Reply and I&rsquo;ll answer personally.</p>
             </td>
           </tr>
 
           <!-- ═══════════ BLOCK: FOOTER (keep: CASL needs sender name, mailing address, contact and unsubscribe) ═══════════ -->
           <tr>
-            <td class="px" bgcolor="#1F3A30" align="center" style="padding:40px 40px 44px; background-color:#1F3A30;">
-              <p class="display" style="margin:0 0 6px; font-family:'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif; font-size:24px; line-height:30px; color:#F5EEDF;">7th &amp; Hill</p>
-              <p class="sans" style="margin:0 0 22px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:3px; text-transform:uppercase; color:#CDAA6D;">Modern Heirlooms. Timeless Classics.</p>
-              <p class="sans" style="margin:0 0 18px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:16px; letter-spacing:2.5px; text-transform:uppercase; color:#F5EEDF;">
-                <a href="https://www.7thandhilljewelry.ca/collections" target="_blank" style="color:#F5EEDF; text-decoration:none;">Shop</a>&nbsp;&middot;&nbsp;<a href="https://www.7thandhilljewelry.ca/collections/design-your-own-jewelry" target="_blank" style="color:#F5EEDF; text-decoration:none;">Design your own</a>&nbsp;&middot;&nbsp;<a href="https://www.7thandhilljewelry.ca/pages/about-salt" target="_blank" style="color:#F5EEDF; text-decoration:none;">Our story</a>&nbsp;&middot;&nbsp;<a href="https://www.7thandhilljewelry.ca/pages/contact" target="_blank" style="color:#F5EEDF; text-decoration:none;">Contact</a>
-              </p>
-              <p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:13px; line-height:20px;"><a href="mailto:hello@7thandhilljewelry.ca" style="color:#F5EEDF; text-decoration:none;">hello@7thandhilljewelry.ca</a></p>
-              <p class="sans legal" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:19px; color:#A9B8AE;">
+            <td bgcolor="#111111" style="padding:16px 24px; background-color:#111111;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td class="sans t-sm" align="left" style="font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:14px; letter-spacing:2px; text-transform:uppercase;"><a href="https://www.7thandhilljewelry.ca" target="_blank" style="color:#F7F5F1; text-decoration:none;">7thandhilljewelry.ca</a></td>
+                  <td class="sans t-sm" align="right" style="font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:14px; letter-spacing:2px; text-transform:uppercase;"><a href="https://www.instagram.com/7thandhilljewelry" target="_blank" style="color:#F7F5F1; text-decoration:none;">Instagram</a>&nbsp;&nbsp;&nbsp;<a href="https://www.tiktok.com/@7thandhilljewelry" target="_blank" style="color:#F7F5F1; text-decoration:none;">TikTok</a></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="px" align="center" style="padding:24px 40px 30px;">
+              <img src="../assets/images/sunburst-gold.png" width="40" height="20" alt="" style="display:block; width:40px; height:20px; margin:0 auto 12px; border:0;">
+              <p class="sans" style="margin:0 0 8px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:14px; letter-spacing:4px; text-transform:uppercase; color:#1C3A2E;">Listen &nbsp;&middot;&nbsp; Design &nbsp;&middot;&nbsp; Adorn</p>
+              <p class="sans" style="margin:0 0 10px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:18px; font-weight:300;"><a href="mailto:hello@7thandhilljewelry.ca" style="color:#2E2A26; text-decoration:none;">hello@7thandhilljewelry.ca</a></p>
+              <p class="sans legal" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:17px; font-weight:300; color:#9A958B;">
                 7th &amp; Hill Jewelry &middot; {{ organization.full_address }}<br>
                 You're receiving this because you subscribed at 7thandhilljewelry.ca or shopped with us.<br>
                 {% unsubscribe %} &nbsp;&middot;&nbsp; {% manage_preferences %}
