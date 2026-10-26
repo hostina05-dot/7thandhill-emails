@@ -1,87 +1,68 @@
-# 7th & Hill · email templates for Klaviyo
+# 7th & Hill · launch letters for Klaviyo
 
-Дизайн: современный, с нотками мистики, по макету K2 / 01.1. Белая страница в тёмно-зелёной «ночной» рамке, чёрная полоса 7 T H & H I L L, фото во всю ширину с круглым лого на нижнем краю, изделия на светлом «лунном» градиенте, тёмные ночные блоки с золотыми звёздочками ✦. Шрифты: Cormorant Garamond и Jost.
-Отправитель: **Sally at 7th & Hill** &lt;hello@7thandhilljewelry.ca&gt; · сайт: https://www.7thandhilljewelry.ca
+Отправитель: **Sally at 7th & Hill** &lt;hello@7thandhilljewelry.ca&gt;, ответы на hello@7thandhilljewelry.ca · сайт: https://www.7thandhilljewelry.ca
+
+Дизайн: белая страница в тёмно-зелёной рамке, чёрная полоса 7 T H & H I L L, фото во всю ширину с круглой печатью на нижнем краю, изделия на светлом «лунном» фоне, тёмные блоки с золотым санберстом. Шрифты: Italiana (заголовки) и Jost (текст), в Gmail/Outlook запасные Georgia и Arial.
+
+## Где что лежит
 
 ```
-templates/               7 шаблонов (исходники)
-  welcome-1.html         Welcome 1/3 · приветствие Sally, подборка, история названия
-  welcome-2.html         Welcome 2/3 · философия и материалы, персонализированные изделия
-  welcome-3.html         Welcome 3/3 · как выбрать, «Six pieces I'd start with»
-  campaign-master.html   базовая рассылка (баннер, заголовок, текст, коллаж изделий, кнопка)
-  thank-you.html         после покупки: уход за украшениями + шармы «в пару»
-  abandoned-cart.html    мягкое напоминание о корзине + несколько любимых изделий
-  salt-welcome.html      приветствие для контактов SALT («A note from Sally»)
-  sallys-edit-collage.html    Sally's edit · еженедельная серия · вариант 1: фото, записка Sally, коллаж
-  sallys-edit-pieces.html     Sally's edit · вариант 2: фото, записка, изделия с названиями
-  sallys-edit-spotlight.html  Sally's edit · вариант 3: изделие недели, история, «Wear it with»
-klaviyo/                 те же шаблоны, готовые к вставке в Klaviyo
-blocks/                  готовые блоки: collage, pieces-with-names, three-pieces, night-quote, find-your-piece
-blocks/catalog.md        все 32 изделия из каталога со ссылками
-assets/images/           фото с лого (hero-*), изделия (product-01…32), фото для коллажей (feature-*)
-preview.html             все шаблоны рядом (desktop / mobile, с именем и без)
-scripts/build.py         обновляет preview.html и klaviyo/
+templates/        34 письма по этапам запуска (исходники, их пишет scripts/compose.py)
+klaviyo/          те же письма, готовые к вставке в Klaviyo (картинки с хостинга)
+preview.html      все письма, сгруппированные по этапам, с метками, статусами и списком «Waiting for Sally»
+blocks/           готовые блоки для вставки + catalog.md (все изделия с номерами и ссылками)
+assets/photos/    оригиналы фото и видео
+assets/images/    готовые картинки для писем (после цветокоррекции)
+assets/catalog.json  изделия: название, картинка, ссылка
+scripts/compose.py   тексты Sally и сборка всех писем из общих блоков
+scripts/photos.py    цветокоррекция, кадрирование, печать на фото, GIF из видео
+scripts/build.py     preview.html и klaviyo/
 ```
+
+Имя файла = этап и код письма: `s1-w1-welcome.html`, `s2-k3-holiday-deadline.html` и т. д. Первая строка комментария в каждом файле: этап, дата запуска, флоу, код, место в серии, когда уходит. Ниже: метка карточки, статус, тема, прехедер, отправитель, логика флоу.
+
+| Этап | Запуск | Письма |
+|---|---|---|
+| 1 | Tue Oct 27 | P0 попап Vault (макет и спецификация, сам попап собирается в Klaviyo Forms) · W1 to W5 welcome · T1 to T3 SALT |
+| 2 | Mon Nov 2 (K3 Tue Nov 3, 10:00) | K3 holiday deadline · C1, C2 cart · CO1 to CO3 checkout · CC1, CC2 concierge ($5,500+) |
+| 3 | Mon Nov 9 | B1, B2 browse · PP1 to PP3 after purchase · AN1 anniversary · K1 weekly skeleton |
+| 4 | by Tue Nov 24 | S1 to S3 sale · DYO · K4 gift guide · K2 Sally's edit (3 layouts) · LC last call · HN holiday note |
 
 ## Как посмотреть
-https://raw.githack.com/hostina05-dot/7thandhill-emails/main/preview.html
-или скачайте `preview.html` с GitHub (Download raw file) и откройте в браузере.
+https://raw.githack.com/hostina05-dot/7thandhill-emails/main/preview.html (после слияния в `main`).
+Переключатели вверху: Desktop / Mobile, With name / No name, масштаб.
 
 ## Как вставить в Klaviyo
-Готовые к вставке файлы лежат в папке **`klaviyo/`**. Картинки подгружаются из этого репозитория (ветка `main`) через jsDelivr, отдельно ничего загружать не нужно.
+1. Откройте файл в `klaviyo/` на GitHub, нажмите **Copy raw file**.
+2. Klaviyo → **Content → Templates → Create template → HTML**, замените стартовый код, **Save**.
+3. Во флоу или кампании: письмо → **Change template → Saved templates**.
+4. Тему, прехедер и отправителя возьмите из комментария в начале файла.
 
-1. Откройте нужный файл в `klaviyo/` на GitHub и нажмите **Copy raw file** (значок копирования над кодом).
-2. Klaviyo → **Content → Templates → Create template → HTML** (или *Code your own*).
-3. Выделите весь стартовый код в редакторе, вставьте скопированный, нажмите **Save**, назовите шаблон.
-4. Во флоу или кампании: откройте письмо → **Change template / Select template** → **Saved templates** → выберите свой.
+Картинки в `klaviyo/` грузятся из ветки `main` этого репозитория через jsDelivr.
 
-После правок в `templates/` обновите `preview.html` и `klaviyo/` одной командой:
+## Настройки в Klaviyo
+- **Купон VAULT15**: уникальные коды, одно использование, 30 дней, не суммируется со скидками (в том числе с Black Friday 20%). В письмах стоит тег `{% coupon_code 'VAULT15' %}`, код вручную нигде не прописан.
+- **Адрес** в подвале: Settings → Organization (190 Roslin Avenue, Toronto, Ontario M4N 1Z6).
+- **SALT · said yes**: флоу по Clicked Email на кнопку Yes в T1 или T2 → `consent_source = SALT T1/T2`, `vault_member = true` → W1 с купоном сразу, W2 to W5 по дням флоу 01. Кто нажал Yes, выходит из SALT-флоу. Включите фильтр бот-кликов. Аудитория кампаний: Vault + `consent_source` начинается с SALT.
+- **Динамические блоки**: корзина (C1) берёт `event.Items`, браузинг (B1) берёт `event.ProductName/ImageURL/URL`, checkout (CO1 to CO3, CC1, CC2) ведёт на `event.extra.checkout_url`. Проверьте в Preview & test на реальном профиле.
+
+## Как менять
+Тексты и состав писем меняются в `scripts/compose.py`, затем:
 
 ```
-python3 scripts/build.py
+python3 scripts/compose.py && python3 scripts/build.py
 ```
 
-Если картинки когда-нибудь переедут на другой хостинг (например, Shopify Files): `python3 scripts/build.py --base-url https://…/files/`.
+Новое фото или видео: положите оригинал в `assets/photos/`, впишите в `SHOTS`, `CLIPS` или `SLIDES` в `scripts/photos.py`, запустите `python3 scripts/photos.py`. Изделие в сетке = номер из `blocks/catalog.md`.
 
-## Что где менять
-Каждый шаблон начинается с комментария: **Subject**, **Preheader**, **From** и когда отправлять. Блоки подписаны `BLOCK: …` и являются целыми строками `<tr>…</tr>`: их можно копировать, переставлять и удалять целиком. Готовые блоки для вставки лежат в `blocks/`.
+## Правила текста (из брифа)
+Без тире, без «Shop now», без «we love» и «stack»; мягкие кнопки (Step inside, Start a gift, Return to your bag). «Solid gold» вместо 14k. Ни слова о бесплатном ресайзе, вместо этого: «Not sure about size? Send me a photo of what you already wear, and I'll help you choose.» Праздники нейтрально: holiday, без ёлок. Слова Sally остаются как она написала.
 
-| Что | Где |
-|---|---|
-| Прехедер | первый `<div style="display:none…">` после `<body>` |
-| Главное фото с лого | `BLOCK: HERO`. Лого «впечатано» в картинку `hero-*.jpg`, поэтому никакой почтовый клиент его не сдвинет и не перекрасит. Новое фото с лого: пришлите фото, я подготовлю, или сделайте сами: 1200 px шириной, снизу белая полоса 80 px, лого 128 px по центру на границе фото и полосы |
-| Заголовок и текст | `BLOCK: TITLE` |
-| Изделия | `BLOCK: … collage` и `… pieces with names`. У каждого изделия: картинка `product-NN.jpg`, название и ссылка. Номера и ссылки всех 32 изделий: `blocks/catalog.md`, картинки всех 32 уже лежат в `assets/images/` |
-| Анимированные ячейки | `anim-rings.gif`, `anim-charms.gif`, `anim-pendants.gif`, `anim-earrings.gif`: 1–2 ячейки коллажа плавно перебирают 3 изделия. Работает в Gmail, Apple Mail и на телефонах; Outlook для Windows показывает первый кадр. Новый набор изделий для такой ячейки: напишите, какие номера из `blocks/catalog.md`, я соберу GIF (150–290 КБ) |
-| Фото для оформления | оригиналы в `assets/photos/`. `python3 scripts/photos.py` даёт всем фото единую цветокоррекцию (тёплый приглушённый тон, мягкие тени с зелёным оттенком), кадрирует их и ставит лого на нижний край. Новое фото: положите оригинал в `assets/photos/`, впишите его в `SHOTS` в `scripts/photos.py` и запустите скрипт, затем `scripts/build.py` |
-| Видео → анимация | `unboxing.gif` в thank-you сделан из `assets/photos/unboxing.mov`: те же цвета, что у фото, первый кадр — закрытая коробка с лого (его покажет Outlook для Windows). Новое видео: положите его в `assets/photos/` и впишите в `CLIPS` в `scripts/photos.py`. Держите такие GIF до ~700 КБ: 3 секунды движения и пауза на последнем кадре |
-| Кнопка | комментарий `BUTTON`: текст в `<span>`, ссылка в `href` |
-| Тёмный блок | `… (night band)`: цитата, список с ✦ |
-| Подвал | `BLOCK: FOOTER`: сайт, Instagram, TikTok, адрес, отписка |
-
-## Переменные Klaviyo
-- `{{ first_name|default:'' }}` в приветствиях, обёрнуто в `{% if first_name %}…{% else %}…{% endif %}`.
-- `{{ event.extra.checkout_url|default:'…/cart' }}` в abandoned-cart (событие Shopify *Started Checkout*).
-- Подвал (обязательно для CASL): «7th & Hill Jewelry», `{{ organization.full_address }}`, email, `{% unsubscribe %}` и `{% manage_preferences %}`. Адрес (190 Roslin Avenue, Toronto, Ontario M4N 1Z6) укажите один раз в Klaviyo → Settings → Organization.
-
-## Sally's edit (каждую неделю)
-У всех трёх вариантов одна «шапка» (Sally's edit и золотая линия), записка Sally с её портретом и подписью и одинаковый подвал: так серию узнают с первого взгляда. Номер выпуска и тема недели — только в теме письма: `Sally's edit · No. 05: [тема]`. Каждую неделю меняйте фото, изделия и текст записки. Варианты можно чередовать.
-
-## Список SALT
-`salt-welcome.html` для контактов, перенесённых из SALT Fine Jewelry. Отправляйте волнами по 200–300 и следите за жалобами на спам (держите их ниже 0,1%).
-По CASL согласие, полученное другой компанией, не всегда переходит к новой. Надёжнее всего попросить подтверждение: добавить кнопку «Yes, keep me posted» и дальше писать только тем, кто нажал (как в письмах T1–T3 из документа YAKO). Проверьте это до запуска.
-
-## Темная тема
-Шаблоны объявлены как светлые (`color-scheme: light`): Apple Mail показывает их как есть. Gmail и Outlook в тёмной теме могут затемнить белый фон, но фото, лого и изделия — это картинки, они не меняются.
-
-## Совместимость
-- Таблицы, инлайн-стили, 600 px. Коллажи и ряды изделий в процентах, поэтому на телефоне просто уменьшаются, ничего не разваливается.
-- Outlook (Windows): ghost-таблицы, шрифты Georgia/Arial, кнопка с отступами через `mso-text-raise`.
-- Шрифты: Cormorant Garamond → Georgia; Jost → Helvetica Neue → Arial.
-- Каждый шаблон меньше 25 KB (Gmail обрезает письма от 102 KB).
-
-## Перед запуском
-- Проверьте ссылки на Instagram (`instagram.com/7thandhilljewelry`) и TikTok (`tiktok.com/@7thandhilljewelry`): я поставил их наугад.
-- Кнопки категорий ведут на поиск по сайту (`/search?q=rings` и т. п.). Если есть отдельные страницы коллекций, подставьте их адреса.
-- Советы по уходу в `thank-you.html` сверьте со страницей Jewelry Care.
-- Отправьте тестовые письма в Gmail, Apple Mail, Outlook (Klaviyo → Preview & test).
+## Waiting for Sally
+1. Бесплатный ресайз колец: есть или нет.
+2. Какие изделия только для подписчиков Vault.
+3. Даты заказа к праздникам для K3 (предложены Nov 6, Nov 30, Dec 17).
+4. Девять изделий для W3 (до Oct 29).
+5. Шесть плиток коллекций в W1.
+6. 14k или «Solid gold».
+7. Бесплатная чистка в GTA как привилегия Vault.
