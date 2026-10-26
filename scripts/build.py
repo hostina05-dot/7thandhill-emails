@@ -51,6 +51,7 @@ def fill_klaviyo(src: str, first_name: str) -> str:
     src = re.sub(r"{{\s*organization\.full_address\s*}}", SAMPLE["organization.full_address"], src)
     src = re.sub(r"{%\s*unsubscribe\s*%}", '<a href="#">Unsubscribe</a>', src)
     src = re.sub(r"{%\s*manage_preferences\s*%}", '<a href="#">Manage preferences</a>', src)
+    src = re.sub(r"{%\s*coupon_code\s+'([^']+)'\s*%}", r"\1-K8Q2", src)
     src = re.sub(r"{{\s*[\w.]+\|default:'([^']*)'\s*}}", r"\1", src)  # any other var -> its default
     return src
 
