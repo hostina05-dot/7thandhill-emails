@@ -42,9 +42,8 @@ SHOTS = {
     "feature-rings-table.jpg":   ("rings-table-bag.jpg",             "feature", (0, 0.20, 1, 0.95)),
     "feature-compass.jpg":       ("compass-horn-velvet.jpg",         "feature", (0, 0.06, 1, 0.86)),
     # small squares of worn pieces, same size as product tiles (tile)
-    "tile-talisman-locket.jpg":  ("locket-worn.jpg",                 "tile",    None),
-    "tile-lovers-tarot.jpg":     ("lovers-worn.jpg",                 "tile",    None),
-    "tile-marquise-ring.jpg":    ("ring-marquise-worn.jpg",          "tile",    None),
+    "tile-talisman-locket.jpg":  ("locket-closeup.jpg",              "tile",    (0.10, 0.44, 0.90, 0.90)),
+    "tile-marquise-ring.jpg":    ("hand-rings.jpg",                  "tile",    (0.10, 0.18, 0.78, 0.70)),
     # photos inside a block, no seal (story)
     "story-bookbox.jpg":         ("bookbox-library.jpg",             "story",   None),
     "popup-locket.jpg":          ("locket-closeup.jpg",              "story",   (0, 0.28, 1, 0.78)),
