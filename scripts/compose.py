@@ -489,9 +489,25 @@ def heading(eyebrow_text, title=None, pad="6px 40px 20px"):
         inner += h1(title, mb=0, size_=26)
     return block("HEADING", inner, pad=pad)
 
-def letter(paras, pad="10px 56px 6px"):
-    """Sally's words, left aligned like a real letter."""
-    return block("LETTER · Sally's words", "".join(p(t, mb=16, align="left") for t in paras), pad=pad, align="left")
+def letter(paras, pad="6px 48px 30px", sign=True, ps=None):
+    """Sally's words beside her round portrait, signed, like her notes in Sally's edit."""
+    body = "".join(f'<p class="sans" style="margin:0 0 14px; font-family:{SANS}; font-size:15px; line-height:26px; font-weight:300; color:{BODY};">{t}</p>' for t in paras)
+    if sign:
+        body += (f'<p class="display" style="margin:4px 0 0; font-family:{DISPLAY}; font-size:26px; line-height:30px; color:{INK};">Sally</p>'
+                 f'<p class="sans t-sm" style="margin:2px 0 0; font-family:{SANS}; font-size:10px; line-height:15px; letter-spacing:2.5px; text-transform:uppercase; color:{SOFT};">Sally Brooks &middot; Founder &amp; designer</p>')
+    if ps:
+        body += f'<p class="sans" style="margin:16px 0 0; font-family:{SANS}; font-size:14px; line-height:23px; font-weight:300; color:{BODY};"><span style="font-weight:400; color:{INK};">P.S.</span> {ps}</p>'
+    return block("LETTER · Sally's words", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td width="72" valign="top" style="padding:4px 16px 0 0;"><img src="{IMG}sally-avatar.png" width="56" height="56" alt="Sally Brooks" style="display:block; width:56px; height:56px; border:0;"></td>
+                  <td valign="top" style="text-align:left;">{body}</td>
+                </tr>
+              </table>
+""", pad=pad, align="left")
+
+def facts_band(rows):
+    """Facts in the dark band, as in the approved letters (title on top, line under it)."""
+    return night("FACTS", night_list(rows), pad="34px 56px 40px")
 
 def signature(align="left", pad="0 56px 28px"):
     return block("SIGNATURE · Sally", f"""              <p class="display" style="margin:0; font-family:{DISPLAY}; font-size:32px; line-height:38px; color:{INK}; text-align:{align};">Sally</p>
@@ -592,7 +608,7 @@ def dyn_viewed():
 FACT_GOLD = "Solid gold. It never tarnishes."
 FACT_TIMING = "In stock ships in 1 to 2 business days.<br>7th &amp; Hill Exclusives: 2 to 4 weeks.<br>Curated designs: 6 to 8 weeks."
 FACT_DELIVERY = "Worldwide shipping. Taxes and duties are covered."
-FACT_CARE = f'Three simple habits, on our <a href="{CARE}" target="_blank" style="color:{INK}; text-decoration:underline;">Jewelry Care page</a>.'
+FACT_CARE = f'Three simple habits, on our <a href="{CARE}" target="_blank" style="color:{GOLD_L}; text-decoration:underline;">Jewelry Care page</a>.'
 FACT_SIZING = "Not sure about size? Send me a photo of what you already wear, and I&rsquo;ll help you choose."
 FACTS_W4 = [("Gold", FACT_GOLD), ("Timing", FACT_TIMING), ("Delivery", FACT_DELIVERY), ("Care", FACT_CARE)]
 CATS_W1 = CATS_DEFAULT[:5] + [("Design your own", DYO)]
@@ -608,6 +624,8 @@ SALT_LOGIC = [
 ]
 
 # ═════════════════════════ STAGE 1 · goes live Tue Oct 27 ═════════════════════════
+# Look of every letter (the approved one): our photo with the seal, a short title, Sally's words in her
+# note with the portrait, facts in a dark band, pieces as large photos, the category line at the end.
 W = dict(stage=1, flow="Welcome flow 01")
 
 doc("s1-w1-welcome.html", **W, code="W1", pos="email 1 of 5", when="Sends immediately after signup",
@@ -620,13 +638,13 @@ doc("s1-w1-welcome.html", **W, code="W1", pos="email 1 of 5", when="Sends immedi
     body=hero("hero-sally-home.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill")
     + title_block("The 7H Vault", "Welcome to 7th &amp; Hill",
         "Welcome! I&rsquo;m Sally, I design modern heirlooms, timeless classics, and personalized jewelry, one piece, one story at a time. From now on, you&rsquo;ll be among the first to see what leaves the workbench.")
-    + heading("First looks from the workbench")
-    + grid("FIRST LOOKS", [201, 202, 203])
+    + heading("First looks from the workbench", pad="0 40px 18px")
+    + collage("FIRST LOOKS", (202, 203), ("feature-locket.jpg", "Talisman Keepsake Locket, worn", P[201]["url"]), ("rings", 13, "earrings"), feature_side="left")
     + vault_key()
     + cta("Step inside", SHOP, pad="34px 64px 30px")
     + find_your_piece("Find your place", CATS_W1)
-    + signature(pad="6px 40px 18px")
-    + ps("Reply to this letter anytime. It lands in my inbox, not in a folder nobody reads."))
+    + ps("Reply to this letter anytime. It lands in my inbox, not in a folder nobody reads.").replace("padding:0 40px 30px", "padding:0 40px 14px")
+    + signature(pad="0 40px 30px"))
 
 doc("s1-w2-story.html", **W, code="W2", pos="email 2 of 5", when="Sends on day 1",
     card="Welcome · email 2 of 5 · day 1",
@@ -635,15 +653,15 @@ doc("s1-w2-story.html", **W, code="W2", pos="email 2 of 5", when="Sends on day 1
     body=hero("hero-archive-building.jpg", "The St. Vincent's Jewelry Center on the corner of 7th and Hill, downtown Los Angeles")
     + caption("The corner of 7th &amp; Hill, downtown Los Angeles")
     + title_block("Our story &middot; Los Angeles, 1962", "Jewelry should mean something.", pt=26)
-    + block("STORY", p("My dad was a gold leaf letterer at the St. Vincent&rsquo;s Jewelry Center, on the corner of 7th and Hill in downtown Los Angeles.")
-        + p("One afternoon in the eighties, my sister Jen and I watched him sketch a necklace. A jeweler friend carved the wax, and the gold poured like lava. I was nine. We still wear those necklaces today.", mb=0),
-        pad="0 64px 34px")
+    + letter(["My dad was a gold leaf letterer at the St. Vincent&rsquo;s Jewelry Center, on the corner of 7th and Hill in downtown Los Angeles.",
+              "One afternoon in the eighties, my sister Jen and I watched him sketch a necklace. A jeweler friend carved the wax, and the gold poured like lava. I was nine. We still wear those necklaces today."], sign=False)
     + night("QUOTE", quote("&ldquo;Jewelry is more than metal and stone. It is a work of art, and a wearable memory.&rdquo;"), pad="34px 56px 40px")
     + line("That corner gave the brand its name, and it is still how I work. I listen to your story first, then I design around it.", pad="34px 64px 30px")
     + picture("BOOK BOX", "story-bookbox.jpg", 488, 364, "The green 7th &amp; Hill book box, lined in velvet",
               cap="Every piece arrives in our green book box, lined in velvet")
     + heading("Modern Heirlooms. Timeless Classics.", pad="0 40px 22px")
-    + cta("Meet Sally", STORY))
+    + cta("Meet Sally", STORY)
+    + cat_line())
 
 doc("s1-w3-find-your-piece.html", **W, code="W3", pos="email 3 of 5", when="Sends on day 3",
     card="Welcome · email 3 of 5 · day 3",
@@ -656,9 +674,9 @@ doc("s1-w3-find-your-piece.html", **W, code="W3", pos="email 3 of 5", when="Send
         "Some women start with a charm. Some with a ring they never take off. These are the nine pieces I would start with.")
     + grid("SALLY'S NINE", [(26, "Marquise Art Deco Ring"), 101, 102, 103, (8, "The Working Scissors"),
                             (28, "The iLove Smartphone"), 104, 105, 201])
-    + cta("See every piece", SHOP, pad="16px 64px 30px")
-    + signature(pad="0 40px 18px")
-    + ps("Not sure where to start? Reply and tell me who it&rsquo;s for."))
+    + cta("See every piece", SHOP, pad="16px 64px 10px")
+    + sally_note("Not sure where to start? Reply and tell me who it&rsquo;s for.")
+    + cat_line())
 
 doc("s1-w4-worn-and-kept.html", **W, code="W4", pos="email 4 of 5", when="Sends on day 5",
     card="Welcome · email 4 of 5 · day 5",
@@ -668,28 +686,29 @@ doc("s1-w4-worn-and-kept.html", **W, code="W4", pos="email 4 of 5", when="Sends 
     body=hero("hero-lily-bracelet.jpg", "Sally holding her grandmother Lily's gold charm bracelet")
     + title_block("The quiet, important part", "Made to be worn.<br>Made to be kept.",
         "My grandmother Lily wore her charm bracelet from 1913 to 2013. It&rsquo;s why I make pieces for every day, not for a drawer.")
-    + facts("WORTH KNOWING", FACTS_W4)
-    + heading("Made personal")
-    + grid("MADE PERSONAL", [5, 12, 7])
-    + cta("Ask Sally anything", MAIL + "?subject=A%20question%20for%20Sally", pad="12px 64px 12px")
-    + line("Or simply reply to this email.", pad="0 64px 36px", size_=13, color=SOFT))
+    + facts_band(FACTS_W4)
+    + heading("Made personal", pad="34px 40px 18px")
+    + checker("MADE PERSONAL", [5, 12, 7])
+    + cta("Ask Sally anything", MAIL + "?subject=A%20question%20for%20Sally", pad="4px 64px 12px")
+    + line("Or simply reply to this email.", pad="0 64px 30px", size_=13, color=SOFT)
+    + cat_line())
 
 doc("s1-w5-help-finding.html", **W, code="W5", pos="email 5 of 5", when="Sends on day 8",
     card="Welcome · email 5 of 5 · day 8",
     title="Need help finding the one?", subject="Need help finding the one?",
     preheader="Tell me who it's for. I'll pick three.", reason=VAULT,
     body=hero("hero-sally-velvet.jpg", "Sally Brooks in black velvet")
-    + block("TITLE", h1("Need help finding the one?", mb=16) + goldline(mb=0), pad="22px 48px 22px")
+    + title_block(None, "Need help finding the one?")
     + letter([HI,
               "Tell me who it&rsquo;s for and the moment behind it. I&rsquo;ll pick three pieces and tell you why each one fits.",
               "And if what you have in mind doesn&rsquo;t exist yet, we can design it together, one on one.",
-              "No pressure, and no follow-up barrage. One honest shortlist."])
-    + signature(pad="0 56px 18px")
-    + ps("If nothing fits, I&rsquo;m happy to suggest other options.").replace("padding:0 40px 30px", "padding:0 56px 30px")
-    + grid("THREE TO START", [105, 1, 103])
-    + cta("Reply to Sally", MAIL + "?subject=Help%20me%20find%20the%20one", pad="16px 64px 8px",
+              "No pressure, and no follow-up barrage. One honest shortlist."],
+             ps="If nothing fits, I&rsquo;m happy to suggest other options.")
+    + checker("THREE TO START", [105, 1, 103])
+    + cta("Reply to Sally", MAIL + "?subject=Help%20me%20find%20the%20one", pad="4px 64px 8px",
           extra=text_link("Or start with Design Your Own", DYO, mt=18))
-    + block("SPACER", "", pad="22px 0 0"))
+    + block("SPACER", "", pad="22px 0 0")
+    + cat_line())
 
 T = dict(stage=1, flow="SALT transition")
 doc("s1-t1-note-from-sally.html", **T, code="T1", pos="email 1 of 3", when="SALT list, waves of 200 to 300 a day",
@@ -699,13 +718,13 @@ doc("s1-t1-note-from-sally.html", **T, code="T1", pos="email 1 of 3", when="SALT
     notes=["No code, no prices, no product grid in this letter.", "This isn't for me = Klaviyo unsubscribe link."],
     body=hero("hero-archive-corner.jpg", "The corner of 7th and Hill in Los Angeles, archive photo")
     + caption("7th &amp; Hill, Los Angeles &middot; where it all began")
-    + block("TITLE", h1("A note from Sally", mb=16) + goldline(mb=0), pad="26px 48px 22px")
+    + title_block(None, "A note from Sally", pt=26)
     + letter([HI,
               "You may remember me as the previous Co-Founder of SALT Fine Jewelry. For eight years I designed for so many of you, and many of you became more than clients. I still remember the stories behind your pieces.",
               "Now I&rsquo;ve started something of my own: 7th &amp; Hill Jewelry. It&rsquo;s named after the corner in downtown Los Angeles where my dad ran his gold leaf lettering business, and where I first watched molten gold become a necklace.",
               "Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. And I still begin the same way. I listen, I design, and then you wear it.",
               "You&rsquo;re receiving this because you were part of my SALT family. I&rsquo;d love to keep writing to you. If you&rsquo;d like that too, tap below."])
-    + signature()
+    + picture("THE BOOK BOX", "story-bookbox.jpg", 488, 364, "The green 7th &amp; Hill book box, lined in velvet", pad="0 56px 28px")
     + line("Say yes, and I&rsquo;ll send you the same welcome gift my Vault members get: 15% off your first 7th &amp; Hill piece.", pad="0 56px 24px", color=INK)
     + cta("Yes, keep me posted", utm(VAULT_PAGE, "salt_t1", "yes"), pad="0 64px 8px",
           extra=text_link("This isn&rsquo;t for me", "{% unsubscribe_url %}", mt=20))
@@ -717,11 +736,10 @@ doc("s1-t2-keep-writing.html", **T, code="T2", pos="email 2 of 3",
     title="Should I keep writing?", subject="Should I keep writing?", preheader="One click, either way.",
     reason=SALT_REASON, logic=SALT_LOGIC[:1] + ["Same Yes logic as T1 (consent_source = SALT T2)."],
     body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter")
-    + block("TITLE", h1("Should I keep writing?", mb=16) + goldline(mb=0), pad="22px 48px 22px")
+    + title_block(None, "Should I keep writing?")
     + letter([HI,
               "Last week I wrote to tell you about 7th &amp; Hill, my own line after SALT. I only want to write to people who&rsquo;d like to hear from me, so I&rsquo;m asking once more.",
               "One click, either way."])
-    + signature()
     + line("The welcome gift still stands: 15% off your first piece.", pad="0 56px 24px", color=INK)
     + cta("Yes, keep me posted", utm(VAULT_PAGE, "salt_t2", "yes"), pad="0 64px 8px",
           extra=text_link("No, thank you", "{% unsubscribe_url %}", mt=20))
@@ -733,11 +751,11 @@ doc("s1-t3-goodbye.html", **T, code="T3", pos="email 3 of 3", when="7 days after
     preheader="This is my last note, unless you'd like more.", reason=SALT_REASON,
     logic=["After this send, people who did not click are suppressed and never emailed again."],
     body=hero("hero-sally-home.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill")
-    + block("TITLE", h1("Thank you, and goodbye for now", mb=16) + goldline(mb=0), pad="22px 48px 22px")
+    + title_block(None, "Thank you, and goodbye for now")
     + letter([HI,
               "I haven&rsquo;t heard back, so this is the last letter you&rsquo;ll get from me. Thank you for the years with SALT. They meant a great deal to me.",
               "If you ever want to see what I&rsquo;m making, the door is open, and the Vault is one click away."])
-    + signature()
+    + picture("FROM THE LIBRARY · slideshow", "library-reel.gif", 300, 373, "Gold rings and pendants resting on old books in a library", pad="0 64px 28px")
     + cta("Join the Vault", utm(VAULT_PAGE, "salt_t3", "join"), pad="0 64px 36px"))
 
 # P0 popup: a layout mock and spec (the live popup is built in Klaviyo Forms)
@@ -801,6 +819,9 @@ doc("s1-p0-vault-popup.html", stage=1, code="P0", flow="Site popup", pos="Klaviy
     notes=["Layout mock and copy spec. The live popup is built in Klaviyo Forms."])
 
 # ═════════════════════════ STAGE 2 · goes live Mon Nov 2 ═════════════════════════
+GIFTS = [201, 202, 203, (28, "iLove Smartphone Charm")]
+GIFT_FOR = ["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"]
+
 doc("s2-k3-holiday-deadline.html", stage=2, code="K3", flow="Campaign", pos="whole list", when="Sends Tue Nov 3, 10:00 Toronto",
     card="Campaign · Tue Nov 3, 10:00",
     title="For holiday gifts, the clock starts now", subject="For holiday gifts, the clock starts now",
@@ -811,11 +832,11 @@ doc("s2-k3-holiday-deadline.html", stage=2, code="K3", flow="Campaign", pos="who
     body=hero("hero-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag")
     + title_block("The only deadline we have", "For holiday gifts, the clock starts now",
         "Some pieces are ready to go, others are made for you over a few weeks. Here&rsquo;s when to order so yours arrives in time.")
-    + facts("ORDER BY", [("In stock", "Order by [date]. Ships in 1 to 2 business days."),
-                         ("7th &amp; Hill Exclusives", "Order by [date]. Made in 2 to 4 weeks."),
-                         ("Curated designs", "Order by [date]. Made in 6 to 8 weeks.")])
-    + grid("GIFTS", [201, 202, 203, (28, "iLove Smartphone Charm")], cols=2,
-           captions=["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"])
+    + facts_band([("In stock", "Order by [date]. Ships in 1 to 2 business days."),
+                  ("7th &amp; Hill Exclusives", "Order by [date]. Made in 2 to 4 weeks."),
+                  ("Curated designs", "Order by [date]. Made in 6 to 8 weeks.")])
+    + block("SPACER", "", pad="30px 0 0")
+    + grid("GIFTS", GIFTS, cols=2, captions=GIFT_FOR)
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
     + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 34px", size_=13, color=SOFT)
     + trust_strip())
@@ -825,22 +846,23 @@ doc("s2-c1-piece-waiting.html", **C, code="C1", flow="Cart flow 06", pos="email 
     card="Cart · email 1 of 2 · +2 h", title="Your piece is waiting", subject="Your piece is waiting",
     preheader="Saved in your bag, whenever you're ready.",
     notes=["Bag contents come from the Klaviyo Added to Cart event (dynamic block)."],
-    body=logo_header()
+    body=hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", CART_URL)
     + title_block("Saved for you", "Your piece is waiting",
         "Some pieces are ready to ship, others are made for you over a few weeks. Starting now means yours arrives when you need it.")
     + dyn_cart()
-    + cta("Return to your bag", CART_URL, pad="4px 64px 38px"))
+    + cta("Return to your bag", CART_URL, pad="4px 64px 34px")
+    + trust_strip())
 
 doc("s2-c2-sizing-question.html", **C, code="C2", flow="Cart flow 06", pos="email 2 of 2", when="+24 h after Added to Cart",
     card="Cart · email 2 of 2 · +24 h", title="A question about sizing?", subject="A question about sizing?",
     preheader="Send me a photo of what you already wear.",
-    body=logo_header()
-    + block("TITLE", h1("A question about sizing?", mb=16) + goldline(mb=0), pad="12px 48px 22px")
+    body=hero("hero-model-library.jpg", "A woman in a library wearing a gold locket and a diamond necklace", CART_URL)
+    + title_block(None, "A question about sizing?")
     + letter([HI,
               "Not sure about size? Send me a photo of what you already wear, and I&rsquo;ll help you choose.",
               "A ring on your hand, a chain on your neck, anything that already feels right. Simply reply to this email and I&rsquo;ll tell you what to order."])
-    + signature()
-    + cta("Reply to Sally", MAIL + "?subject=A%20question%20about%20sizing", pad="0 64px 8px",
+    + collage("WHAT OTHERS WEAR", (16, 13), ("feature-hands.jpg", "Marquise Art Deco rings worn on the hand", P[26]["url"]), (31, "rings", 2))
+    + cta("Reply to Sally", MAIL + "?subject=A%20question%20about%20sizing", pad="4px 64px 8px",
           extra=text_link("Return to your bag", CART_URL, mt=20))
     + block("SPACER", "", pad="24px 0 0"))
 
@@ -851,26 +873,27 @@ doc("s2-co1-one-step-away.html", **C, code="CO1", flow="Checkout flow 07", pos="
     body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter", CHECKOUT)
     + title_block("Saved for you", "You were one step away",
         "Your order is saved, just as you left it. When you&rsquo;re ready, it&rsquo;s one click away.")
-    + cta("Return to your bag", CHECKOUT, pad="4px 64px 40px"))
+    + cta("Return to your bag", CHECKOUT, pad="4px 64px 36px")
+    + trust_strip())
 
 doc("s2-co2-questions.html", **C, code="CO2", flow="Checkout flow 07", pos="email 2 of 3", when="+22 h after CO1",
     card="Checkout · email 2 of 3 · +22 h", title="Any questions before you decide?", subject="Any questions before you decide?",
     preheader="Sizing, timing and delivery, in short.",
-    body=logo_header()
-    + title_block(None, "Any questions before you decide?", "Here are the short answers. For anything else, simply reply.", pt=12)
-    + facts("SHORT ANSWERS", [("Sizing", FACT_SIZING), ("Timing", FACT_TIMING), ("Delivery", FACT_DELIVERY)])
-    + cta("Return to your bag", CHECKOUT, pad="4px 64px 40px"))
+    body=hero("hero-necklaces-book.jpg", "Gold necklaces resting on an old green leather book", CHECKOUT)
+    + title_block("Short answers", "Any questions before you decide?", "For anything else, simply reply.")
+    + facts_band([("Sizing", FACT_SIZING), ("Timing", FACT_TIMING), ("Delivery", FACT_DELIVERY)])
+    + cta("Return to your bag", CHECKOUT, pad="34px 64px 36px"))
 
 doc("s2-co3-meant-for-a-date.html", **C, code="CO3", flow="Checkout flow 07", pos="email 3 of 3", when="+48 h after CO1",
     card="Checkout · email 3 of 3 · +48 h", title="If it's meant for a date", subject="If it's meant for a date",
     preheader="Count back from the day you need it.",
-    body=hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", CHECKOUT)
+    body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn", CHECKOUT)
     + title_block("Timing", "If it&rsquo;s meant for a date",
-        "A birthday, an anniversary, a holiday. Count back from the day you need it:")
-    + facts("COUNT BACK", [("In stock", "Ships in 1 to 2 business days."),
-                           ("7th &amp; Hill Exclusives", "Made in 2 to 4 weeks."),
-                           ("Curated designs", "Made in 6 to 8 weeks.")])
-    + line("Tell me the date and I&rsquo;ll tell you what&rsquo;s possible.", pad="0 64px 24px", color=INK)
+        "A birthday, an anniversary, a holiday. Count back from the day you need it.")
+    + facts_band([("In stock", "Ships in 1 to 2 business days."),
+                  ("7th &amp; Hill Exclusives", "Made in 2 to 4 weeks."),
+                  ("Curated designs", "Made in 6 to 8 weeks.")])
+    + sally_note("Tell me the date and I&rsquo;ll tell you what&rsquo;s possible.")
     + cta("Return to your bag", CHECKOUT, pad="0 64px 8px", extra=text_link("Reply to Sally", MAIL, mt=20))
     + block("SPACER", "", pad="24px 0 0"))
 
@@ -879,12 +902,11 @@ doc("s2-cc1-concierge-note.html", **C, code="CC1", flow="Checkout flow 07 · con
     card="Concierge · note 1 of 2 · +2 h, checkout $5,500+", title="A quick note from Sally", subject="A quick note from Sally",
     preheader="I'd like to help you choose, personally.",
     logic=["Flow split on checkout value: $5,500 or more goes here instead of CO1 to CO3. Sally replies personally."],
-    body=logo_header()
-    + block("TITLE", h1("A quick note from Sally", mb=16) + goldline(mb=0), pad="12px 48px 22px")
+    body=hero("hero-sally-home.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill", CHECKOUT)
+    + title_block(None, "A quick note from Sally")
     + letter([HI,
               "I saw you were close to choosing a piece. For something this considered, I&rsquo;d like to help personally: size, stones, timing, anything at all.",
               "Simply reply to this email and I&rsquo;ll answer myself."])
-    + signature()
     + cta("Reply to Sally", MAIL + "?subject=A%20note%20for%20Sally", pad="0 64px 8px",
           extra=text_link("Return to your bag", CHECKOUT, mt=20))
     + block("SPACER", "", pad="24px 0 0"))
@@ -894,12 +916,11 @@ doc("s2-cc2-concierge-timeline.html", **C, code="CC2", flow="Checkout flow 07 ·
     card="Concierge · note 2 of 2 · +24 h, only if no reply", title="About your timeline", subject="About your timeline",
     preheader="If it's easier to talk, I'm here.",
     logic=["Sends only if there was no reply to CC1 within a day."],
-    body=logo_header()
-    + block("TITLE", h1("About your timeline", mb=16) + goldline(mb=0), pad="12px 48px 22px")
+    body=hero("hero-sally-velvet.jpg", "Sally Brooks in black velvet", CHECKOUT)
+    + title_block(None, "About your timeline")
     + letter([HI,
               "If it&rsquo;s easier to talk it through, I&rsquo;d be glad to set up a short call. Reply with a day and time that suit you, and I&rsquo;ll make it work.",
               "And if you&rsquo;d rather take your time, your bag is saved."])
-    + signature()
     + cta("Set up a short call", MAIL + "?subject=A%20short%20call%20with%20Sally", pad="0 64px 8px",
           extra=text_link("Return to your bag", CHECKOUT, mt=20))
     + block("SPACER", "", pad="24px 0 0"))
@@ -910,23 +931,26 @@ doc("s3-b1-still-thinking.html", **B, code="B1", flow="Browse flow 05", pos="ema
     card="Browse · email 1 of 2 · +4 h", title="Still thinking about it?", subject="Still thinking about it?",
     preheader="A piece worth a second look.",
     logic=["Re-entry: once every 14 days per person."],
-    notes=["The viewed piece comes from the Klaviyo Viewed Product event. The three beside it are a curated row;",
+    notes=["The viewed piece comes from the Klaviyo Viewed Product event. The collage beside it is curated;",
            "swap it for a Klaviyo product recommendation block if you prefer."],
-    body=logo_header()
-    + title_block("Still thinking about it?", "A piece worth a second look", pt=12)
+    body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a gold capsule locket")
+    + title_block("Still thinking about it?", "A piece worth a second look")
     + dyn_viewed()
     + cta("See it again", "{{ event.URL|default:'https://www.7thandhilljewelry.ca/collections' }}", pad="0 64px 30px")
-    + heading("Beside it")
-    + grid("BESIDE IT", [13, 21, 25])
-    + block("SPACER", "", pad="14px 0 0"))
+    + heading("Beside it", pad="0 40px 18px")
+    + collage("BESIDE IT", (13, "pendants"), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/search?q=pendant"), (21, 16, 31))
+    + cat_line())
 
 doc("s3-b2-worth-knowing.html", **B, code="B2", flow="Browse flow 05", pos="email 2 of 2", when="+24 h after B1",
     card="Browse · email 2 of 2 · +24 h", title="Worth knowing before you choose", subject="Worth knowing before you choose",
     preheader="Solid gold, timing and delivery, in short.",
-    body=logo_header()
-    + title_block("Worth knowing", "Worth knowing before you choose", pt=12)
-    + facts("WORTH KNOWING", FACTS_W4)
-    + cta("Discover 7th &amp; Hill", SHOP, pad="4px 64px 40px"))
+    body=hero("hero-necklaces-book.jpg", "Gold necklaces resting on an old green leather book")
+    + title_block("The quiet, important part", "Worth knowing before you choose")
+    + facts_band(FACTS_W4)
+    + block("SPACER", "", pad="30px 0 0")
+    + checker("WORTH A LOOK", [14, 4, 26])
+    + cta("Discover 7th &amp; Hill", SHOP)
+    + cat_line())
 
 doc("s3-pp1-thank-you.html", **B, code="PP1", flow="After-purchase flow 10", pos="email 1 of 3", when="Sends right away after Placed Order",
     card="After purchase · email 1 of 3 · right away", title="Thank you", subject="Thank you for choosing 7th & Hill",
@@ -935,14 +959,15 @@ doc("s3-pp1-thank-you.html", **B, code="PP1", flow="After-purchase flow 10", pos
     + title_block("Thank you", greet(f"Thank you, {FN}", "Thank you"),
         "Your order is in good hands. Pieces in stock ship in 1 to 2 business days; anything made for you takes a little longer. We&rsquo;ll write to you the moment it ships.")
     + picture("UNBOXING · animation", "unboxing.gif", 300, 403, "A 7th &amp; Hill book box opening to show diamond earrings and a ring",
-              cap="Every piece arrives in our green book box, lined in velvet", pad="0 64px 34px")
-    + signature(align="center", pad="0 40px 36px"))
+              cap="Every piece arrives in our green book box, lined in velvet", pad="0 64px 10px")
+    + sally_note("Thank you for choosing a piece of mine. I hope it becomes one you never take off.")
+    + cat_line())
 
 doc("s3-pp2-care.html", **B, code="PP2", flow="After-purchase flow 10", pos="email 2 of 3", when="Day 21 after Placed Order",
     card="After purchase · email 2 of 3 · day 21", title="Welcome to the 7H story", subject="Welcome to the 7H story",
     preheader="A few habits that keep it beautiful for years.",
     notes=["Care rules follow the site's Jewelry Care page."],
-    body=hero("hero-necklaces-book.jpg", "Gold necklaces resting on an old green leather book")
+    body=hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book")
     + title_block("Day 21", "Welcome to the 7H story",
         "Your piece has had a few weeks to settle in. A few habits keep it beautiful for years.")
     + night("CARE · from the Jewelry Care page",
@@ -955,7 +980,9 @@ doc("s3-pp2-care.html", **B, code="PP2", flow="After-purchase flow 10", pos="ema
             ("Store apart", "Each piece on its own, in a soft pouch or lined box."),
           ])
         + text_link("Read the Jewelry Care page", CARE, mt=24, color=IVORY, line=GOLD_L))
-    + block("SPACER", "", pad="30px 0 0"))
+    + picture("THE BOOK BOX", "story-bookbox.jpg", 488, 364, "The green 7th &amp; Hill book box, lined in velvet",
+              cap="Store it in its book box between wears", pad="34px 64px 30px")
+    + cat_line())
 
 doc("s3-pp3-next-piece.html", **B, code="PP3", flow="After-purchase flow 10", pos="email 3 of 3", when="Day 35 after Placed Order",
     card="After purchase · email 3 of 3 · day 35", title="Your next piece", subject="Your next piece",
@@ -972,11 +999,12 @@ doc("s3-an1-a-year-ago.html", **B, code="AN1", flow="Anniversary flow 15", pos="
     card="Anniversary · two weeks before the purchase anniversary", title="A year ago", subject="A year ago",
     preheader="A year with your 7th & Hill piece.",
     notes=["Trigger: date property of the first order. To show the exact date, insert the profile date property in the first line."],
-    body=hero("hero-hand-rings.jpg", "Marquise Art Deco rings worn on the hand")
+    body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
     + title_block("A year ago", "A year with your piece",
         "A year ago this month, a 7th &amp; Hill piece became yours. If the year deserves marking, a charm, a date or a new piece can carry it.")
-    + grid("TO MARK THE YEAR", [103, 7, 3])
-    + cta("Mark the year", SHOP, pad="16px 64px 40px"))
+    + collage("TO MARK THE YEAR", (103, 105), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/search?q=pendant"), (7, 3, "charms"), feature_side="left")
+    + cta("Mark the year", SHOP)
+    + cat_line())
 
 doc("s3-k1-new-in-studio.html", stage=3, status=DRAFT, code="K1", flow="Weekly campaign", pos="skeleton",
     when="Weekly, first one Tue Nov 10", card="Campaign · weekly · first Tue Nov 10",
@@ -985,7 +1013,7 @@ doc("s3-k1-new-in-studio.html", stage=3, status=DRAFT, code="K1", flow="Weekly c
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
     + title_block("New in the studio", "[This week&rsquo;s headline]",
         "[Two calm sentences about what just left the workbench.]")
-    + heading("What just left the workbench")
+    + heading("What just left the workbench", pad="0 40px 18px")
     + collage("THIS WEEK", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/search?q=pendant"), (7, 3, "rings"))
     + cta("Step inside", SHOP)
     + cat_line())
@@ -1051,7 +1079,7 @@ doc("s4-s3-last-day.html", **SALE, code="S3", when="Mon Nov 30, 10:00 Toronto",
 doc("s4-dyo-design-your-own.html", stage=4, status=DRAFT, code="DYO", flow="Campaign", pos="whole list",
     when="Sends Tue Nov 17", card="Campaign · Design Your Own · Tue Nov 17",
     title="Design your own", subject="Some pieces don't exist yet", preheader="Let's make yours together.",
-    body=hero("hero-hand-rings.jpg", "Marquise Art Deco rings worn on the hand")
+    body=hero("hero-necklaces-book.jpg", "Gold necklaces resting on an old green leather book")
     + title_block("Design your own", "Listen. Design. Adorn.",
         "Some pieces don&rsquo;t exist yet. We can make yours together, one on one.")
     + night("THREE STEPS",
@@ -1060,9 +1088,12 @@ doc("s4-dyo-design-your-own.html", stage=4, status=DRAFT, code="DYO", flow="Camp
             ("Design", "I sketch it, and you choose the gold, the stones and the details."),
             ("Adorn", "It&rsquo;s made to order, just for you."),
           ], numerals=["i", "ii", "iii"]), pad="34px 56px 40px")
-    + cta("Start your design", MAIL + "?subject=Design%20my%20own", pad="34px 64px 8px",
+    + heading("Made personal", pad="34px 40px 18px")
+    + checker("MADE PERSONAL", [5, 12, 105])
+    + cta("Start your design", MAIL + "?subject=Design%20my%20own", pad="4px 64px 8px",
           extra=text_link("See Design Your Own", DYO, mt=20))
-    + block("SPACER", "", pad="24px 0 0"))
+    + block("SPACER", "", pad="24px 0 0")
+    + cat_line())
 
 doc("s4-k4-gift-guide.html", stage=4, status="Draft, not yet approved by Sally · waiting for the in-stock and Exclusives list",
     code="K4", flow="Campaign", pos="whole list", when="Sends Thu Dec 3", card="Campaign · gift guide · Thu Dec 3",
@@ -1112,25 +1143,27 @@ doc("s4-k2-sallys-edit-spotlight.html", **EDIT, when="Alternative layout", card=
 doc("s4-lc-last-call.html", stage=4, status=DRAFT, code="LC", flow="Campaign", pos="whole list", when="Sends Tue Dec 15",
     card="Campaign · last call · Tue Dec 15", title="Last call for in-stock pieces", subject="Last call for in-stock pieces",
     preheader="Order by [date] and it arrives in time.",
-    notes=["Grid: in-stock pieces only (placeholder below)."],
-    body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter")
+    notes=["Pieces: in-stock only (placeholders below)."],
+    body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
     + title_block("Last call", "Last call for in-stock pieces",
         "In-stock pieces ordered by [date] ship in 1 to 2 business days and arrive in time for the holidays.")
-    + grid("IN STOCK", [13, 16, 21, 2, 28, 31])
-    + cta("Start a gift", SHOP, pad="16px 64px 16px")
-    + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 36px", size_=13, color=SOFT))
+    + collage("IN STOCK", (16, 13), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), (2, 28, 31))
+    + cta("Start a gift", SHOP, pad="6px 64px 16px")
+    + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 30px", size_=13, color=SOFT)
+    + trust_strip())
 
 doc("s4-hn-holiday-note.html", stage=4, status=DRAFT, code="HN", flow="Campaign", pos="whole list", when="Sends Thu Dec 24",
     card="Campaign · holiday note · Thu Dec 24", title="A holiday note from Sally", subject="A holiday note from Sally",
     preheader="Thank you, from the workbench.",
     notes=["No selling and no button to buy. Holiday wording for all clients."],
     body=hero("hero-sally-velvet.jpg", "Sally Brooks in black velvet")
-    + block("TITLE", h1("A holiday note from Sally", mb=16) + goldline(mb=0), pad="22px 48px 22px")
+    + title_block(None, "A holiday note from Sally")
     + letter([HI,
               "This year, thank you. For the stories you shared with me, for the pieces you chose for the people you love, and for every note you sent back.",
               "Whatever you celebrate, I hope these days are warm and unhurried.",
               "See you in the new year."])
-    + signature(pad="0 56px 40px"))
+    + picture("FROM THE LIBRARY · slideshow", "library-reel.gif", 300, 373, "Gold rings and pendants resting on old books in a library", pad="0 64px 40px"))
+
 
 # ───────── blocks/ (paste-ready snippets) and the catalog list
 B_DIR = os.path.join(ROOT, "blocks"); os.makedirs(B_DIR, exist_ok=True)
@@ -1142,7 +1175,8 @@ SNIPS = {
     "grid.html": ("Pieces in rows of three with names.", grid("PIECES", [13, 16, 21])),
     "pieces-with-names.html": ("Rows of photo + name, sides alternate.", checker("PIECES", [5, 12, 7])),
     "facts.html": ("Facts Sally confirmed: gold, timing, delivery, care.", facts("WORTH KNOWING", FACTS_W4)),
-    "letter-and-signature.html": ("Sally's words, left aligned, and her signature.", letter([HI, "[Sally's words]"]) + signature()),
+    "letter-and-signature.html": ("Sally's words beside her portrait, signed.", letter([HI, "[Sally's words]"])),
+    "facts-band.html": ("Facts in the dark band.", facts_band(FACTS_W4)),
     "night-quote.html": ("Dark band with a quote.", night("QUOTE", quote("[Quote]"), pad="34px 56px 38px")),
     "find-your-place.html": ("Six collection tiles.", find_your_piece("Find your place", CATS_W1)),
     "trust-strip.html": ("Solid gold · Book box · Duties.", trust_strip()),

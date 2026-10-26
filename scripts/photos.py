@@ -39,6 +39,7 @@ SHOTS = {
     "hero-archive-building.jpg": ("archive-st-vincent-building.jpg",  "hero",    (0, 0.08, 1, 0.70)),
     # large square photos inside collages (feature)
     "feature-hands.jpg":         ("hand-rings.jpg",                  "feature", (0, 0, 1, 1)),
+    "feature-locket.jpg":        ("locket-closeup.jpg",              "feature", (0, 0.30, 1, 1)),
     "feature-rings-table.jpg":   ("rings-table-bag.jpg",             "feature", (0, 0.20, 1, 0.95)),
     "feature-compass.jpg":       ("compass-horn-velvet.jpg",         "feature", (0, 0.06, 1, 0.86)),
     # small squares of worn pieces, same size as product tiles (tile)
