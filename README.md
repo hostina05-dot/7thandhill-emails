@@ -19,14 +19,15 @@ scripts/photos.py    цветокоррекция, кадрирование, п�
 scripts/build.py     preview.html и klaviyo/
 ```
 
-Имя файла = этап и код письма: `s1-w1-welcome.html`, `s2-k3-holiday-deadline.html` и т. д. Первая строка комментария в каждом файле: этап, дата запуска, флоу, код, место в серии, когда уходит. Ниже: метка карточки, статус, тема, прехедер, отправитель, логика флоу.
+Имя файла = группа и код письма: `flow-w1-welcome.html`, `salt-t1-note-from-sally.html`, `camp-k3-holiday-deadline.html`. Первая строка комментария в каждом файле: группа, флоу, код, место в серии, триггер и задержка (для кампаний дата). Ниже: метка карточки, тема, прехедер, отправитель, логика флоу.
 
-| Этап | Запуск | Письма |
+Всё запускается во вторник, 27 октября, тремя группами:
+
+| Группа | Когда | Письма |
 |---|---|---|
-| 1 | Tue Oct 27 | P0 попап Vault (макет и спецификация, сам попап собирается в Klaviyo Forms) · W1 to W5 welcome · T1 to T3 SALT |
-| 2 | Mon Nov 2 (K3 Tue Nov 3, 10:00) | K3 holiday deadline · C1, C2 cart · CO1 to CO3 checkout · CC1, CC2 concierge ($5,500+) |
-| 3 | Mon Nov 9 | B1, B2 browse · PP1 to PP3 after purchase · AN1 anniversary · K1 weekly skeleton |
-| 4 | by Tue Nov 24 | S1 to S3 sale · DYO · K4 gift guide · K2 Sally's edit (3 layouts) · LC last call · HN holiday note |
+| `flow-` · Flows | автоматически с Tue Oct 27 | P0 попап · Welcome 01 (W1 to W5) · Cart 06 (C1, C2) · Checkout 07 (CO1 to CO3, консьерж CC1, CC2 от $5,500) · Browse 05 (B1, B2) · After purchase 10 (PP1 to PP3) · Anniversary 15 (AN1) |
+| `salt-` · SALT consent | с Tue Oct 27 | T1 ежедневными волнами по 200 to 300 · T2 и T3 автоматически через 7 и 14 дней |
+| `camp-` · Campaigns | по датам | K2 Sally’s Edit Tue Oct 27 11:00 · K3 Tue Nov 3 · K1 Tue Nov 10 · DYO Tue Nov 17 · S1 Wed Nov 25 18:00 · S2 Fri Nov 27 08:00 · S3 Mon Nov 30 · K4 Thu Dec 3 · K2 Tue Dec 8 · LC Tue Dec 15 · HN Thu Dec 24 (+ запасной макет K2 без даты) |
 
 ## Как посмотреть
 https://raw.githack.com/hostina05-dot/7thandhill-emails/main/preview.html (после слияния в `main`).

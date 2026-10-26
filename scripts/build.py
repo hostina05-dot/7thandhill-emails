@@ -5,7 +5,7 @@
     python3 scripts/build.py     # preview.html grouped by stage + klaviyo/ copies
 
     build.py rebuilds preview.html: every template grouped by launch stage, with labels,
-        a plain overview of each stage on top, images embedded, Klaviyo tags filled
+        a plain overview of the three groups on top, images embedded, Klaviyo tags filled
         with sample data. Open it in any browser.
 
         Also writes klaviyo/*.html: the same templates with image paths pointed
@@ -27,35 +27,31 @@ IMAGES = ROOT / "assets" / "images"
 LOCAL_PREFIX = "../assets/images/"
 DEFAULT_BASE = "https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/"
 
-# Preview order inside each stage (brief order). Stage comes from the file name prefix s1-, s2-...
+# Preview order: three groups (from the file prefix flow-, salt-, camp-), letters in send order
 ORDER = [
-    "s1-p0", "s1-w1", "s1-w2", "s1-w3", "s1-w4", "s1-w5", "s1-t1", "s1-t2", "s1-t3",
-    "s2-k3", "s2-c1", "s2-c2", "s2-co1", "s2-co2", "s2-co3", "s2-cc1", "s2-cc2",
-    "s3-b1", "s3-b2", "s3-pp1", "s3-pp2", "s3-pp3", "s3-an1", "s3-k1",
-    "s4-s1", "s4-s2", "s4-s3", "s4-dyo", "s4-k4", "s4-k2", "s4-lc", "s4-hn",
+    "flow-p0", "flow-w1", "flow-w2", "flow-w3", "flow-w4", "flow-w5",
+    "flow-c1", "flow-c2", "flow-co1", "flow-co2", "flow-co3", "flow-cc1", "flow-cc2",
+    "flow-b1", "flow-b2", "flow-pp1", "flow-pp2", "flow-pp3", "flow-an1",
+    "salt-t1", "salt-t2", "salt-t3",
+    "camp-k2-sallys-edit-oct27", "camp-k3", "camp-k1", "camp-dyo", "camp-s1", "camp-s2", "camp-s3",
+    "camp-k4", "camp-k2-sallys-edit-dec8", "camp-lc", "camp-hn", "camp-k2-sallys-edit-spare",
 ]
 STAGES = {
-    1: "STAGE 1 · Goes live Tue, Oct 27",
-    2: "STAGE 2 · Goes live Mon, Nov 2 (K3 sends Tue, Nov 3)",
-    3: "STAGE 3 · Goes live Mon, Nov 9",
-    4: "STAGE 4 · By Tue, Nov 24",
+    "flow": "FLOWS · live from Tue, Oct 27 (automatic)",
+    "salt": "SALT CONSENT · from Tue, Oct 27",
+    "camp": "CAMPAIGNS · by date",
 }
 # Plain overview at the top of the preview
 OVERVIEW = [
-    ("Етап 1 · запуск у вівторок, 27 жовтня",
-     "Усе, що потрібно з першого дня. Попап на сайті запрошує в 7H Vault. Хто підписався, отримує 5 вітальних листів: "
-     "одразу лист із кодом на 15%, потім історію бренду, добірку Sally, головне про золото й доставку і пропозицію допомогти з вибором "
-     "(дні 0, 1, 3, 5, 8). Окремо 3 листи для старих клієнтів SALT: Sally представляє 7th & Hill і питає, чи писати їм далі. "
-     "Хто натиснув «Yes», отримує ті самі вітальні листи. Хто мовчить, отримує ще одне нагадування, а потім прощальний лист."),
-    ("Етап 2 · запуск у понеділок, 2 листопада",
-     "Листи, що повертають покупців. Розсилка K3 у вівторок, 3 листопада: до яких дат замовляти подарунки на свята. "
-     "Хто поклав виріб у кошик і пішов, отримує 2 листи (через 2 години і через добу). Хто дійшов до оплати й не завершив, "
-     "отримує 3 листи (через 2 години, добу і 2 доби). Якщо сума від $5,500, замість них приходять 2 особисті записки від Sally."),
-    ("Етапи 3 і 4 · з 9 листопада, усе готово до 24 листопада",
-     "Етап 3: хто переглядав виріб, отримує 2 листи. Після покупки йдуть 3 листи: подяка одразу, догляд за прикрасою на 21-й день, "
-     "нові вироби на 35-й день. Привітання з річницею покупки. Щотижнева розсилка «New in the studio». "
-     "Етап 4: Black Friday (25, 27 і 30 листопада), Design Your Own (17 листопада), гід подарунків (3 грудня), Sally’s edit (8 грудня), "
-     "останній день замовлень (15 грудня) і святкова записка від Sally (24 грудня)."),
+    ("Flows · live from Tue, Oct 27 (automatic)",
+     "Every automatic series: welcome, cart, checkout with the concierge notes, browse, after purchase and the purchase anniversary. "
+     "How many letters go out depends on what people do on the site."),
+    ("SALT consent · from Tue, Oct 27",
+     "The SALT list: T1 goes out in daily waves of 200 to 300 addresses. T2 and T3 follow automatically after 7 and 14 days, "
+     "only to people who have not said yes yet."),
+    ("Campaigns · by date",
+     "For everyone who has already given consent. The first, K2 Sally’s Edit, goes out on Tue, Oct 27 at 11:00, then once a week on Tuesdays: "
+     "K3 holiday dates, K1, Design Your Own, then Black Friday, the gift guide, the December letters and the New Year sale."),
 ]
 
 SAMPLE = {
@@ -122,7 +118,7 @@ def build_preview():
         raw = path.read_text(encoding="utf-8")
         used.update(re.findall(re.escape(LOCAL_PREFIX) + r"([\w.-]+)", raw))
         head = raw.split("-->", 1)[0]
-        stage = int(re.match(r"s(\d)-", path.name).group(1)) if re.match(r"s\d-", path.name) else 0
+        stage = path.name.split("-", 1)[0]
         cards.append({
             "file": path.name,
             "stage": stage,
@@ -197,7 +193,7 @@ PREVIEW = r"""<!DOCTYPE html>
 </head>
 <body>
 <header>
-  <h1>7th &amp; Hill <small>Launch letters · preview by stage</small></h1>
+  <h1>7th &amp; Hill <small>Launch letters · flows, SALT, campaigns</small></h1>
   <div class="controls">
     <div class="seg" data-key="width" aria-label="Width">
       <button data-v="600" aria-pressed="true">Desktop</button><button data-v="375">Mobile</button>

@@ -266,6 +266,7 @@ def collage(name, small_pair, feature, row, feature_side="right"):
 
 def checker(name, ids):
     """Alternating rows: piece photo on one side, its name on the other (K2 layout)."""
+    assert not any(isinstance(i, str) for i in ids), f"{name}: named rows need named pieces"
     rows = ""
     for i, n in enumerate(ids):
         pr = piece(n)
@@ -417,15 +418,18 @@ VAULT = "You're receiving this because you joined the 7H Vault at 7thandhilljewe
 SALT_REASON = "You're receiving this as a former SALT Fine Jewelry client of Sally's."
 
 FROM = "Sally at 7th & Hill <hello@7thandhilljewelry.ca> · replies to hello@7thandhilljewelry.ca"
-STAGE_LIVE = {1: "Goes live Tue Oct 27", 2: "Goes live Mon Nov 2", 3: "Goes live Mon Nov 9", 4: "By Tue Nov 24"}
+GROUPS = {"flow": "Flows · live from Tue, Oct 27 (automatic)",
+          "salt": "SALT consent · from Tue, Oct 27",
+          "camp": "Campaigns · by date"}
 READY, DRAFT = "Ready for Sally", "Draft, not yet approved by Sally"
 WRITTEN = []
 
-def doc(fname, *, stage, code, flow, pos, when, card, title, subject, preheader, body, status=READY,
+def doc(fname, *, code, flow, pos, when, card, title, subject, preheader, body, status=READY,
         reason=SUB, logic=(), notes=(), page=False):
     """Write one letter. The comment header is what the preview reads: stage, card label, status, logic."""
-    lines = [f"  Stage {stage} · {STAGE_LIVE[stage]} · {flow} · {code} ({pos}) · {when}",
-             f"  Card: Stage {stage} · {code} · {card}",
+    group = GROUPS[fname.split("-", 1)[0]]
+    lines = [f"  {group} · {flow} · {code} ({pos}) · {when}",
+             f"  Card: {code} · {card}",
              f"  Status: {status}",
              f"  Subject: {subject}",
              f"  Preheader: {preheader}",
@@ -537,7 +541,9 @@ def facts(name, rows, pad="0 48px 32px"):
 """, pad=pad)
 
 def grid(name, items, cols=3, captions=None):
-    """Pieces in rows of 2 or 3, name under each (and an optional line, e.g. who it is for)."""
+    """Pieces in rows of 2 or 3, name under each (and an optional line, e.g. who it is for).
+    Every card shows a real piece name, so animated cells belong in collages, not here."""
+    assert not any(isinstance(i, str) for i in items), f"{name}: grid cards need named pieces"
     w, pct = (172, "33.33%") if cols == 3 else (262, "50%")
     rows = ""
     for r in range(0, len(items), cols):
@@ -632,10 +638,10 @@ SALT_LOGIC = [
 # ═════════════════════════ STAGE 1 · goes live Tue Oct 27 ═════════════════════════
 # Look of every letter (the approved one): our photo with the seal, a short title, Sally's words in her
 # note with the portrait, facts in a dark band, pieces as large photos, the category line at the end.
-W = dict(stage=1, flow="Welcome flow 01")
+W = dict(flow="Welcome flow 01")
 
-doc("s1-w1-welcome.html", **W, code="W1", pos="email 1 of 5", when="Sends immediately after signup",
-    card="Welcome · email 1 of 5 · immediately after signup",
+doc("flow-w1-welcome.html", **W, code="W1", pos="email 1 of 5", when="Right after signup",
+    card="Welcome 01 · email 1 of 5 · right after signup",
     title="Welcome to 7th &amp; Hill", subject="Your key to the Vault",
     preheader="15% off your first piece, and first word on every sale.",
     status="Waiting for Sally: GTA cleaning perk, collection tiles", reason=VAULT,
@@ -652,8 +658,8 @@ doc("s1-w1-welcome.html", **W, code="W1", pos="email 1 of 5", when="Sends immedi
     + ps("Reply to this letter anytime. It lands in my inbox, not in a folder nobody reads.").replace("padding:0 40px 30px", "padding:0 40px 14px")
     + signature(pad="0 40px 30px"))
 
-doc("s1-w2-story.html", **W, code="W2", pos="email 2 of 5", when="Sends on day 1",
-    card="Welcome · email 2 of 5 · day 1",
+doc("flow-w2-story.html", **W, code="W2", pos="email 2 of 5", when="Day 1 after signup",
+    card="Welcome 01 · email 2 of 5 · day 1",
     title="Jewelry should mean something", subject="It started on a corner in Los Angeles",
     preheader="Gold leaf, a sketch, and a necklace I still wear.", reason=VAULT,
     body=hero("hero-archive-building.jpg", "The St. Vincent's Jewelry Center on the corner of 7th and Hill, downtown Los Angeles")
@@ -669,8 +675,8 @@ doc("s1-w2-story.html", **W, code="W2", pos="email 2 of 5", when="Sends on day 1
     + cta("Meet Sally", STORY)
     + cat_line())
 
-doc("s1-w3-find-your-piece.html", **W, code="W3", pos="email 3 of 5", when="Sends on day 3",
-    card="Welcome · email 3 of 5 · day 3",
+doc("flow-w3-find-your-piece.html", **W, code="W3", pos="email 3 of 5", when="Day 3 after signup",
+    card="Welcome 01 · email 3 of 5 · day 3",
     title="Find the piece that feels like you", subject="Nine pieces I'd start with",
     preheader="Charms, rings and a locket, chosen by Sally.", reason=VAULT,
     status="Waiting for Sally: nine pieces",
@@ -685,8 +691,8 @@ doc("s1-w3-find-your-piece.html", **W, code="W3", pos="email 3 of 5", when="Send
     + sally_note("Not sure where to start? Reply and tell me who it&rsquo;s for.")
     + cat_line())
 
-doc("s1-w4-worn-and-kept.html", **W, code="W4", pos="email 4 of 5", when="Sends on day 5",
-    card="Welcome · email 4 of 5 · day 5",
+doc("flow-w4-worn-and-kept.html", **W, code="W4", pos="email 4 of 5", when="Day 5 after signup",
+    card="Welcome 01 · email 4 of 5 · day 5",
     title="Made to be worn. Made to be kept.", subject="Worth knowing before you choose",
     preheader="Solid gold, timing and delivery, in short.", reason=VAULT,
     status="Waiting for Sally: 14k or Solid gold",
@@ -695,13 +701,13 @@ doc("s1-w4-worn-and-kept.html", **W, code="W4", pos="email 4 of 5", when="Sends 
         "My grandmother Lily wore her charm bracelet from 1913 to 2013. It&rsquo;s why I make pieces for every day, not for a drawer.")
     + facts_band(FACTS_W4)
     + heading("Made personal", pad="34px 40px 18px")
-    + checker("MADE PERSONAL", [5, "charms", 7])
+    + checker("MADE PERSONAL", [5, 12, 7])
     + cta("Ask Sally anything", MAIL + "?subject=A%20question%20for%20Sally", pad="4px 64px 12px")
     + line("Or simply reply to this email.", pad="0 64px 30px", size_=13, color=SOFT)
     + cat_line())
 
-doc("s1-w5-help-finding.html", **W, code="W5", pos="email 5 of 5", when="Sends on day 8",
-    card="Welcome · email 5 of 5 · day 8",
+doc("flow-w5-help-finding.html", **W, code="W5", pos="email 5 of 5", when="Day 8 after signup",
+    card="Welcome 01 · email 5 of 5 · day 8",
     title="Need help finding the one?", subject="Need help finding the one?",
     preheader="Tell me who it's for. I'll pick three.", reason=VAULT,
     body=hero("hero-sally-velvet.jpg", "Sally Brooks in black velvet")
@@ -717,9 +723,9 @@ doc("s1-w5-help-finding.html", **W, code="W5", pos="email 5 of 5", when="Sends o
     + block("SPACER", "", pad="22px 0 0")
     + cat_line())
 
-T = dict(stage=1, flow="SALT transition")
-doc("s1-t1-note-from-sally.html", **T, code="T1", pos="email 1 of 3", when="SALT list, waves of 200 to 300 a day",
-    card="SALT · email 1 of 3 · waves of 200 to 300 a day",
+T = dict(flow="SALT transition")
+doc("salt-t1-note-from-sally.html", **T, code="T1", pos="email 1 of 3", when="Daily waves of 200 to 300",
+    card="SALT · email 1 of 3 · daily waves of 200 to 300",
     title="A note from Sally", subject="A note from Sally", preheader="You may remember me from SALT.",
     reason=SALT_REASON, logic=SALT_LOGIC,
     notes=["No code, no prices, no product grid in this letter.", "This isn't for me = Klaviyo unsubscribe link."],
@@ -737,9 +743,9 @@ doc("s1-t1-note-from-sally.html", **T, code="T1", pos="email 1 of 3", when="SALT
           extra=text_link("This isn&rsquo;t for me", "{% unsubscribe_url %}", mt=20))
     + block("SPACER", "", pad="24px 0 0"))
 
-doc("s1-t2-keep-writing.html", **T, code="T2", pos="email 2 of 3",
-    when="7 days after T1, only to people who did not click and did not unsubscribe",
-    card="SALT · email 2 of 3 · 7 days after T1, non-clickers only",
+doc("salt-t2-keep-writing.html", **T, code="T2", pos="email 2 of 3",
+    when="Automatic, 7 days after T1, only to people who did not click and did not unsubscribe",
+    card="SALT · email 2 of 3 · automatic, 7 days after T1, non-clickers only",
     title="Should I keep writing?", subject="Should I keep writing?", preheader="One click, either way.",
     reason=SALT_REASON, logic=SALT_LOGIC[:1] + ["Same Yes logic as T1 (consent_source = SALT T2)."],
     body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter")
@@ -752,8 +758,8 @@ doc("s1-t2-keep-writing.html", **T, code="T2", pos="email 2 of 3",
           extra=text_link("No, thank you", "{% unsubscribe_url %}", mt=20))
     + block("SPACER", "", pad="24px 0 0"))
 
-doc("s1-t3-goodbye.html", **T, code="T3", pos="email 3 of 3", when="7 days after T2, same condition",
-    card="SALT · email 3 of 3 · 7 days after T2, non-clickers only",
+doc("salt-t3-goodbye.html", **T, code="T3", pos="email 3 of 3", when="Automatic, 14 days after T1, same condition",
+    card="SALT · email 3 of 3 · automatic, 14 days after T1, non-clickers only",
     title="Thank you, and goodbye for now", subject="Thank you, and goodbye for now",
     preheader="This is my last note, unless you'd like more.", reason=SALT_REASON,
     logic=["After this send, people who did not click are suppressed and never emailed again."],
@@ -817,9 +823,9 @@ POPUP = f"""<!DOCTYPE html>
 </div>
 </body></html>
 """
-doc("s1-p0-vault-popup.html", stage=1, code="P0", flow="Site popup", pos="Klaviyo form, option B",
+doc("flow-p0-vault-popup.html", code="P0", flow="Site popup", pos="Klaviyo form, option B",
     when="New visitors, after 8 s or on exit, once every 14 days, not existing subscribers",
-    card="Popup · option B · new visitors after 8 s or on exit",
+    card="Popup · new visitors, after 8 s or on exit, once every 14 days",
     title="7H Vault popup", subject="(popup, not an email)", preheader="Some pieces never make it to the site",
     status="Waiting for Sally: which pieces are subscriber-only", page=True, body=POPUP,
     notes=["Layout mock and copy spec. The live popup is built in Klaviyo Forms."])
@@ -828,8 +834,8 @@ doc("s1-p0-vault-popup.html", stage=1, code="P0", flow="Site popup", pos="Klaviy
 GIFTS = [201, 202, 203, (28, "iLove Smartphone Charm")]
 GIFT_FOR = ["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"]
 
-doc("s2-k3-holiday-deadline.html", stage=2, code="K3", flow="Campaign", pos="whole list", when="Sends Tue Nov 3, 10:00 Toronto",
-    card="Campaign · Tue Nov 3, 10:00",
+doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list", when="Tue Nov 3",
+    card="Campaign · holiday deadline · Tue Nov 3",
     title="For holiday gifts, the clock starts now", subject="For holiday gifts, the clock starts now",
     preheader="Order dates for every kind of piece.",
     status="Draft, not yet approved by Sally · waiting for holiday order dates",
@@ -847,9 +853,9 @@ doc("s2-k3-holiday-deadline.html", stage=2, code="K3", flow="Campaign", pos="who
     + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 34px", size_=13, color=SOFT)
     + trust_strip())
 
-C = dict(stage=2, status=DRAFT)
-doc("s2-c1-piece-waiting.html", **C, code="C1", flow="Cart flow 06", pos="email 1 of 2", when="+2 h after Added to Cart",
-    card="Cart · email 1 of 2 · +2 h", title="Your piece is waiting", subject="Your piece is waiting",
+C = dict(status=DRAFT)
+doc("flow-c1-piece-waiting.html", **C, code="C1", flow="Cart flow 06", pos="email 1 of 2", when="2 h after Added to Cart",
+    card="Cart 06 · email 1 of 2 · 2 h after Added to Cart", title="Your piece is waiting", subject="Your piece is waiting",
     preheader="Saved in your bag, whenever you're ready.",
     notes=["Bag contents come from the Klaviyo Added to Cart event (dynamic block)."],
     body=hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", CART_URL)
@@ -858,11 +864,11 @@ doc("s2-c1-piece-waiting.html", **C, code="C1", flow="Cart flow 06", pos="email 
     + dyn_cart()
     + cta("Return to your bag", CART_URL, pad="4px 64px 34px")
     + heading("From the workbench", pad="0 40px 18px")
-    + grid("FROM THE WORKBENCH", ["rings", 13, "earrings"])
+    + grid("FROM THE WORKBENCH", [21, 13, 17])
     + trust_strip())
 
-doc("s2-c2-sizing-question.html", **C, code="C2", flow="Cart flow 06", pos="email 2 of 2", when="+24 h after Added to Cart",
-    card="Cart · email 2 of 2 · +24 h", title="A question about sizing?", subject="A question about sizing?",
+doc("flow-c2-sizing-question.html", **C, code="C2", flow="Cart flow 06", pos="email 2 of 2", when="24 h after Added to Cart",
+    card="Cart 06 · email 2 of 2 · 24 h after Added to Cart", title="A question about sizing?", subject="A question about sizing?",
     preheader="Send me a photo of what you already wear.",
     body=hero("hero-sweater-hand.jpg", "A hand wearing a Marquise Art Deco ring, beside a gold enamel pendant", CART_URL)
     + title_block(None, "A question about sizing?")
@@ -874,8 +880,8 @@ doc("s2-c2-sizing-question.html", **C, code="C2", flow="Cart flow 06", pos="emai
           extra=text_link("Return to your bag", CART_URL, mt=20))
     + block("SPACER", "", pad="24px 0 0"))
 
-doc("s2-co1-one-step-away.html", **C, code="CO1", flow="Checkout flow 07", pos="email 1 of 3", when="+2 h after Started Checkout",
-    card="Checkout · email 1 of 3 · +2 h", title="You were one step away", subject="You were one step away",
+doc("flow-co1-one-step-away.html", **C, code="CO1", flow="Checkout flow 07", pos="email 1 of 3", when="2 h after Started Checkout",
+    card="Checkout 07 · email 1 of 3 · 2 h after Started Checkout", title="You were one step away", subject="You were one step away",
     preheader="Your order is saved, just as you left it.",
     logic=["If checkout value is $5,500 or more, the flow sends CC1 and CC2 instead of CO1 to CO3."],
     body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter", CHECKOUT)
@@ -883,21 +889,21 @@ doc("s2-co1-one-step-away.html", **C, code="CO1", flow="Checkout flow 07", pos="
         "Your order is saved, just as you left it. When you&rsquo;re ready, it&rsquo;s one click away.")
     + cta("Return to your bag", CHECKOUT, pad="4px 64px 36px")
     + heading("If you&rsquo;re still deciding", "A few favourites", pad="0 40px 22px")
-    + checker("FAVOURITES", ["necklaces", 21, 2])
+    + checker("FAVOURITES", [14, 21, 2])
     + trust_strip())
 
-doc("s2-co2-questions.html", **C, code="CO2", flow="Checkout flow 07", pos="email 2 of 3", when="+22 h after CO1",
-    card="Checkout · email 2 of 3 · +22 h", title="Any questions before you decide?", subject="Any questions before you decide?",
+doc("flow-co2-questions.html", **C, code="CO2", flow="Checkout flow 07", pos="email 2 of 3", when="22 h after CO1",
+    card="Checkout 07 · email 2 of 3 · 22 h after CO1", title="Any questions before you decide?", subject="Any questions before you decide?",
     preheader="Sizing, timing and delivery, in short.",
     body=hero("hero-necklaces-book.jpg", "Gold necklaces resting on an old green leather book", CHECKOUT)
     + title_block("Short answers", "Any questions before you decide?", "For anything else, simply reply.")
     + facts_band([("Sizing", FACT_SIZING), ("Timing", FACT_TIMING), ("Delivery", FACT_DELIVERY)])
     + block("SPACER", "", pad="30px 0 0")
-    + grid("WORTH A LOOK", ["pendants", 16, "rings"])
+    + grid("WORTH A LOOK", [25, 16, 20])
     + cta("Return to your bag", CHECKOUT, pad="12px 64px 36px"))
 
-doc("s2-co3-meant-for-a-date.html", **C, code="CO3", flow="Checkout flow 07", pos="email 3 of 3", when="+48 h after CO1",
-    card="Checkout · email 3 of 3 · +48 h", title="If it's meant for a date", subject="If it's meant for a date",
+doc("flow-co3-meant-for-a-date.html", **C, code="CO3", flow="Checkout flow 07", pos="email 3 of 3", when="48 h after CO1",
+    card="Checkout 07 · email 3 of 3 · 48 h after CO1", title="If it's meant for a date", subject="If it's meant for a date",
     preheader="Count back from the day you need it.",
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn", CHECKOUT)
     + title_block("Timing", "If it&rsquo;s meant for a date",
@@ -906,27 +912,27 @@ doc("s2-co3-meant-for-a-date.html", **C, code="CO3", flow="Checkout flow 07", po
                   ("7th &amp; Hill Exclusives", "Made in 2 to 4 weeks."),
                   ("Curated designs", "Made in 6 to 8 weeks.")])
     + sally_note("Tell me the date and I&rsquo;ll tell you what&rsquo;s possible.")
-    + grid("IN TIME", [23, "charms", 9])
+    + grid("IN TIME", [23, 31, 9])
     + cta("Return to your bag", CHECKOUT, pad="12px 64px 8px", extra=text_link("Reply to Sally", MAIL, mt=20))
     + block("SPACER", "", pad="24px 0 0"))
 
-doc("s2-cc1-concierge-note.html", **C, code="CC1", flow="Checkout flow 07 · concierge", pos="note 1 of 2",
-    when="+2 h, checkout value $5,500 or more (instead of CO1 to CO3)",
-    card="Concierge · note 1 of 2 · +2 h, checkout $5,500+", title="A quick note from Sally", subject="A quick note from Sally",
+doc("flow-cc1-concierge-note.html", **C, code="CC1", flow="Checkout flow 07 · concierge", pos="note 1 of 2",
+    when="2 h after Started Checkout, checkout $5,500 or more (instead of CO1 to CO3)",
+    card="Checkout 07 · concierge note 1 of 2 · 2 h after Started Checkout, $5,500 or more", title="A quick note from Sally", subject="A quick note from Sally",
     preheader="I'd like to help you choose, personally.",
     logic=["Flow split on checkout value: $5,500 or more goes here instead of CO1 to CO3. Sally replies personally."],
     body=hero("hero-sally-home.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill", CHECKOUT)
     + title_block(None, "A quick note from Sally")
     + letter([HI,
-              "I saw you were close to choosing a piece. For something this considered, I&rsquo;d like to help personally: size, stones, timing, anything at all.",
+              "Thank you for considering a piece from 7th &amp; Hill. For something this considered, I&rsquo;d like to help personally: size, stones, timing, anything at all.",
               "Simply reply to this email and I&rsquo;ll answer myself."])
     + cta("Reply to Sally", MAIL + "?subject=A%20note%20for%20Sally", pad="0 64px 8px",
           extra=text_link("Return to your bag", CHECKOUT, mt=20))
     + block("SPACER", "", pad="24px 0 0"))
 
-doc("s2-cc2-concierge-timeline.html", **C, code="CC2", flow="Checkout flow 07 · concierge", pos="note 2 of 2",
-    when="+24 h after CC1, only if there was no reply",
-    card="Concierge · note 2 of 2 · +24 h, only if no reply", title="About your timeline", subject="About your timeline",
+doc("flow-cc2-concierge-timeline.html", **C, code="CC2", flow="Checkout flow 07 · concierge", pos="note 2 of 2",
+    when="24 h after CC1, only if there was no reply",
+    card="Checkout 07 · concierge note 2 of 2 · 24 h after CC1, only if no reply", title="About your timeline", subject="About your timeline",
     preheader="If it's easier to talk, I'm here.",
     logic=["Sends only if there was no reply to CC1 within a day."],
     body=hero("hero-sally-velvet.jpg", "Sally Brooks in black velvet", CHECKOUT)
@@ -939,9 +945,9 @@ doc("s2-cc2-concierge-timeline.html", **C, code="CC2", flow="Checkout flow 07 ·
     + block("SPACER", "", pad="24px 0 0"))
 
 # ═════════════════════════ STAGE 3 · goes live Mon Nov 9 ═════════════════════════
-B = dict(stage=3, status=DRAFT)
-doc("s3-b1-still-thinking.html", **B, code="B1", flow="Browse flow 05", pos="email 1 of 2", when="+4 h after Viewed Product",
-    card="Browse · email 1 of 2 · +4 h", title="Still thinking about it?", subject="Still thinking about it?",
+B = dict(status=DRAFT)
+doc("flow-b1-still-thinking.html", **B, code="B1", flow="Browse flow 05", pos="email 1 of 2", when="4 h after Viewed Product",
+    card="Browse 05 · email 1 of 2 · 4 h after Viewed Product", title="Still thinking about it?", subject="Still thinking about it?",
     preheader="A piece worth a second look.",
     logic=["Re-entry: once every 14 days per person."],
     notes=["The viewed piece comes from the Klaviyo Viewed Product event. The collage beside it is curated;",
@@ -954,19 +960,19 @@ doc("s3-b1-still-thinking.html", **B, code="B1", flow="Browse flow 05", pos="ema
     + collage("BESIDE IT", (13, "pendants"), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/search?q=pendant"), (21, 16, 31))
     + cat_line())
 
-doc("s3-b2-worth-knowing.html", **B, code="B2", flow="Browse flow 05", pos="email 2 of 2", when="+24 h after B1",
-    card="Browse · email 2 of 2 · +24 h", title="Worth knowing before you choose", subject="Worth knowing before you choose",
+doc("flow-b2-worth-knowing.html", **B, code="B2", flow="Browse flow 05", pos="email 2 of 2", when="24 h after B1",
+    card="Browse 05 · email 2 of 2 · 24 h after B1", title="Worth knowing before you choose", subject="Worth knowing before you choose",
     preheader="Solid gold, timing and delivery, in short.",
     body=hero("hero-necklaces-book.jpg", "Gold necklaces resting on an old green leather book")
     + title_block("The quiet, important part", "Worth knowing before you choose")
     + facts_band(FACTS_W4)
     + block("SPACER", "", pad="30px 0 0")
-    + checker("WORTH A LOOK", [14, "pendants", 26])
+    + checker("WORTH A LOOK", [14, 4, 26])
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
 
-doc("s3-pp1-thank-you.html", **B, code="PP1", flow="After-purchase flow 10", pos="email 1 of 3", when="Sends right away after Placed Order",
-    card="After purchase · email 1 of 3 · right away", title="Thank you", subject="Thank you for choosing 7th & Hill",
+doc("flow-pp1-thank-you.html", **B, code="PP1", flow="After-purchase flow 10", pos="email 1 of 3", when="Right after Placed Order",
+    card="After purchase 10 · email 1 of 3 · right after Placed Order", title="Thank you", subject="Thank you for choosing 7th & Hill",
     preheader="Your piece is in good hands.",
     body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
     + title_block("Thank you", greet(f"Thank you, {FN}", "Thank you"),
@@ -974,11 +980,11 @@ doc("s3-pp1-thank-you.html", **B, code="PP1", flow="After-purchase flow 10", pos
     + picture("UNBOXING · animation", "unboxing.gif", 300, 403, "A 7th &amp; Hill book box opening to show diamond earrings and a ring",
               cap="Every piece arrives in our green book box, lined in velvet", pad="0 64px 10px")
     + sally_note("Thank you for choosing a piece of mine. I hope it becomes one you never take off.")
-    + grid("ALONGSIDE", ["necklaces", 31, "earrings"])
+    + grid("ALONGSIDE", [13, 31, 17])
     + cat_line())
 
-doc("s3-pp2-care.html", **B, code="PP2", flow="After-purchase flow 10", pos="email 2 of 3", when="Day 21 after Placed Order",
-    card="After purchase · email 2 of 3 · day 21", title="Welcome to the 7H story", subject="Welcome to the 7H story",
+doc("flow-pp2-care.html", **B, code="PP2", flow="After-purchase flow 10", pos="email 2 of 3", when="Day 21 after Placed Order",
+    card="After purchase 10 · email 2 of 3 · day 21", title="Welcome to the 7H story", subject="Welcome to the 7H story",
     preheader="A few habits that keep it beautiful for years.",
     notes=["Care rules follow the site's Jewelry Care page."],
     body=hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book")
@@ -997,11 +1003,11 @@ doc("s3-pp2-care.html", **B, code="PP2", flow="After-purchase flow 10", pos="ema
     + picture("THE BOOK BOX", "story-bookbox.jpg", 488, 364, "The green 7th &amp; Hill book box, lined in velvet",
               cap="Store it in its book box between wears", pad="34px 64px 30px")
     + heading("To wear alongside it", "Charms to add over time", pad="0 40px 22px")
-    + grid("ALONGSIDE", [(23, "Signature Toggle Charm"), "charms", 9])
+    + grid("ALONGSIDE", [(23, "Signature Toggle Charm"), 2, 9])
     + cat_line())
 
-doc("s3-pp3-next-piece.html", **B, code="PP3", flow="After-purchase flow 10", pos="email 3 of 3", when="Day 35 after Placed Order",
-    card="After purchase · email 3 of 3 · day 35", title="Your next piece", subject="Your next piece",
+doc("flow-pp3-next-piece.html", **B, code="PP3", flow="After-purchase flow 10", pos="email 3 of 3", when="Day 35 after Placed Order",
+    card="After purchase 10 · email 3 of 3 · day 35", title="Your next piece", subject="Your next piece",
     preheader="New from the workbench, in case something speaks to you.",
     body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a gold capsule locket")
     + title_block("New from the workbench", "Your next piece",
@@ -1010,9 +1016,9 @@ doc("s3-pp3-next-piece.html", **B, code="PP3", flow="After-purchase flow 10", po
     + cta("Step inside", SHOP)
     + cat_line())
 
-doc("s3-an1-a-year-ago.html", **B, code="AN1", flow="Anniversary flow 15", pos="email 1 of 1",
+doc("flow-an1-a-year-ago.html", **B, code="AN1", flow="Anniversary flow 15", pos="email 1 of 1",
     when="Two weeks before the anniversary of the first purchase",
-    card="Anniversary · two weeks before the purchase anniversary", title="A year ago", subject="A year ago",
+    card="Anniversary 15 · two weeks before the purchase anniversary", title="A year ago", subject="A year ago",
     preheader="A year with your 7th & Hill piece.",
     notes=["Trigger: date property of the first order. To show the exact date, insert the profile date property in the first line."],
     body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
@@ -1022,8 +1028,8 @@ doc("s3-an1-a-year-ago.html", **B, code="AN1", flow="Anniversary flow 15", pos="
     + cta("Mark the year", SHOP)
     + cat_line())
 
-doc("s3-k1-new-in-studio.html", stage=3, status=DRAFT, code="K1", flow="Weekly campaign", pos="skeleton",
-    when="Weekly, first one Tue Nov 10", card="Campaign · weekly · first Tue Nov 10",
+doc("camp-k1-new-in-studio.html", status=DRAFT, code="K1", flow="Weekly campaign", pos="skeleton",
+    when="Tue Nov 10", card="Campaign · New in the studio · Tue Nov 10",
     title="New in the studio", subject="New in the studio: [this week]", preheader="[What just left the workbench]",
     notes=["Skeleton: Sally sends the pieces each week. Swap the photo, the six pieces and the two lines."],
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
@@ -1051,23 +1057,23 @@ def offer_light(big, small):
               </table>
 """, pad="0 48px 32px")
 
-SALE = dict(stage=4, status=DRAFT, flow="Sale template", pos="Black Friday", notes=SALE_NOTES)
+SALE = dict(status=DRAFT, flow="Sale template", pos="Black Friday", notes=SALE_NOTES)
 
 # S1 · private: close-up photo, Sally's note, the offer framed in gold, three pieces
-doc("s4-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:00 Toronto",
-    card="Sale · Vault early access · Wed Nov 25, 18:00", title="Before anyone else",
+doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:00",
+    card="Campaign · Vault early access · Wed Nov 25, 18:00", title="Before anyone else",
     subject="Before anyone else", preheader="Early access for the Vault.",
     logic=["Audience: Vault list plus SALT contacts who said yes."],
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
     + title_block("For the Vault, first", "Before anyone else")
     + sally_note("Black Friday opens to the Vault tonight, a little before everyone else. I wanted you to see these first.").replace("padding:28px 56px 34px", "padding:0 56px 30px")
     + offer_light("20% off", "Every piece marked A 7th &amp; Hill Exclusive.<br>Each is made in 2 to 4 weeks, in time for the holidays.")
-    + grid("EXCLUSIVES", [26, "rings", 14])
+    + grid("EXCLUSIVES", [26, 21, 14])
     + cta("Step inside", SHOP, pad="16px 64px 40px"))
 
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
-doc("s4-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00 Toronto",
-    card="Sale · Black Friday · Fri Nov 27, 08:00", title="20% off our Exclusives",
+doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
+    card="Campaign · Black Friday · Fri Nov 27, 08:00", title="20% off our Exclusives",
     subject="20% off our Exclusives", preheader="From today until Monday.",
     body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a gold capsule locket")
     + night("OFFER · swap for each sale",
@@ -1081,19 +1087,19 @@ doc("s4-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00 Toront
     + trust_strip())
 
 # S3 · the last word: a letter on the desk, short, pieces with names
-doc("s4-s3-last-day.html", **SALE, code="S3", when="Mon Nov 30, 10:00 Toronto",
-    card="Sale · last day · Mon Nov 30, 10:00", title="Today is the last day",
+doc("camp-s3-last-day.html", **SALE, code="S3", when="Mon Nov 30",
+    card="Campaign · last day of the sale · Mon Nov 30", title="Today is the last day",
     subject="Today is the last day", preheader="The 20% on our Exclusives ends tonight.",
     logic=["Audience: opened S2 and did not buy."],
     body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter")
     + title_block("The last day", "Today is the last day",
         "The 20% on our Exclusives ends tonight. If one has been on your mind, this is the moment.")
     + offer_light("Until midnight", "20% off every piece marked A 7th &amp; Hill Exclusive.")
-    + checker("STILL HERE", ["rings", 14, "pendants"])
+    + checker("STILL HERE", [21, 14, 1])
     + cta("Step inside", SHOP, pad="0 64px 40px"))
 
-doc("s4-dyo-design-your-own.html", stage=4, status=DRAFT, code="DYO", flow="Campaign", pos="whole list",
-    when="Sends Tue Nov 17", card="Campaign · Design Your Own · Tue Nov 17",
+doc("camp-dyo-design-your-own.html", status=DRAFT, code="DYO", flow="Campaign", pos="whole list",
+    when="Tue Nov 17", card="Campaign · Design Your Own · Tue Nov 17",
     title="Design your own", subject="Some pieces don't exist yet", preheader="Let's make yours together.",
     body=hero("hero-necklaces-book.jpg", "Gold necklaces resting on an old green leather book")
     + title_block("Design your own", "Listen. Design. Adorn.",
@@ -1105,27 +1111,27 @@ doc("s4-dyo-design-your-own.html", stage=4, status=DRAFT, code="DYO", flow="Camp
             ("Adorn", "It&rsquo;s made to order, just for you."),
           ], numerals=["i", "ii", "iii"]), pad="34px 56px 40px")
     + heading("Made personal", pad="34px 40px 18px")
-    + checker("MADE PERSONAL", [5, "charms", 105])
+    + checker("MADE PERSONAL", [5, 12, 105])
     + cta("Start your design", MAIL + "?subject=Design%20my%20own", pad="4px 64px 8px",
           extra=text_link("See Design Your Own", DYO, mt=20))
     + block("SPACER", "", pad="24px 0 0")
     + cat_line())
 
-doc("s4-k4-gift-guide.html", stage=4, status="Draft, not yet approved by Sally · waiting for the in-stock and Exclusives list",
-    code="K4", flow="Campaign", pos="whole list", when="Sends Thu Dec 3", card="Campaign · gift guide · Thu Dec 3",
+doc("camp-k4-gift-guide.html", status="Draft, not yet approved by Sally · waiting for the in-stock and Exclusives list",
+    code="K4", flow="Campaign", pos="whole list", when="Thu Dec 3", card="Campaign · gift guide · Thu Dec 3",
     title="The 7H gift guide", subject="The 7H gift guide", preheader="Pieces that can still arrive in time.",
     notes=["Show only pieces that can still arrive: in stock and 7th & Hill Exclusives. Grid below is a placeholder."],
     body=hero("hero-model-sweater.jpg", "A woman between old books wearing a gold enamel pendant, a heart charm necklace and a marquise ring, holding a 7th &amp; Hill bag")
     + title_block("The 7H gift guide", "Gifts that arrive in time",
         "Every piece here is in stock or one of our Exclusives, so it can still arrive before the holidays.")
-    + grid("GIFTS", [201, "necklaces", "rings", "charms"], cols=2,
+    + grid("GIFTS", [201, 13, 21, (28, "iLove Smartphone Charm")], cols=2,
            captions=["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"])
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
     + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 34px", size_=13, color=SOFT)
     + trust_strip())
 
-EDIT = dict(stage=4, status=DRAFT, code="K2", flow="Campaign", pos="Sally's edit")
-doc("s4-k2-sallys-edit.html", **EDIT, when="Sends Tue Dec 8", card="Campaign · Sally's edit · green library · Tue Dec 8",
+EDIT = dict(status=DRAFT, code="K2", flow="Campaign", pos="Sally’s Edit")
+doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign · Sally’s Edit · green library · Tue Dec 8",
     title="Sally&rsquo;s edit", subject="Sally's edit · [theme]", preheader="The pieces I kept reaching for this week.",
     notes=["The green library layout Sally chose. Reusable: swap the photo, the note and the pieces."],
     body=masthead("", "")
@@ -1134,16 +1140,16 @@ doc("s4-k2-sallys-edit.html", **EDIT, when="Sends Tue Dec 8", card="Campaign · 
     + collage("THE EDIT", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/search?q=pendant"), (7, 3, "rings"))
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
-doc("s4-k2-sallys-edit-pieces.html", **EDIT, when="Alternative layout", card="Campaign · Sally's edit · pieces with names",
+doc("camp-k2-sallys-edit-oct27.html", **EDIT, when="Tue Oct 27, 11:00", card="Campaign · Sally’s Edit · Tue Oct 27, 11:00",
     title="Sally&rsquo;s edit", subject="Sally's edit · [theme]", preheader="Four I'd give, and four I'd keep.",
     notes=["Alternative layout: photo, note, pieces with names."],
     body=masthead("", "")
     + hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", SITE + "/search?q=pendant")
     + sally_note("Every pendant here holds something: a name, a date, a small superstition. These are the ones I&rsquo;d give, and the ones I&rsquo;d keep.")
-    + checker("THE EDIT", [1, 12, "pendants", 3])
+    + checker("THE EDIT", [1, 12, 4, 3])
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
-doc("s4-k2-sallys-edit-spotlight.html", **EDIT, when="Alternative layout", card="Campaign · Sally's edit · one piece",
+doc("camp-k2-sallys-edit-spare.html", **EDIT, when="No date yet (spare layout)", card="Campaign · Sally’s Edit · spare layout, no date yet",
     title="Sally&rsquo;s edit", subject="Sally's edit · [the piece]", preheader="[One line from Sally]",
     notes=["Alternative layout: one piece. Sally writes the two lines about it; nothing is invented for her."],
     body=masthead("", "")
@@ -1151,10 +1157,10 @@ doc("s4-k2-sallys-edit-spotlight.html", **EDIT, when="Alternative layout", card=
     + title_block("The piece of the week", "[Name of the piece]", "[Two lines from Sally about this piece.]", pt=18)
     + cta("View the piece", SITE + "/search?q=locket", pad="0 64px 34px")
     + heading("Wear it with")
-    + grid("WEAR IT WITH", [13, "earrings", (23, "Signature Toggle Charm")])
+    + grid("WEAR IT WITH", [13, 16, (23, "Signature Toggle Charm")])
     + cat_line())
 
-doc("s4-lc-last-call.html", stage=4, status=DRAFT, code="LC", flow="Campaign", pos="whole list", when="Sends Tue Dec 15",
+doc("camp-lc-last-call.html", status=DRAFT, code="LC", flow="Campaign", pos="whole list", when="Tue Dec 15",
     card="Campaign · last call · Tue Dec 15", title="Last call for in-stock pieces", subject="Last call for in-stock pieces",
     preheader="Order by [date] and it arrives in time.",
     notes=["Pieces: in-stock only (placeholders below)."],
@@ -1166,7 +1172,7 @@ doc("s4-lc-last-call.html", stage=4, status=DRAFT, code="LC", flow="Campaign", p
     + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 30px", size_=13, color=SOFT)
     + trust_strip())
 
-doc("s4-hn-holiday-note.html", stage=4, status=DRAFT, code="HN", flow="Campaign", pos="whole list", when="Sends Thu Dec 24",
+doc("camp-hn-holiday-note.html", status=DRAFT, code="HN", flow="Campaign", pos="whole list", when="Thu Dec 24",
     card="Campaign · holiday note · Thu Dec 24", title="A holiday note from Sally", subject="A holiday note from Sally",
     preheader="Thank you, from the workbench.",
     notes=["No selling and no button to buy. Holiday wording for all clients."],
