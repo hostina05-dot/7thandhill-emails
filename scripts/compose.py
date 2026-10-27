@@ -646,7 +646,7 @@ doc("flow-w1-welcome.html", **W, code="W1", pos="email 1 of 5", when="Right afte
     status="Waiting for Sally: GTA cleaning perk, collection tiles", reason=VAULT,
     notes=["Coupon: Klaviyo unique coupon VAULT15 (single use, 30 days, not with sale prices).",
            "Perk iii (complimentary cleaning in the GTA) waits for Sally: keep or remove."],
-    body=hero("hero-sally-home.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill")
+    body=hero("hero-sally-fireplace.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill, by the fireplace")
     + title_block("The 7H Vault", "Welcome to 7th &amp; Hill",
         "Welcome! I&rsquo;m Sally, I design modern heirlooms, timeless classics, and personalized jewelry, one piece, one story at a time. From now on, you&rsquo;ll be among the first to see what leaves the workbench.")
     + heading("First looks from the workbench", pad="0 40px 18px")
@@ -753,7 +753,7 @@ doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", 
     reason=SALT_REASON, logic=SALT_LOGIC,
     notes=["Coupon: the same Klaviyo unique coupon VAULT15 (single use, 30 days, does not combine with sale prices).",
            "No prices. One light row of three moving cells (rings, necklaces, earrings) to invite a first look."],
-    body=hero("hero-sally-salt.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill")
+    body=hero("hero-sally-fireplace.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill, by the fireplace")
     + title_block(None, "A note from Sally")
     + letter([HI,
               "You may remember me as the previous Co-Founder of SALT Fine Jewelry. For eight years I designed for so many of you, and many of you became more than clients. I still remember the stories behind your pieces.",
@@ -916,7 +916,7 @@ doc("flow-cc1-concierge-note.html", **C, code="CC1", flow="Checkout flow 07 · c
     card="Checkout 07 · concierge note 1 of 2 · 2 h after Started Checkout, $5,500 or more", title="A quick note from Sally", subject="A quick note from Sally",
     preheader="I'd like to help you choose, personally.",
     logic=["Flow split on checkout value: $5,500 or more goes here instead of CO1 to CO3. Sally replies personally."],
-    body=hero("hero-sally-home.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill", CHECKOUT)
+    body=hero("hero-sally-fireplace.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill, by the fireplace", CHECKOUT)
     + title_block(None, "A quick note from Sally")
     + letter([HI,
               "Thank you for considering a piece from 7th &amp; Hill. For something this considered, I&rsquo;d like to help personally: size, stones, timing, anything at all.",

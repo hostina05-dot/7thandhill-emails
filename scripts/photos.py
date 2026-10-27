@@ -23,8 +23,7 @@ PHOTOS, OUT = ROOT / "assets" / "photos", ROOT / "assets" / "images"
 # name -> (original, kind, crop box as fractions (left, top, right, bottom) or None)
 SHOTS = {
     # full-width photos with the seal (hero)
-    "hero-sally-home.jpg":       ("sally-home.jpg",                  "hero",    (0, 0, 1, 0.68)),
-    "hero-sally-salt.jpg":       ("sally-fireplace.jpg",             "hero",    (0.11, 0.19, 0.95, 0.64)),
+    "hero-sally-fireplace.jpg":  ("sally-fireplace.jpg",             "hero",    (0.11, 0.19, 0.95, 0.64)),
     "hero-sally-velvet.jpg":     ("sally-velvet.jpg",                "hero",    (0, 0.03, 1, 0.48)),
     "hero-lily-bracelet.jpg":    ("sally-lily-bracelet.jpg",         "hero",    (0, 0.10, 1, 0.90)),
     "hero-model-sweater.jpg":    ("model-green-sweater.jpg",         "hero",    None),
