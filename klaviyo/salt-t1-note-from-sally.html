@@ -10,7 +10,7 @@
   Logic: After T1, SALT contacts join the campaign audience from K3 (Tue Nov 3). They do not get the welcome flow.
   Logic: Sunset: SALT contacts with no opens or clicks within 30 days of T1 are suppressed.
   Note: Coupon: the same Klaviyo unique coupon VAULT15 (single use, 30 days, does not combine with sale prices).
-  Note: No prices and no product grid in this letter.
+  Note: No prices. One light row of three moving cells (rings, necklaces, earrings) to invite a first look.
   Ready to paste into Klaviyo: images load from https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/
 -->
 <!DOCTYPE html>
@@ -74,24 +74,17 @@
           </tr>
 
           <!-- ═══════════ BLOCK: HERO · photo with the round logo on its lower edge ═══════════
-               The logo is part of the image (hero-archive-corner.jpg), so no email client can move or hide it.
+               The logo is part of the image (hero-sally-salt.jpg), so no email client can move or hide it.
                New photo: see README, "Hero images". -->
           <tr>
             <td style="padding:0;">
-              <a href="https://www.7thandhilljewelry.ca" target="_blank" style="display:block; text-decoration:none;"><img src="https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/hero-archive-corner.jpg" width="600" height="489" alt="The corner of 7th and Hill in Los Angeles, archive photo" style="display:block; width:100%; max-width:600px; height:auto; border:0; background-color:#EEEEEE; color:#8A857C; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px;"></a>
-            </td>
-          </tr>
-
-          <!-- ═══════════ BLOCK: CAPTION ═══════════ -->
-          <tr>
-            <td class="px" align="center" style="padding:12px 40px 0;">
-              <p class="sans" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:17px; letter-spacing:2px; text-transform:uppercase; color:#8A857C;">7th &amp; Hill, Los Angeles &middot; where it all began</p>
+              <a href="https://www.7thandhilljewelry.ca" target="_blank" style="display:block; text-decoration:none;"><img src="https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/hero-sally-salt.jpg" width="600" height="654" alt="Sally Brooks, founder and designer of 7th &amp; Hill" style="display:block; width:100%; max-width:600px; height:auto; border:0; background-color:#EEEEEE; color:#8A857C; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px;"></a>
             </td>
           </tr>
 
           <!-- ═══════════ BLOCK: TITLE · eyebrow + headline + text ═══════════ -->
           <tr>
-            <td class="px" align="center" style="padding:26px 64px 34px;">
+            <td class="px" align="center" style="padding:18px 64px 34px;">
               <h1 class="display h1" style="margin:0 0 16px; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:34px; line-height:40px; font-weight:400; color:#2E2A26;">A note from Sally</h1>
               <table role="presentation" width="36" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0px auto 22px;">
                 <tr><td height="1" style="height:1px; border-top:1px solid #9C7E4A; font-size:0; line-height:0;">&nbsp;</td></tr>
@@ -111,9 +104,29 @@
             </td>
           </tr>
 
+          <!-- ═══════════ BLOCK: HEADING ═══════════ -->
+          <tr>
+            <td class="px" align="center" style="padding:4px 40px 16px;">
+              <p class="sans" style="margin:0 0 0px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:16px; font-weight:400; letter-spacing:3.5px; text-transform:uppercase; color:#9C7E4A;">From the workbench</p>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: FROM THE WORKBENCH · three moving cells ═══════════ -->
+          <tr>
+            <td class="pxs" align="center" style="padding:0 26px 30px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td width="33.33%" valign="top" style="padding:4px;"><a href="https://www.7thandhilljewelry.ca/search?q=ring" target="_blank" style="display:block; text-decoration:none;"><img src="https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/anim-rings.gif" width="172" height="172" alt="Rings" style="display:block; width:100%; max-width:172px; height:auto; border:0; background-color:#E9EDF1; color:#8A857C; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;"></a></td>
+                    <td width="33.33%" valign="top" style="padding:4px;"><a href="https://www.7thandhilljewelry.ca/search?q=necklace" target="_blank" style="display:block; text-decoration:none;"><img src="https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/anim-necklaces.gif" width="172" height="172" alt="Necklaces" style="display:block; width:100%; max-width:172px; height:auto; border:0; background-color:#E9EDF1; color:#8A857C; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;"></a></td>
+                    <td width="33.33%" valign="top" style="padding:4px;"><a href="https://www.7thandhilljewelry.ca/search?q=earrings" target="_blank" style="display:block; text-decoration:none;"><img src="https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/anim-earrings.gif" width="172" height="172" alt="Earrings" style="display:block; width:100%; max-width:172px; height:auto; border:0; background-color:#E9EDF1; color:#8A857C; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;"></a></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
           <!-- ═══════════ BLOCK: CTA · button ═══════════ -->
           <tr>
-            <td class="px" align="center" style="padding:0 64px 34px;">
+            <td class="px" align="center" style="padding:0 64px 38px;">
               <!-- BUTTON: edit label and href -->
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0px auto 0px;">
                 <tr>
@@ -128,14 +141,6 @@
                   </td>
                 </tr>
               </table>
-            </td>
-          </tr>
-
-          <!-- ═══════════ BLOCK: THE BOOK BOX ═══════════ -->
-          <tr>
-            <td class="px" align="center" style="padding:0 64px 36px;">
-              <img src="https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/story-bookbox.jpg" width="488" height="364" alt="The green 7th &amp; Hill book box, lined in velvet" style="display:block; width:100%; max-width:488px; height:auto; margin:0 auto; border:0; background-color:#E9EDF1;">
-              <p class="sans" style="margin:12px 0 0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:17px; letter-spacing:2px; text-transform:uppercase; color:#8A857C;">Every piece arrives in our green book box, lined in velvet</p>
             </td>
           </tr>
 

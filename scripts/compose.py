@@ -722,6 +722,22 @@ doc("flow-w5-help-finding.html", **W, code="W5", pos="email 5 of 5", when="Day 8
     + block("SPACER", "", pad="22px 0 0")
     + cat_line())
 
+def moving_row(name, cells, eyebrow_text):
+    """A light row of three cells that each cycle through pieces. No names, like the collages."""
+    tds = "".join(f"""                    <td width="33.33%" valign="top" style="padding:4px;">{pimg(c, 172)}</td>
+""" for c in cells)
+    return heading(eyebrow_text, pad="4px 40px 16px") + f"""
+          <!-- ═══════════ BLOCK: {name} · three moving cells ═══════════ -->
+          <tr>
+            <td class="pxs" align="center" style="padding:0 26px 30px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+{tds}                </tr>
+              </table>
+            </td>
+          </tr>
+"""
+
 def gift_ps():
     """P.S. with Sally's welcome gift and the unique coupon (Klaviyo coupon VAULT15)."""
     return (f'A small welcome gift from me: 15% off your first 7th &amp; Hill piece.'
@@ -736,19 +752,17 @@ doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", 
     title="A note from Sally", subject="A note from Sally", preheader="You may remember me from SALT.",
     reason=SALT_REASON, logic=SALT_LOGIC,
     notes=["Coupon: the same Klaviyo unique coupon VAULT15 (single use, 30 days, does not combine with sale prices).",
-           "No prices and no product grid in this letter."],
-    body=hero("hero-archive-corner.jpg", "The corner of 7th and Hill in Los Angeles, archive photo")
-    + caption("7th &amp; Hill, Los Angeles &middot; where it all began")
-    + title_block(None, "A note from Sally", pt=26)
+           "No prices. One light row of three moving cells (rings, necklaces, earrings) to invite a first look."],
+    body=hero("hero-sally-salt.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill")
+    + title_block(None, "A note from Sally")
     + letter([HI,
               "You may remember me as the previous Co-Founder of SALT Fine Jewelry. For eight years I designed for so many of you, and many of you became more than clients. I still remember the stories behind your pieces.",
               "Now I&rsquo;ve started something of my own: 7th &amp; Hill Jewelry. It&rsquo;s named after the corner in downtown Los Angeles where my dad ran his gold leaf lettering business, and where I first watched molten gold become a necklace.",
               "Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. And I still begin the same way. I listen, I design, and then you wear it.",
               "You&rsquo;re receiving this because you were part of my SALT family."],
              ps=gift_ps())
-    + cta("Meet 7th &amp; Hill", utm(SITE, "salt_t1", "meet"), pad="0 64px 34px")
-    + picture("THE BOOK BOX", "story-bookbox.jpg", 488, 364, "The green 7th &amp; Hill book box, lined in velvet",
-              cap="Every piece arrives in our green book box, lined in velvet", pad="0 64px 36px"))
+    + moving_row("FROM THE WORKBENCH", ["rings", "necklaces", "earrings"], "From the workbench")
+    + cta("Meet 7th &amp; Hill", utm(SITE, "salt_t1", "meet"), pad="0 64px 38px"))
 
 # P0 popup: a layout mock and spec (the live popup is built in Klaviyo Forms)
 POPUP = f"""<!DOCTYPE html>

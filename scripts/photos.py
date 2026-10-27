@@ -24,6 +24,7 @@ PHOTOS, OUT = ROOT / "assets" / "photos", ROOT / "assets" / "images"
 SHOTS = {
     # full-width photos with the seal (hero)
     "hero-sally-home.jpg":       ("sally-home.jpg",                  "hero",    (0, 0, 1, 0.68)),
+    "hero-sally-salt.jpg":       ("sally-home.jpg",                  "hero",    (0, 0.02, 1, 0.84)),
     "hero-sally-velvet.jpg":     ("sally-velvet.jpg",                "hero",    (0, 0.03, 1, 0.48)),
     "hero-lily-bracelet.jpg":    ("sally-lily-bracelet.jpg",         "hero",    (0, 0.10, 1, 0.90)),
     "hero-model-sweater.jpg":    ("model-green-sweater.jpg",         "hero",    None),
