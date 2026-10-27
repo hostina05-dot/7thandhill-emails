@@ -47,7 +47,8 @@ def on_white(im):
     return lum.mean() > 228 and np.percentile(lum, 5) > 205 and (ring.max(1) - ring.min(1)).mean() < 14
 
 
-def moonlit_tile(im):
+def moonlit_tile(im, w_out=SIZE, h_out=SIZE):
+    """The piece on the moonlit backdrop; the square tile by default, any frame (a reel cover) on request."""
     a = np.asarray(flatten(im)).astype(np.float32)
     h, w, _ = a.shape
     b = max(2, int(min(h, w) * 0.04))
@@ -67,16 +68,16 @@ def moonlit_tile(im):
     y0, y1 = (0 if top else y0), (h - 1 if bottom else y1)
     piece = Image.fromarray(a.astype(np.uint8)).crop((x0, y0, x1 + 1, y1 + 1))
     pw, ph = piece.size
-    k = SIZE * FILL / max(pw, ph)
-    if left and right: k = max(k, SIZE / pw)
-    if top and bottom: k = max(k, SIZE / ph)
+    k = min(w_out, h_out) * FILL / max(pw, ph)
+    if left and right: k = max(k, w_out / pw)
+    if top and bottom: k = max(k, h_out / ph)
     piece = piece.resize((max(1, round(pw * k)), max(1, round(ph * k))), Image.LANCZOS)
     pw, ph = piece.size
-    px = 0 if left and not right else SIZE - pw if right and not left else (SIZE - pw) // 2
-    py = 0 if top and not bottom else SIZE - ph if bottom and not top else (SIZE - ph) // 2 if top else round(SIZE * 0.46 - ph / 2)
-    canvas = Image.new("RGB", (SIZE, SIZE), "white")
+    px = 0 if left and not right else w_out - pw if right and not left else (w_out - pw) // 2
+    py = 0 if top and not bottom else h_out - ph if bottom and not top else (h_out - ph) // 2 if top else round(h_out * 0.46 - ph / 2)
+    canvas = Image.new("RGB", (w_out, h_out), "white")
     canvas.paste(piece, (px, py))
-    return ImageChops.multiply(canvas, moonlit(SIZE, SIZE))
+    return ImageChops.multiply(canvas, moonlit(w_out, h_out))
 
 
 def gallery(rows):
