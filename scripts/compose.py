@@ -947,7 +947,7 @@ doc("flow-b1-still-thinking.html", **B, code="B1", flow="Browse flow 05", pos="e
     logic=["Re-entry: once every 14 days per person."],
     notes=["The viewed piece comes from the Klaviyo Viewed Product event. The collage beside it is curated;",
            "swap it for a Klaviyo product recommendation block if you prefer."],
-    body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a gold capsule locket")
+    body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a zodiac compass pendant and a pavé horn pendant")
     + title_block("Still thinking about it?", "A piece worth a second look")
     + dyn_viewed()
     + cta("See it again", "{{ event.URL|default:'https://www.7thandhilljewelry.ca/collections' }}", pad="0 64px 30px")
@@ -1004,7 +1004,7 @@ doc("flow-pp2-care.html", **B, code="PP2", flow="After-purchase flow 10", pos="e
 doc("flow-pp3-next-piece.html", **B, code="PP3", flow="After-purchase flow 10", pos="email 3 of 3", when="Day 35 after Placed Order",
     card="After purchase 10 · email 3 of 3 · day 35", title="Your next piece", subject="Your next piece",
     preheader="New from the workbench, in case something speaks to you.",
-    body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a gold capsule locket")
+    body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a zodiac compass pendant and a pavé horn pendant")
     + title_block("New from the workbench", "Your next piece",
         "A few new arrivals, in case something speaks to you.")
     + collage("NEW ARRIVALS", ("pendants", 31), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), (4, "rings", 32))
@@ -1070,7 +1070,7 @@ doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:0
 doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
     card="Campaign · Black Friday · Fri Nov 27, 08:00", title="20% off our Exclusives",
     subject="20% off our Exclusives", preheader="From today until Monday.",
-    body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a gold capsule locket")
+    body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a zodiac compass pendant and a pavé horn pendant")
     + night("OFFER · swap for each sale",
         eyebrow("Black Friday", mb=10, color=GOLD_L)
         + h1("20% off our Exclusives", mb=12, color=IVORY, size_=34)
