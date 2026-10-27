@@ -4,7 +4,11 @@
 
 Picks the first photo of each product shot on white, evens out the white, centres the piece
 with the same air around it, and multiplies it onto the moonlit gradient (as the packshots in
-photos.py). Writes assets/products/<handle>.jpg and assets/products/index.csv.
+photos.py). Writes assets/products/<code>-<handle>.jpg, assets/products/index.csv and products.html.
+
+Every piece gets a short code by type: R012 = ring no. 12 (C charm, R ring, E earrings, N necklace,
+CH chain, B bracelet, CN connector, L lock, O other). Codes never change on a re-run; new products
+get the next free number of their type. In scripts/compose.py a code works like a catalog number.
 """
 import csv, json, sys
 from pathlib import Path
@@ -19,6 +23,8 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets" / "products"
 SITE = "https://www.7thandhilljewelry.ca/products/"
 TYPES = {"Earrings": "Earring", "Necklaces": "Necklace", "Charms & Pendants": "Charm", "": "Other"}
+CODES = {"Charm": "C", "Ring": "R", "Earring": "E", "Necklace": "N", "Chain": "CH", "Bracelet": "B",
+         "Connector": "CN", "Lock": "L"}
 SIZE, FILL = 600, 0.74  # the piece's longer side takes 74% of the square
 
 
@@ -74,28 +80,38 @@ def moonlit_tile(im):
 
 
 def gallery(rows):
-    """products.html: every tile with its name and link, grouped by type, to pick pieces for the letters."""
+    """products.html: every tile with its code, name and link, grouped by type, with a search box."""
     import html
     groups = {}
     for r in rows:
         if r["file"]:
-            groups.setdefault(TYPES.get(r["type"], r["type"]), []).append(r)
+            groups.setdefault(r["group"], []).append(r)
     parts = []
     for t in sorted(groups, key=lambda t: -len(groups[t])):
         cards = "".join(
-            f'<a class="c" href="{r["url"]}" target="_blank"><img loading="lazy" src="assets/products/{r["file"]}" alt="">'
-            f'<span>{html.escape(r["title"])}</span><code>{r["file"]}</code></a>' for r in groups[t])
-        parts.append(f'<h2>{html.escape(t)} <small>{len(groups[t])}</small></h2><div class="g">{cards}</div>')
+            f'<a class="c" href="{r["url"]}" target="_blank" data-k="{r["code"].lower()} {html.escape(r["title"].lower())}">'
+            f'<img loading="lazy" src="assets/products/{r["file"]}" alt=""><b>{r["code"]}</b><span>{html.escape(r["title"])}</span></a>'
+            for r in groups[t])
+        parts.append(f'<section><h2>{html.escape(t)} <small>{groups[t][0]["code"].rstrip("0123456789")} · {len(groups[t])}</small></h2>'
+                     f'<div class="g">{cards}</div></section>')
     n = sum(len(v) for v in groups.values())
     (ROOT / "products.html").write_text(f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>7th & Hill pieces</title>
 <style>body{{margin:0;padding:24px 16px;background:#f7f5f1;color:#1d2b24;font:14px/1.4 Arial,sans-serif}}
-h1{{font:400 30px Georgia,serif;margin:0 0 4px}}p{{margin:0 0 20px;color:#5b6660}}h2{{font:400 22px Georgia,serif;margin:28px 0 12px}}
+h1{{font:400 30px Georgia,serif;margin:0 0 4px}}p{{margin:0 0 14px;color:#5b6660}}h2{{font:400 22px Georgia,serif;margin:28px 0 12px}}
 small{{font:12px Arial;color:#8a938e}}.g{{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}}
+input{{width:100%;max-width:360px;box-sizing:border-box;padding:10px 12px;border:1px solid #cfd3cf;font:14px Arial;background:#fff}}
 .c{{display:block;color:inherit;text-decoration:none;background:#fff;padding:6px 6px 8px}}.c img{{width:100%;display:block}}
-.c span{{display:block;font-size:12px;margin-top:6px}}.c code{{display:block;font-size:10px;color:#8a938e;word-break:break-all}}</style></head>
-<body><h1>7th &amp; Hill pieces</h1><p>{n} pieces from the site on the moonlit backdrop. Click a tile for the product page; the file name is in assets/products/.</p>
-{"".join(parts)}</body></html>
+.c b{{display:block;font:700 15px Arial;margin-top:6px;letter-spacing:.04em}}.c span{{display:block;font-size:12px;color:#5b6660}}</style></head>
+<body><h1>7th &amp; Hill pieces</h1>
+<p>{n} pieces from the site on the moonlit backdrop. To put a piece in a letter, name its code, for example R012.
+C charm · R ring · E earrings · N necklace · CH chain · B bracelet · CN connector · L lock · O other. Click a tile for the product page.</p>
+<input id="q" type="search" placeholder="Search by code or name: R012, scarab, heart">
+{"".join(parts)}
+<script>document.getElementById('q').addEventListener('input',function(){{var q=this.value.trim().toLowerCase();
+document.querySelectorAll('.c').forEach(function(c){{c.style.display=!q||c.dataset.k.indexOf(q)>-1?'':'none'}});
+document.querySelectorAll('section').forEach(function(s){{s.style.display=s.querySelector('.c:not([style*="none"])')?'':'none'}})}});</script>
+</body></html>
 """)
 
 
@@ -105,23 +121,44 @@ def main(src):
     for page in sorted(src.glob("p*.json")):
         products += json.load(open(page))["products"]
     OUT.mkdir(parents=True, exist_ok=True)
+    index = OUT / "index.csv"
+    known = {r["url"]: r.get("code", "") for r in csv.DictReader(open(index))} if index.exists() else {}
+    known = {u: c for u, c in known.items() if c}
+    count = {}
+    for c in known.values():
+        pre = c.rstrip("0123456789"); count[pre] = max(count.get(pre, 0), int(c[len(pre):]))
     rows = []
     for p in products:
         if p["handle"].startswith("gift-card"):
             continue
+        group = TYPES.get(p["product_type"], p["product_type"])
         shots = [src / "img" / f"{p['id']}_{k}.jpg" for k in range(len(p["images"]))]
         pick = next((f for f in shots if f.exists() and on_white(Image.open(f))), None)
-        name = f"{p['handle']}.jpg"
+        url = SITE + p["handle"]
+        code = known.get(url, "")
+        if pick and not code:
+            pre = CODES.get(group, "O"); count[pre] = count.get(pre, 0) + 1
+            code = f"{pre}{count[pre]:03d}"
+        name = f"{code}-{p['handle']}.jpg" if pick else ""
         if pick:
             moonlit_tile(Image.open(pick)).save(OUT / name, quality=82, optimize=True, progressive=True)
-        rows.append({"title": p["title"].title().replace("14K", "14k"), "type": p["product_type"], "vendor": p["vendor"],
-                     "url": SITE + p["handle"], "file": name if pick else "",
-                     "note": "" if pick else "no photo on white, left out",
+        rows.append({"code": code, "title": p["title"].title().replace("14K", "14k").replace("10K", "10k").replace("18K", "18k"), "type": p["product_type"], "group": group,
+                     "url": url, "file": name, "note": "" if pick else "no photo on white, left out",
                      "available": "yes" if any(v["available"] for v in p["variants"]) else "no"})
-    with open(OUT / "index.csv", "w", newline="") as f:
+    rows.sort(key=lambda r: (not r["code"], r["code"].rstrip("0123456789"), int(r["code"].lstrip("ABCDEFGHIJKLMNOPQRSTUVWXYZ") or 0)))
+    for old in OUT.glob("*.jpg"):  # tiles of products that left the site, or from before the codes
+        if old.name not in {r["file"] for r in rows}:
+            old.unlink()
+    with open(index, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0]))
         w.writeheader(); w.writerows(rows)
     gallery(rows)
+    with open(ROOT / "blocks" / "site-products.md", "w") as f:
+        f.write("# 7th & Hill · all pieces from the site\n\nCode = what to name in a letter (R012 = ring no. 12). "
+                "Pictures: products.html. Tiles: assets/products/.\n\n| Code | Piece | Link |\n|---|---|---|\n")
+        for r in rows:
+            if r["code"]:
+                f.write(f"| {r['code']} | {r['title']} | {r['url']} |\n")
     print(f"{sum(bool(r['file']) for r in rows)} of {len(rows)} products on the moonlit backdrop -> {OUT}")
 
 

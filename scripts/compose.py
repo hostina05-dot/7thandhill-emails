@@ -6,9 +6,9 @@
 Shared blocks (top bar, photo with seal, titles, buttons, collages, notes, footer) are defined once below,
 then each letter is a short list of blocks with Sally's copy. Edit the copy here and re-run, so all
 letters stay in step. Pieces come from assets/catalog.json (numbers 1-32 = photo catalog, 101+ = extra
-packshots, 201+ = worn photos).
+packshots, 201+ = worn photos) or by code from the site set in assets/products/ (R012 = ring no. 12, see products.html).
 """
-import os, json, re
+import os, json, re, csv, shutil
 from PIL import Image
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 P = {int(k): v for k, v in json.load(open(os.path.join(ROOT, "assets", "catalog.json"))).items()}
@@ -17,6 +17,7 @@ SHOP = SITE + "/collections"; DYO = SITE + "/collections/design-your-own-jewelry
 STORY = SITE + "/pages/about-salt"; CARE = SITE + "/pages/jewelry-care"; CONTACT = SITE + "/pages/contact"
 IG = "https://www.instagram.com/7thandhilljewelry"; TT = "https://www.tiktok.com/@7thandhilljewelry"
 IMG = "../assets/images/"
+SITE_SET = {r["code"]: r for r in csv.DictReader(open(os.path.join(ROOT, "assets", "products", "index.csv"))) if r["code"]}
 
 OUTER = "#101613"; PAGE = "#FFFFFF"; INK = "#2E2A26"; BODY = "#4A463F"; SOFT = "#8A857C"
 GOLD = "#9C7E4A"; LINE = "#E6E2DB"; GREEN = "#1C3A2E"; GREEN_L = "#8FA79B"; BAR = "#111111"
@@ -208,18 +209,39 @@ ANIM = {  # animated grid cells: cross-fade between pieces (GIF; Outlook for Win
     "w3-hearts": ("anim-w3-hearts.gif", "Radiant Sunburst Heart, Hand &amp; Footprint Heart", SITE + "/search?q=heart"),
 }
 
+def is_anim(n):
+    return isinstance(n, str) and n in ANIM
+
+def short_name(title):
+    """Site titles lead with the metal; the letters name the piece."""
+    t = re.sub(r"^(The )?(Solid )?(1[048]k )?(Solid )?(Italian )?(Gold )?(And |& )?", "", title, flags=re.I).strip()
+    return t[:1].upper() + t[1:] if t else title
+
+def site_piece(code):
+    """A piece from assets/products/ by its code: the tile is copied into assets/images/ for the letters."""
+    m = re.fullmatch(r"([A-Za-z]+)0*(\d+)", code.strip())
+    assert m and f"{m[1].upper()}{int(m[2]):03d}" in SITE_SET, f"{code}: no such code in products.html"
+    r = SITE_SET[f"{m[1].upper()}{int(m[2]):03d}"]
+    img = f"site-{r['code']}.jpg"
+    dst = os.path.join(ROOT, "assets", "images", img)
+    if not os.path.exists(dst):
+        shutil.copyfile(os.path.join(ROOT, "assets", "products", r["file"]), dst)
+    return {"name": short_name(r["title"]), "url": r["url"], "img": img}
+
 def piece(n):
-    """n = catalog number, or (number, display name) to rename a piece in one letter."""
+    """n = catalog number or site code (R012), or (number or code, display name) to rename a piece in one letter."""
     if isinstance(n, tuple):
-        d = dict(P[n[0]]); d["name"] = n[1]
+        d = dict(piece(n[0])); d["name"] = n[1]
         return d
+    if isinstance(n, str) and not is_anim(n):
+        return site_piece(n)
     if isinstance(n, str):   # animated cell: named after the kind of piece it cycles through
         src, alt, url = ANIM[n]
         return {"name": alt, "url": url, "img": src}
     return P[n]
 
 def pimg(n, w):
-    if isinstance(n, str) and n in ANIM:
+    if is_anim(n):
         src, alt, url = ANIM[n]
         return f'<a href="{url}" target="_blank" style="display:block; text-decoration:none;"><img src="{IMG}{src}" width="{w}" height="{w}" alt="{alt}" style="display:block; width:100%; max-width:{w}px; height:auto; border:0; background-color:#E9EDF1; color:{SOFT}; font-family:{SANS}; font-size:11px;"></a>'
     pr = piece(n)
@@ -266,7 +288,7 @@ def collage(name, small_pair, feature, row, feature_side="right"):
 
 def checker(name, ids):
     """Alternating rows: piece photo on one side, its name on the other (K2 layout)."""
-    assert not any(isinstance(i, str) for i in ids), f"{name}: named rows need named pieces"
+    assert not any(is_anim(i) for i in ids), f"{name}: named rows need named pieces"
     rows = ""
     for i, n in enumerate(ids):
         pr = piece(n)
@@ -543,7 +565,7 @@ def facts(name, rows, pad="0 48px 32px"):
 def grid(name, items, cols=3, captions=None):
     """Pieces in rows of 2 or 3, name under each (and an optional line, e.g. who it is for).
     Every card shows a real piece name, so animated cells belong in collages, not here."""
-    assert not any(isinstance(i, str) for i in items), f"{name}: grid cards need named pieces"
+    assert not any(is_anim(i) for i in items), f"{name}: grid cards need named pieces"
     w, pct = (172, "33.33%") if cols == 3 else (262, "50%")
     rows = ""
     for r in range(0, len(items), cols):
