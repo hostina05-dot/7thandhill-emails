@@ -14,6 +14,8 @@ blocks/           готовые блоки для вставки + catalog.md (
 assets/photos/    оригиналы фото и видео
 assets/images/    готовые картинки для писем (после цветокоррекции)
 assets/catalog.json  изделия: название, картинка, ссылка
+assets/products/  все изделия с сайта на «лунном» фоне (600x600) + index.csv: название, тип, ссылка, файл
+products.html     галерея всех изделий с сайта по типам, клик ведёт на страницу товара
 scripts/compose.py   тексты Sally и сборка всех писем из общих блоков
 scripts/photos.py    цветокоррекция, кадрирование, печать на фото, GIF из видео
 scripts/build.py     preview.html и klaviyo/
@@ -59,6 +61,11 @@ python3 scripts/compose.py && python3 scripts/build.py
 ```
 
 Новое фото или видео: положите оригинал в `assets/photos/`, впишите в `SHOTS`, `CLIPS` или `SLIDES` в `scripts/photos.py`, запустите `python3 scripts/photos.py`. Изделие в сетке = номер из `blocks/catalog.md`.
+
+## Все изделия с сайта
+`assets/products/` = все товары с www.7thandhilljewelry.ca на том же «лунном» фоне, что плитки в письмах: первое фото товара на белом, белый выровнен, изделие по центру с одинаковым воздухом (если на исходном фото оно обрезано краем кадра, этот край остаётся на краю плитки). Имя файла = адрес товара на сайте (`/products/<имя>`). Посмотреть: https://raw.githack.com/hostina05-dot/7thandhill-emails/claude/friendly-newton-8qmg2v/products.html
+
+Обновить после новых товаров на сайте: скачать `products.json?limit=250&page=1..3` и фото товаров в одну папку (`img/<id товара>_<номер фото>.jpg`), затем `python3 scripts/site_products.py <папка>`.
 
 ## Правила текста (из брифа)
 Без тире, без «Shop now», без «we love» и «stack»; мягкие кнопки (Step inside, Start a gift, Return to your bag). «Solid gold» вместо 14k. Ни слова о бесплатном ресайзе, вместо этого: «Not sure about size? Send me a photo of what you already wear, and I'll help you choose.» Праздники нейтрально: holiday, без ёлок. Слова Sally остаются как она написала.
