@@ -31,6 +31,7 @@ SHOTS = {
     "hero-sweater-hand.jpg":     ("model-sweater-bag.jpg",           "hero",    (0.30, 0.18, 0.80, 0.86)),
     "hero-model-armchair.jpg":   ("model-armchair-compass.jpg",      "hero",    (0, 0.02, 1, 0.70)),
     "hero-model-armchair-locket.jpg": ("model-green-armchair.jpg",   "hero",    (0, 0.02, 1, 0.64)),
+    "hero-water-lilies.jpg":     ("model-water-lilies.jpg",          "hero",    (0.10, 0, 0.98, 1)),
     "hero-bookbox-library.jpg":  ("bookbox-library.jpg",             "hero",    (0, 0.06, 1, 1)),
     "hero-envelope-rings.jpg":   ("envelope-rings.jpg",              "hero",    (0, 0.08, 1, 1)),
     "hero-rings-table.jpg":      ("rings-table-bag.jpg",             "hero",    (0, 0.30, 1, 0.88)),

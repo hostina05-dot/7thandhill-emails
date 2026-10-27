@@ -1070,7 +1070,7 @@ doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:0
 doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
     card="Campaign · Black Friday · Fri Nov 27, 08:00", title="20% off our Exclusives",
     subject="20% off our Exclusives", preheader="From today until Monday.",
-    body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a zodiac compass pendant and a pavé horn pendant")
+    body=hero("hero-water-lilies.jpg", "A woman in a pale blue dress lying by a lily pond, wearing a heart charm necklace, a medallion and a gold bracelet")
     + night("OFFER · swap for each sale",
         eyebrow("Black Friday", mb=10, color=GOLD_L)
         + h1("20% off our Exclusives", mb=12, color=IVORY, size_=34)
