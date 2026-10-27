@@ -6,7 +6,7 @@
     python3 scripts/reel.py R --hero R041      # opens on one ring, full screen (the default)
     python3 scripts/reel.py R --hero none      # straight to the board
 
-1080x1920, 30 fps, no sound (add the track in Instagram). The reel opens on the hero piece full
+1080x1920, 30 fps, with an original score timed to the board (scripts/score.py; --silent for none). The reel opens on the hero piece full
 screen with a slow push-in, then it shrinks into the middle square and the board around it shows.
 On every beat one colour of the board
 changes: the "black" squares slide up to the next piece, then the "white" squares slide down.
@@ -95,6 +95,17 @@ def plan(pieces):
         history.append(list(now))
         beat += 1
     return history
+
+
+def timeline(pieces, hero=None):
+    """When things happen, in seconds from the start: for the music."""
+    n = len(pieces) - (1 if hero and any(p["code"] == hero["code"] for p in pieces) else 0) + (1 if hero else 0)
+    swaps = len(plan([None] * n)) - 1 if n else 0
+    lead, hold = (HERO + ZOOM, HERO_HOLD) if hero else (0.0, HOLD)
+    t_end = lead + hold + swaps * BEAT
+    return {"opening": HERO if hero else 0.0, "landing": lead if hero else 0.0,
+            "cues": [lead + hold + k * BEAT for k in range(swaps)], "outro": t_end,
+            "duration": int((t_end + OUTRO) * FPS) / FPS}
 
 
 def frames(pieces, fonts, hero=None):
@@ -197,22 +208,31 @@ def main():
     ap.add_argument("--fonts", default=str(ROOT / "assets" / "fonts"))
     ap.add_argument("--max", type=int, default=0, help="use only the first N pieces")
     ap.add_argument("--hero", default="R041", help="code of the piece that opens the reel full screen, or none")
+    ap.add_argument("--silent", action="store_true", help="no music")
     a = ap.parse_args()
     pieces = pick(a.pieces)
     if a.max:
         pieces = pieces[:a.max]
     out = Path(a.out or ROOT / "reels" / f"reel-{a.pieces[0].lower() if len(a.pieces) == 1 else 'pick'}.mp4")
     out.parent.mkdir(parents=True, exist_ok=True)
-    ff = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
-                           "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-preset", "slow", "-crf", "18",
-                           "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(out)], stdin=subprocess.PIPE)
-    n = 0
     codes = {r["code"]: r for r in csv.DictReader(open(PRODUCTS / "index.csv")) if r["code"]}
     hero = None if a.hero.lower() == "none" else codes[a.hero.upper()]
+    audio = []
+    if not a.silent:  # original score, timed to the board (scripts/score.py)
+        import score
+        wav = out.with_suffix(".wav")
+        score.write(wav, score.score(**timeline(pieces, hero), beat=BEAT))
+        audio = ["-i", str(wav), "-c:a", "aac", "-b:a", "192k", "-shortest"]
+    ff = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
+                           "-r", str(FPS), "-i", "-", *audio[:2], "-c:v", "libx264", "-preset", "slow", "-crf", "18",
+                           "-pix_fmt", "yuv420p", *audio[2:], "-movflags", "+faststart", str(out)], stdin=subprocess.PIPE)
+    n = 0
     for fr in frames(pieces, Path(a.fonts), hero):
         ff.stdin.write(fr.tobytes()); n += 1
     ff.stdin.close(); ff.wait()
-    print(f"{out}  {len(pieces)} pieces, {n / FPS:.1f} s")
+    if audio:
+        out.with_suffix(".wav").unlink()
+    print(f"{out}  {len(pieces)} pieces, {n / FPS:.1f} s{'' if audio else ', no sound'}")
 
 
 if __name__ == "__main__":
