@@ -1004,7 +1004,7 @@ doc("flow-pp2-care.html", **B, code="PP2", flow="After-purchase flow 10", pos="e
 doc("flow-pp3-next-piece.html", **B, code="PP3", flow="After-purchase flow 10", pos="email 3 of 3", when="Day 35 after Placed Order",
     card="After purchase 10 · email 3 of 3 · day 35", title="Your next piece", subject="Your next piece",
     preheader="New from the workbench, in case something speaks to you.",
-    body=hero("hero-model-armchair.jpg", "A woman in a green velvet armchair wearing a zodiac compass pendant and a pavé horn pendant")
+    body=hero("hero-model-armchair-locket.jpg", "A woman in a green velvet armchair wearing a gold capsule locket")
     + title_block("New from the workbench", "Your next piece",
         "A few new arrivals, in case something speaks to you.")
     + collage("NEW ARRIVALS", ("pendants", 31), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), (4, "rings", 32))
