@@ -80,8 +80,14 @@ def moonlit_tile(im):
 
 
 def gallery(rows):
-    """products.html: every tile with its code, name and link, grouped by type, with a search box."""
-    import html
+    """products.html: every tile with its code, name and link, grouped by type, with a search box.
+    Small copies of the tiles sit inside the page, so it shows the pictures wherever it is opened."""
+    import base64, html, io
+
+    def thumb(file):
+        b = io.BytesIO()
+        Image.open(OUT / file).resize((240, 240), Image.LANCZOS).save(b, "JPEG", quality=72, optimize=True, progressive=True)
+        return "data:image/jpeg;base64," + base64.b64encode(b.getvalue()).decode()
     groups = {}
     for r in rows:
         if r["file"]:
@@ -90,7 +96,7 @@ def gallery(rows):
     for t in sorted(groups, key=lambda t: -len(groups[t])):
         cards = "".join(
             f'<a class="c" href="{r["url"]}" target="_blank" data-k="{r["code"].lower()} {html.escape(r["title"].lower())}">'
-            f'<img loading="lazy" src="assets/products/{r["file"]}" alt=""><b>{r["code"]}</b><span>{html.escape(r["title"])}</span></a>'
+            f'<img loading="lazy" src="{thumb(r["file"])}" alt=""><b>{r["code"]}</b><span>{html.escape(r["title"])}</span></a>'
             for r in groups[t])
         parts.append(f'<section><h2>{html.escape(t)} <small>{groups[t][0]["code"].rstrip("0123456789")} · {len(groups[t])}</small></h2>'
                      f'<div class="g">{cards}</div></section>')
@@ -105,7 +111,7 @@ input{{width:100%;max-width:360px;box-sizing:border-box;padding:10px 12px;border
 .c b{{display:block;font:700 15px Arial;margin-top:6px;letter-spacing:.04em}}.c span{{display:block;font-size:12px;color:#5b6660}}</style></head>
 <body><h1>7th &amp; Hill pieces</h1>
 <p>{n} pieces from the site on the moonlit backdrop. To put a piece in a letter, name its code, for example R012.
-C charm · R ring · E earrings · N necklace · CH chain · B bracelet · CN connector · L lock · O other. Click a tile for the product page.</p>
+C charm · R ring · E earrings · N necklace · CH chain · B bracelet · CN connector · L lock · O other. Click a tile for the product page. Full-size tiles: assets/products/&lt;code&gt;-….jpg.</p>
 <input id="q" type="search" placeholder="Search by code or name: R012, scarab, heart">
 {"".join(parts)}
 <script>document.getElementById('q').addEventListener('input',function(){{var q=this.value.trim().toLowerCase();
