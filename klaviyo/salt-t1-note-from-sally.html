@@ -1,18 +1,16 @@
 <!--
-  SALT consent · from Tue, Oct 27 · SALT transition · T1 (email 1 of 3) · Daily waves of 200 to 300
-  Card: T1 · SALT · email 1 of 3 · daily waves of 200 to 300
+  SALT list · from Tue, Oct 27 · SALT list · T1 (T1 only) · Daily waves from Tue Oct 27: 200, 400, 800, then 1,500 a day while complaints stay under 0.1% and bounces under 2%
+  Card: SALT list · T1 only · daily waves from Tue Oct 27: 200, 400, 800, then 1,500 a day while complaints stay under 0.1% and bounces under 2%
   Status: Ready for Sally
   Subject: A note from Sally
   Preheader: You may remember me from SALT.
   From: Sally at 7th & Hill <hello@7thandhilljewelry.ca> · replies to hello@7thandhilljewelry.ca
-  Logic: The Yes button links to the 7H Vault page with UTM tags (utm_content=yes).
-  Logic: Klaviyo flow "SALT · said yes" starts on Clicked Email, filtered to the Yes button of T1 or T2.
-  Logic: First action: set consent_source = SALT T1 (or SALT T2) and vault_member = true.
-  Logic: Then it sends the welcome series: W1 with the unique VAULT15 coupon right away, W2 to W5 on the flow 01 days.
-  Logic: People who said yes leave the SALT flow, so T2 and T3 never reach them. Bot-click filtering on.
-  Logic: Campaign audience = Vault list + everyone whose consent_source starts with SALT.
-  Note: No code, no prices, no product grid in this letter.
-  Note: This isn't for me = Klaviyo unsubscribe link.
+  Logic: No consent step: T1 is the only SALT letter. The unsubscribe link stays in the footer.
+  Logic: Daily waves from Tue Oct 27: 200, 400, 800, then 1,500 a day while complaints stay under 0.1% and bounces under 2%.
+  Logic: After T1, SALT contacts join the campaign audience from K3 (Tue Nov 3). They do not get the welcome flow.
+  Logic: Sunset: SALT contacts with no opens or clicks within 30 days of T1 are suppressed.
+  Note: Coupon: the same Klaviyo unique coupon VAULT15 (single use, 30 days, does not combine with sale prices).
+  Note: No prices and no product grid in this letter.
   Ready to paste into Klaviyo: images load from https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/
 -->
 <!DOCTYPE html>
@@ -107,29 +105,15 @@
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td width="72" valign="top" style="padding:4px 16px 0 0;"><img src="https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/sally-avatar.png" width="56" height="56" alt="Sally Brooks" style="display:block; width:56px; height:56px; border:0;"></td>
-                  <td valign="top" style="text-align:left;"><p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F;">{% if first_name %}Hi {{ first_name|default:'' }},{% else %}Hello,{% endif %}</p><p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F;">You may remember me as the previous Co-Founder of SALT Fine Jewelry. For eight years I designed for so many of you, and many of you became more than clients. I still remember the stories behind your pieces.</p><p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F;">Now I&rsquo;ve started something of my own: 7th &amp; Hill Jewelry. It&rsquo;s named after the corner in downtown Los Angeles where my dad ran his gold leaf lettering business, and where I first watched molten gold become a necklace.</p><p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F;">Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. And I still begin the same way. I listen, I design, and then you wear it.</p><p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F;">You&rsquo;re receiving this because you were part of my SALT family. I&rsquo;d love to keep writing to you. If you&rsquo;d like that too, tap below.</p><p class="display" style="margin:4px 0 0; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:26px; line-height:30px; color:#2E2A26;">Sally</p><p class="sans t-sm" style="margin:2px 0 0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:15px; letter-spacing:2.5px; text-transform:uppercase; color:#8A857C;">Sally Brooks &middot; Founder &amp; designer</p></td>
+                  <td valign="top" style="text-align:left;"><p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F;">{% if first_name %}Hi {{ first_name|default:'' }},{% else %}Hello,{% endif %}</p><p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F;">You may remember me as the previous Co-Founder of SALT Fine Jewelry. For eight years I designed for so many of you, and many of you became more than clients. I still remember the stories behind your pieces.</p><p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F;">Now I&rsquo;ve started something of my own: 7th &amp; Hill Jewelry. It&rsquo;s named after the corner in downtown Los Angeles where my dad ran his gold leaf lettering business, and where I first watched molten gold become a necklace.</p><p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F;">Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. And I still begin the same way. I listen, I design, and then you wear it.</p><p class="sans" style="margin:0 0 14px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#4A463F;">You&rsquo;re receiving this because you were part of my SALT family.</p><p class="display" style="margin:4px 0 0; font-family:Italiana, Georgia, 'Times New Roman', serif; font-size:26px; line-height:30px; color:#2E2A26;">Sally</p><p class="sans t-sm" style="margin:2px 0 0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:15px; letter-spacing:2.5px; text-transform:uppercase; color:#8A857C;">Sally Brooks &middot; Founder &amp; designer</p><p class="sans" style="margin:16px 0 0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:14px; line-height:23px; font-weight:300; color:#4A463F;"><span style="font-weight:400; color:#2E2A26;">P.S.</span> A small welcome gift from me: 15% off your first 7th &amp; Hill piece.</p><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:12px 0 10px;"><tr><td align="center" style="border:1px solid #9C7E4A; padding:11px 22px;"><p class="sans" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:16px; line-height:20px; letter-spacing:4px; color:#2E2A26;">{% coupon_code 'VAULT15' %}</p></td></tr></table><p class="sans" style="margin:0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:13px; line-height:21px; font-weight:300; color:#8A857C;">Use it once, within 30 days. It does not combine with sale prices.</p></td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- ═══════════ BLOCK: THE BOOK BOX ═══════════ -->
-          <tr>
-            <td class="px" align="center" style="padding:0 56px 28px;">
-              <img src="https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/story-bookbox.jpg" width="488" height="364" alt="The green 7th &amp; Hill book box, lined in velvet" style="display:block; width:100%; max-width:488px; height:auto; margin:0 auto; border:0; background-color:#E9EDF1;">
-            </td>
-          </tr>
-
-          <!-- ═══════════ BLOCK: LINE ═══════════ -->
-          <tr>
-            <td class="px" align="center" style="padding:0 56px 24px;">
-              <p class="sans" style="margin:0 0 0px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:300; color:#2E2A26; text-align:center;">Say yes, and I&rsquo;ll send you the same welcome gift my Vault members get: 15% off your first 7th &amp; Hill piece.</p>
-            </td>
-          </tr>
-
           <!-- ═══════════ BLOCK: CTA · button ═══════════ -->
           <tr>
-            <td class="px" align="center" style="padding:0 64px 8px;">
+            <td class="px" align="center" style="padding:0 64px 34px;">
               <!-- BUTTON: edit label and href -->
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0px auto 0px;">
                 <tr>
@@ -137,20 +121,21 @@
                     <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="border:1px solid #8FA79B; mso-padding-alt:0;">
-                          <a class="sans" href="https://www.7thandhilljewelry.ca/pages/7h-vault?utm_source=klaviyo&amp;utm_medium=email&amp;utm_campaign=salt_t1&amp;utm_content=yes" target="_blank" style="display:inline-block; padding:16px 40px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:14px; font-weight:400; letter-spacing:3px; text-transform:uppercase; color:#F7F5F1; text-decoration:none; mso-padding-alt:0;"><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%; mso-text-raise:20pt;" hidden>&nbsp;</i><![endif]--><span style="mso-text-raise:10pt;">Yes, keep me posted</span><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%;" hidden>&nbsp;</i><![endif]--></a>
+                          <a class="sans" href="https://www.7thandhilljewelry.ca?utm_source=klaviyo&amp;utm_medium=email&amp;utm_campaign=salt_t1&amp;utm_content=meet" target="_blank" style="display:inline-block; padding:16px 40px; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:14px; font-weight:400; letter-spacing:3px; text-transform:uppercase; color:#F7F5F1; text-decoration:none; mso-padding-alt:0;"><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%; mso-text-raise:20pt;" hidden>&nbsp;</i><![endif]--><span style="mso-text-raise:10pt;">Meet 7th &amp; Hill</span><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%;" hidden>&nbsp;</i><![endif]--></a>
                         </td>
                       </tr>
                     </table>
                   </td>
                 </tr>
               </table>
-              <p class="sans" style="margin:20px 0 0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:14px; letter-spacing:2.5px; text-transform:uppercase;"><a href="{% unsubscribe_url %}" target="_blank" style="color:#2E2A26; text-decoration:none; border-bottom:1px solid #9C7E4A; padding-bottom:2px;">This isn&rsquo;t for me</a></p>
             </td>
           </tr>
 
-          <!-- ═══════════ BLOCK: SPACER ═══════════ -->
+          <!-- ═══════════ BLOCK: THE BOOK BOX ═══════════ -->
           <tr>
-            <td class="px" align="center" style="padding:24px 0 0;">
+            <td class="px" align="center" style="padding:0 64px 36px;">
+              <img src="https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/story-bookbox.jpg" width="488" height="364" alt="The green 7th &amp; Hill book box, lined in velvet" style="display:block; width:100%; max-width:488px; height:auto; margin:0 auto; border:0; background-color:#E9EDF1;">
+              <p class="sans" style="margin:12px 0 0; font-family:Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px; line-height:17px; letter-spacing:2px; text-transform:uppercase; color:#8A857C;">Every piece arrives in our green book box, lined in velvet</p>
             </td>
           </tr>
 

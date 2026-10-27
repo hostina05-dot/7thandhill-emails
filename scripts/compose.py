@@ -419,17 +419,17 @@ SALT_REASON = "You're receiving this as a former SALT Fine Jewelry client of Sal
 
 FROM = "Sally at 7th & Hill <hello@7thandhilljewelry.ca> · replies to hello@7thandhilljewelry.ca"
 GROUPS = {"flow": "Flows · live from Tue, Oct 27 (automatic)",
-          "salt": "SALT consent · from Tue, Oct 27",
+          "salt": "SALT list · from Tue, Oct 27",
           "camp": "Campaigns · by date"}
 READY, DRAFT = "Ready for Sally", "Draft, not yet approved by Sally"
 WRITTEN = []
 
-def doc(fname, *, code, flow, pos, when, card, title, subject, preheader, body, status=READY,
+def doc(fname, *, code, flow, pos, when, card, label=None, title, subject, preheader, body, status=READY,
         reason=SUB, logic=(), notes=(), page=False):
     """Write one letter. The comment header is what the preview reads: stage, card label, status, logic."""
     group = GROUPS[fname.split("-", 1)[0]]
     lines = [f"  {group} · {flow} · {code} ({pos}) · {when}",
-             f"  Card: {code} · {card}",
+             f"  Card: {label or code + ' · ' + card}",
              f"  Status: {status}",
              f"  Subject: {subject}",
              f"  Preheader: {preheader}",
@@ -626,13 +626,12 @@ FACTS_W4 = [("Gold", FACT_GOLD), ("Timing", FACT_TIMING), ("Delivery", FACT_DELI
 CATS_W1 = CATS_DEFAULT[:5] + [("Design your own", DYO)]
 HI = greet(f"Hi {FN},", "Hello,")
 
+SALT_WAVES = "Daily waves from Tue Oct 27: 200, 400, 800, then 1,500 a day while complaints stay under 0.1% and bounces under 2%"
 SALT_LOGIC = [
-    "The Yes button links to the 7H Vault page with UTM tags (utm_content=yes).",
-    "Klaviyo flow \"SALT · said yes\" starts on Clicked Email, filtered to the Yes button of T1 or T2.",
-    "First action: set consent_source = SALT T1 (or SALT T2) and vault_member = true.",
-    "Then it sends the welcome series: W1 with the unique VAULT15 coupon right away, W2 to W5 on the flow 01 days.",
-    "People who said yes leave the SALT flow, so T2 and T3 never reach them. Bot-click filtering on.",
-    "Campaign audience = Vault list + everyone whose consent_source starts with SALT.",
+    "No consent step: T1 is the only SALT letter. The unsubscribe link stays in the footer.",
+    SALT_WAVES + ".",
+    "After T1, SALT contacts join the campaign audience from K3 (Tue Nov 3). They do not get the welcome flow.",
+    "Sunset: SALT contacts with no opens or clicks within 30 days of T1 are suppressed.",
 ]
 
 # ═════════════════════════ STAGE 1 · goes live Tue Oct 27 ═════════════════════════
@@ -723,12 +722,21 @@ doc("flow-w5-help-finding.html", **W, code="W5", pos="email 5 of 5", when="Day 8
     + block("SPACER", "", pad="22px 0 0")
     + cat_line())
 
-T = dict(flow="SALT transition")
-doc("salt-t1-note-from-sally.html", **T, code="T1", pos="email 1 of 3", when="Daily waves of 200 to 300",
-    card="SALT · email 1 of 3 · daily waves of 200 to 300",
+def gift_ps():
+    """P.S. with Sally's welcome gift and the unique coupon (Klaviyo coupon VAULT15)."""
+    return (f'A small welcome gift from me: 15% off your first 7th &amp; Hill piece.'
+            f'</p><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:12px 0 10px;">'
+            f'<tr><td align="center" style="border:1px solid {GOLD}; padding:11px 22px;">'
+            f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:16px; line-height:20px; letter-spacing:4px; color:{INK};">{{% coupon_code \'VAULT15\' %}}</p>'
+            f'</td></tr></table><p class="sans" style="margin:0; font-family:{SANS}; font-size:13px; line-height:21px; font-weight:300; color:{SOFT};">'
+            f'Use it once, within 30 days. It does not combine with sale prices.')
+
+doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", when=SALT_WAVES,
+    card="", label="SALT list · T1 only · " + SALT_WAVES[0].lower() + SALT_WAVES[1:],
     title="A note from Sally", subject="A note from Sally", preheader="You may remember me from SALT.",
     reason=SALT_REASON, logic=SALT_LOGIC,
-    notes=["No code, no prices, no product grid in this letter.", "This isn't for me = Klaviyo unsubscribe link."],
+    notes=["Coupon: the same Klaviyo unique coupon VAULT15 (single use, 30 days, does not combine with sale prices).",
+           "No prices and no product grid in this letter."],
     body=hero("hero-archive-corner.jpg", "The corner of 7th and Hill in Los Angeles, archive photo")
     + caption("7th &amp; Hill, Los Angeles &middot; where it all began")
     + title_block(None, "A note from Sally", pt=26)
@@ -736,39 +744,11 @@ doc("salt-t1-note-from-sally.html", **T, code="T1", pos="email 1 of 3", when="Da
               "You may remember me as the previous Co-Founder of SALT Fine Jewelry. For eight years I designed for so many of you, and many of you became more than clients. I still remember the stories behind your pieces.",
               "Now I&rsquo;ve started something of my own: 7th &amp; Hill Jewelry. It&rsquo;s named after the corner in downtown Los Angeles where my dad ran his gold leaf lettering business, and where I first watched molten gold become a necklace.",
               "Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. And I still begin the same way. I listen, I design, and then you wear it.",
-              "You&rsquo;re receiving this because you were part of my SALT family. I&rsquo;d love to keep writing to you. If you&rsquo;d like that too, tap below."])
-    + picture("THE BOOK BOX", "story-bookbox.jpg", 488, 364, "The green 7th &amp; Hill book box, lined in velvet", pad="0 56px 28px")
-    + line("Say yes, and I&rsquo;ll send you the same welcome gift my Vault members get: 15% off your first 7th &amp; Hill piece.", pad="0 56px 24px", color=INK)
-    + cta("Yes, keep me posted", utm(VAULT_PAGE, "salt_t1", "yes"), pad="0 64px 8px",
-          extra=text_link("This isn&rsquo;t for me", "{% unsubscribe_url %}", mt=20))
-    + block("SPACER", "", pad="24px 0 0"))
-
-doc("salt-t2-keep-writing.html", **T, code="T2", pos="email 2 of 3",
-    when="Automatic, 7 days after T1, only to people who did not click and did not unsubscribe",
-    card="SALT · email 2 of 3 · automatic, 7 days after T1, non-clickers only",
-    title="Should I keep writing?", subject="Should I keep writing?", preheader="One click, either way.",
-    reason=SALT_REASON, logic=SALT_LOGIC[:1] + ["Same Yes logic as T1 (consent_source = SALT T2)."],
-    body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter")
-    + title_block(None, "Should I keep writing?")
-    + letter([HI,
-              "Last week I wrote to tell you about 7th &amp; Hill, my own line after SALT. I only want to write to people who&rsquo;d like to hear from me, so I&rsquo;m asking once more.",
-              "One click, either way."])
-    + line("The welcome gift still stands: 15% off your first piece.", pad="0 56px 24px", color=INK)
-    + cta("Yes, keep me posted", utm(VAULT_PAGE, "salt_t2", "yes"), pad="0 64px 8px",
-          extra=text_link("No, thank you", "{% unsubscribe_url %}", mt=20))
-    + block("SPACER", "", pad="24px 0 0"))
-
-doc("salt-t3-goodbye.html", **T, code="T3", pos="email 3 of 3", when="Automatic, 14 days after T1, same condition",
-    card="SALT · email 3 of 3 · automatic, 14 days after T1, non-clickers only",
-    title="Thank you, and goodbye for now", subject="Thank you, and goodbye for now",
-    preheader="This is my last note, unless you'd like more.", reason=SALT_REASON,
-    logic=["After this send, people who did not click are suppressed and never emailed again."],
-    body=hero("hero-sally-home.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill")
-    + title_block(None, "Thank you, and goodbye for now")
-    + letter([HI,
-              "I haven&rsquo;t heard back, so this is the last letter you&rsquo;ll get from me. Thank you for the years with SALT. They meant a great deal to me.",
-              "If you ever want to see what I&rsquo;m making, the door is open, and the Vault is one click away."])
-    + cta("Join the Vault", utm(VAULT_PAGE, "salt_t3", "join"), pad="0 64px 36px"))
+              "You&rsquo;re receiving this because you were part of my SALT family."],
+             ps=gift_ps())
+    + cta("Meet 7th &amp; Hill", utm(SITE, "salt_t1", "meet"), pad="0 64px 34px")
+    + picture("THE BOOK BOX", "story-bookbox.jpg", 488, 364, "The green 7th &amp; Hill book box, lined in velvet",
+              cap="Every piece arrives in our green book box, lined in velvet", pad="0 64px 36px"))
 
 # P0 popup: a layout mock and spec (the live popup is built in Klaviyo Forms)
 POPUP = f"""<!DOCTYPE html>
@@ -839,6 +819,7 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
     title="For holiday gifts, the clock starts now", subject="For holiday gifts, the clock starts now",
     preheader="Order dates for every kind of piece.",
     status="Draft, not yet approved by Sally · waiting for holiday order dates",
+    logic=["Audience: Vault list plus SALT contacts. This is the first campaign the SALT list receives."],
     notes=["Suggested order-by dates for Sally to confirm: curated designs Nov 6, Exclusives Nov 30, in stock Dec 17.",
            "Neutral holiday wording on purpose: no trees, no Christmas."],
     body=hero("hero-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag")
@@ -1063,7 +1044,7 @@ SALE = dict(status=DRAFT, flow="Sale template", pos="Black Friday", notes=SALE_N
 doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:00",
     card="Campaign · Vault early access · Wed Nov 25, 18:00", title="Before anyone else",
     subject="Before anyone else", preheader="Early access for the Vault.",
-    logic=["Audience: Vault list plus SALT contacts who said yes."],
+    logic=["Audience: Vault list plus SALT contacts."],
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
     + title_block("For the Vault, first", "Before anyone else")
     + sally_note("Black Friday opens to the Vault tonight, a little before everyone else. I wanted you to see these first.").replace("padding:28px 56px 34px", "padding:0 56px 30px")
@@ -1142,7 +1123,8 @@ doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign ·
     + cat_line())
 doc("camp-k2-sallys-edit-oct27.html", **EDIT, when="Tue Oct 27, 11:00", card="Campaign · Sally’s Edit · Tue Oct 27, 11:00",
     title="Sally&rsquo;s edit", subject="Sally's edit · [theme]", preheader="Four I'd give, and four I'd keep.",
-    notes=["Alternative layout: photo, note, pieces with names."],
+    logic=["Audience: Vault list only. SALT contacts join the campaign audience from K3 (Tue Nov 3)."],
+    notes=["Layout: photo, note, pieces with names."],
     body=masthead("", "")
     + hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", SITE + "/search?q=pendant")
     + sally_note("Every pendant here holds something: a name, a date, a small superstition. These are the ones I&rsquo;d give, and the ones I&rsquo;d keep.")

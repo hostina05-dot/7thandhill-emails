@@ -32,13 +32,13 @@ ORDER = [
     "flow-p0", "flow-w1", "flow-w2", "flow-w3", "flow-w4", "flow-w5",
     "flow-c1", "flow-c2", "flow-co1", "flow-co2", "flow-co3", "flow-cc1", "flow-cc2",
     "flow-b1", "flow-b2", "flow-pp1", "flow-pp2", "flow-pp3", "flow-an1",
-    "salt-t1", "salt-t2", "salt-t3",
+    "salt-t1",
     "camp-k2-sallys-edit-oct27", "camp-k3", "camp-k1", "camp-dyo", "camp-s1", "camp-s2", "camp-s3",
     "camp-k4", "camp-k2-sallys-edit-dec8", "camp-lc", "camp-hn", "camp-k2-sallys-edit-spare",
 ]
 STAGES = {
     "flow": "FLOWS · live from Tue, Oct 27 (automatic)",
-    "salt": "SALT CONSENT · from Tue, Oct 27",
+    "salt": "SALT LIST · T1 only, from Tue, Oct 27",
     "camp": "CAMPAIGNS · by date",
 }
 # Plain overview at the top of the preview
@@ -46,9 +46,10 @@ OVERVIEW = [
     ("Flows · live from Tue, Oct 27 (automatic)",
      "Every automatic series: welcome, cart, checkout with the concierge notes, browse, after purchase and the purchase anniversary. "
      "How many letters go out depends on what people do on the site."),
-    ("SALT consent · from Tue, Oct 27",
-     "The SALT list: T1 goes out in daily waves of 200 to 300 addresses. T2 and T3 follow automatically after 7 and 14 days, "
-     "only to people who have not said yes yet."),
+    ("SALT list · T1 only, from Tue, Oct 27",
+     "One letter from Sally to former SALT clients, with a 15% welcome gift. It goes out in daily waves: 200, 400, 800, "
+     "then 1,500 a day while complaints stay under 0.1% and bounces under 2%. After T1 they join the campaigns from K3 "
+     "(Tue Nov 3); no welcome flow for them. Anyone with no opens or clicks within 30 days is suppressed."),
     ("Campaigns · by date",
      "For everyone who has already given consent. The first, K2 Sally’s Edit, goes out on Tue, Oct 27 at 11:00, then once a week on Tuesdays: "
      "K3 holiday dates, K1, Design Your Own, then Black Friday, the gift guide, the December letters and the New Year sale."),
