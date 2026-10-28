@@ -13,7 +13,7 @@ screen with a slow push-in, then it shrinks into the middle square and the board
 On every beat one colour of the board
 changes: the "black" squares slide up to the next piece, then the "white" squares slide down.
 At the end the board turns green square by square and the seal comes up with the brand line.
-Pieces come from assets/products/ (codes in products.html). Fonts: Italiana and Jost, from
+Pieces come from assets/products/ (codes in products.html). Fonts as on the site: Cormorant, Inter, Montserrat, from
 Google Fonts, in --fonts.
 """
 import argparse, csv, random, re, subprocess
@@ -116,6 +116,16 @@ LABEL = ""  # set by --label: the middle row becomes a green band with the categ
 LABELS = {"R": "Rings", "C": "Charms", "E": "Earrings", "N": "Necklaces", "CH": "Chains", "B": "Bracelets"}
 
 
+def vfont(path, size, weight):
+    """A variable font at a given weight (Cormorant regular, Montserrat medium ...)."""
+    f = ImageFont.truetype(str(path), size)
+    try:
+        f.set_variation_by_axes([weight if a.get("name") in (b"Weight", "Weight") else a["default"] for a in f.get_variation_axes()])
+    except Exception:
+        pass
+    return f
+
+
 def use_label(text):
     """Free the middle row for the name; the hero then lands in the square above it."""
     global LABEL, CELLS, HERO_CELL
@@ -131,13 +141,13 @@ def band(frame, fonts, fade=0.0):
     d.rectangle([X0, y, W - X0 - 1, y + CH - 1], fill=GREEN)
     sb = Image.open(ROOT / "assets" / "images" / "sunburst-gold.png").convert("RGBA").resize((80, 40), Image.LANCZOS)
     layer = Image.new("RGBA", frame.size, (0, 0, 0, 0))
-    layer.alpha_composite(sb, ((W - 80) // 2, y + 62))
+    layer.alpha_composite(sb, ((W - 80) // 2, y + 44))
     dl = ImageDraw.Draw(layer)
-    name = ImageFont.truetype(str(fonts / "Italiana-Regular.ttf"), 150)
-    small = ImageFont.truetype(str(fonts / "Jost[wght].ttf"), 26)
-    dl.text(((W - dl.textlength(LABEL, font=name)) / 2, y + 112), LABEL, font=name, fill=CREAM)
+    name = vfont(fonts / "Cormorant[wght].ttf", 168, 400)
+    small = vfont(fonts / "Montserrat[wght].ttf", 24, 500)    # the site's text logo
+    dl.text(((W - dl.textlength(LABEL, font=name)) / 2, y + 78), LABEL, font=name, fill=CREAM)
     line = "7 T H   &   H I L L"
-    dl.text(((W - dl.textlength(line, font=small)) / 2, y + CH - 78), line, font=small, fill=GOLD)
+    dl.text(((W - dl.textlength(line, font=small)) / 2, y + CH - 64), line, font=small, fill=GOLD)
     if fade:
         layer.putalpha(layer.getchannel("A").point(lambda v: int(v * (1 - fade))))
     out = frame.convert("RGBA"); out.alpha_composite(layer)
@@ -167,12 +177,8 @@ def frames(pieces, fonts, hero=None):
         lead, hold = 0.0, HOLD
     history = plan(pieces)
     seal = seal_card(300)
-    serif = ImageFont.truetype(str(fonts / "Italiana-Regular.ttf"), 62)
-    sans = ImageFont.truetype(str(fonts / "Jost[wght].ttf"), 30)
-    try:
-        sans.set_variation_by_axes([420])
-    except Exception:
-        pass
+    serif = vfont(fonts / "Cormorant[wght].ttf", 70, 400)
+    sans = vfont(fonts / "Inter[opsz,wght].ttf", 28, 400)
     swaps = len(history) - 1
     t_end = hold + swaps * BEAT
     total = int((lead + t_end + OUTRO) * FPS)
