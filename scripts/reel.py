@@ -6,6 +6,7 @@
     python3 scripts/reel.py R --hero R041      # opens on one ring, full screen (the default)
     python3 scripts/reel.py R --hero none      # straight to the board
     python3 scripts/reel.py C --hero C018 --max 116 --silent   # charms, same length as the rings
+    python3 scripts/reel.py R --label Rings --silent           # the middle row holds the name of the category
 
 1080x1920, 30 fps, with an original score timed to the board (scripts/score.py; --silent for none). The reel opens on the hero piece full
 screen with a slow push-in, then it shrinks into the middle square and the board around it shows.
@@ -111,6 +112,38 @@ def timeline(pieces, hero=None):
             "duration": int((t_end + OUTRO) * FPS) / FPS}
 
 
+LABEL = ""  # set by --label: the middle row becomes a green band with the category name
+LABELS = {"R": "Rings", "C": "Charms", "E": "Earrings", "N": "Necklaces", "CH": "Chains", "B": "Bracelets"}
+
+
+def use_label(text):
+    """Free the middle row for the name; the hero then lands in the square above it."""
+    global LABEL, CELLS, HERO_CELL
+    LABEL = text
+    CELLS = [(c, r) for r in range(ROWS) for c in range(COLS) if r != ROWS // 2]
+    HERO_CELL = CELLS.index((COLS // 2, ROWS // 2 - 1))
+
+
+def band(frame, fonts, fade=0.0):
+    """Green band across the middle row: sunburst, the category name, the house."""
+    y = Y0 + (ROWS // 2) * (CH + GAP)
+    d = ImageDraw.Draw(frame)
+    d.rectangle([X0, y, W - X0 - 1, y + CH - 1], fill=GREEN)
+    sb = Image.open(ROOT / "assets" / "images" / "sunburst-gold.png").convert("RGBA").resize((80, 40), Image.LANCZOS)
+    layer = Image.new("RGBA", frame.size, (0, 0, 0, 0))
+    layer.alpha_composite(sb, ((W - 80) // 2, y + 62))
+    dl = ImageDraw.Draw(layer)
+    name = ImageFont.truetype(str(fonts / "Italiana-Regular.ttf"), 150)
+    small = ImageFont.truetype(str(fonts / "Jost[wght].ttf"), 26)
+    dl.text(((W - dl.textlength(LABEL, font=name)) / 2, y + 112), LABEL, font=name, fill=CREAM)
+    line = "7 T H   &   H I L L"
+    dl.text(((W - dl.textlength(line, font=small)) / 2, y + CH - 78), line, font=small, fill=GOLD)
+    if fade:
+        layer.putalpha(layer.getchannel("A").point(lambda v: int(v * (1 - fade))))
+    out = frame.convert("RGBA"); out.alpha_composite(layer)
+    return out.convert("RGB")
+
+
 def frames(pieces, fonts, hero=None):
     if hero:  # the hero opens the board in the middle square
         pieces = [p for p in pieces if p["code"] != hero["code"]]
@@ -163,6 +196,8 @@ def frames(pieces, fonts, hero=None):
             if g > 0:
                 cover = Image.new("RGB", (CW, CH), GREEN)
                 frame.paste(Image.blend(frame.crop((x, y, x + CW, y + CH)), cover, g), (x, y))
+        if LABEL:  # the name row; its words go with the board into the green
+            frame = band(frame, fonts, ease((t - t_end) / 0.6))
         if hero and t < 0:  # the hero shrinks into the middle square, the board shows around it
             frame = shrink(frame, big, tile(hero), smooth((t + ZOOM) / ZOOM))
         # once every square is green, close the gaps and bring up the seal and the line
@@ -212,11 +247,21 @@ def main():
     ap.add_argument("--max", type=int, default=0, help="use only the first N pieces")
     ap.add_argument("--hero", default="R041", help="code of the piece that opens the reel full screen, or none")
     ap.add_argument("--silent", action="store_true", help="no music")
+    ap.add_argument("--label", default=None, help="category name in the middle row; 'auto' names it from the type letter")
+    ap.add_argument("--beat", type=float, default=None, help="seconds between changes of the board")
     a = ap.parse_args()
+    global BEAT
+    if a.label:
+        use_label(LABELS.get(a.pieces[0].upper(), a.pieces[0]) if a.label == "auto" else a.label)
+        BEAT = 0.75                      # fewer, slower changes: each piece is seen
+        a.max = a.max or len(CELLS) * 5  # the first board and eight changes of half of it
+    if a.beat:
+        BEAT = a.beat
     pieces = pick(a.pieces)
     if a.max:
         pieces = pieces[:a.max]
-    out = Path(a.out or ROOT / "reels" / f"reel-{a.pieces[0].lower() if len(a.pieces) == 1 else 'pick'}.mp4")
+    name = a.pieces[0].lower() if len(a.pieces) == 1 else "pick"
+    out = Path(a.out or ROOT / "reels" / f"reel-{name}{'-named' if a.label else ''}.mp4")
     out.parent.mkdir(parents=True, exist_ok=True)
     codes = {r["code"]: r for r in csv.DictReader(open(PRODUCTS / "index.csv")) if r["code"]}
     hero = None if a.hero.lower() == "none" else codes[a.hero.upper()]
