@@ -651,7 +651,7 @@ def dyn_viewed():
 FACT_GOLD = "Solid gold. It never tarnishes."
 FACT_TIMING = "In stock ships in 1 to 2 business days.<br>7th &amp; Hill Exclusives: 2 to 4 weeks.<br>Curated designs: 6 to 8 weeks."
 FACT_DELIVERY = "Worldwide shipping. Taxes and duties are covered."
-FACT_CARE = f'Three simple habits, on our <a href="{CARE}" target="_blank" style="color:{GOLD_L}; text-decoration:underline;">Jewelry Care page</a>.'
+FACT_CARE = f'Four simple habits, on our <a href="{CARE}" target="_blank" style="color:{GOLD_L}; text-decoration:underline;">Jewelry Care page</a>.'
 FACT_SIZING = "Not sure about size? Send me a photo of what you already wear, and I&rsquo;ll help you choose."
 FACTS_W4 = [("Gold", FACT_GOLD), ("Timing", FACT_TIMING), ("Delivery", FACT_DELIVERY), ("Care", FACT_CARE)]
 CATS_W1 = CATS_DEFAULT[:6] + [("Design your own", DYO)]
@@ -727,7 +727,7 @@ doc("flow-w4-worn-and-kept.html", **W, code="W4", pos="email 4 of 5", when="Day 
     status="Waiting for Sally: 14k or Solid gold",
     body=hero("hero-lily-bracelet.jpg", "Sally holding her grandmother Lily's gold charm bracelet")
     + title_block("The quiet, important part", "Made to be worn.<br>Made to be kept.",
-        "My grandmother Lily wore her charm bracelet from 1913 to 2013. It&rsquo;s why I make pieces for every day, not for a drawer.")
+        "My grandmother, Lily, wore her charm bracelet from the 1940s until 2013. It&rsquo;s why I make pieces for every day, not for a drawer.")
     + facts_band(FACTS_W4)
     + heading("Made personal", pad="34px 40px 18px")
     + checker("MADE PERSONAL", [5, 12, 7])
