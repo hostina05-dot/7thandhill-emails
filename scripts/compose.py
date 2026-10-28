@@ -423,7 +423,7 @@ def footer(reason):
           <tr>
             <td class="px" align="center" style="padding:24px 40px 30px;">
               <img src="{IMG}sunburst-gold.png" width="40" height="20" alt="" style="display:block; width:40px; height:20px; margin:0 auto 12px; border:0;">
-              <p class="sans" style="margin:0 0 8px; font-family:{SANS}; font-size:10px; line-height:14px; letter-spacing:3px; text-transform:uppercase; color:{GREEN};">Modern Heirlooms. Timeless Classics.</p>
+              <p class="display" style="margin:0 0 10px; font-family:{DISPLAY}; font-size:15px; line-height:20px; font-weight:400; letter-spacing:1.5px; text-transform:uppercase; color:{GREEN};">Modern Heirlooms.<br>Timeless Classics.</p>
               <p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:12px; line-height:18px; font-weight:400;"><a href="mailto:hello@7thandhilljewelry.ca" style="color:{INK}; text-decoration:none;">hello@7thandhilljewelry.ca</a></p>
               <p class="sans legal" style="margin:0; font-family:{SANS}; font-size:11px; line-height:17px; font-weight:400; color:#9A958B;">
                 7th &amp; Hill Jewelry &middot; {{{{ organization.full_address }}}}<br>
