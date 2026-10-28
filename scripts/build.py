@@ -57,7 +57,7 @@ OVERVIEW = [
 
 SAMPLE = {
     "first_name": "Margaret",
-    "organization.full_address": "190 Roslin Avenue, Toronto, Ontario M4N 1Z6",
+    "organization.full_address": "",
 }
 # sample event data so dynamic blocks show something in the preview (Klaviyo fills the real values)
 SAMPLE_ITEMS = [

@@ -52,7 +52,7 @@ SHOTS = {
     "story-bookbox.jpg":         ("bookbox-library.jpg",             "story",   None),
     "popup-locket.jpg":          ("locket-closeup.jpg",              "story",   (0, 0.36, 1, 0.86)),
     # round portrait for Sally's notes
-    "sally-avatar.png":          ("sally-velvet.jpg",                "avatar",  (0.000, 0.045, 1.000, 0.603)),
+    "sally-avatar.png":          ("sally-fireplace.jpg",             "avatar",  (0.330, 0.245, 0.710, 0.499)),
 }
 
 # white-background packshots -> product tiles on the soft moonlit backdrop all catalog pieces share
@@ -161,12 +161,13 @@ def main():
             continue
         im = grade(crop(Image.open(PHOTOS / src).convert("RGB"), box))
         if kind == "avatar":  # round portrait with a cream ring, transparent corners
-            size, ring = 112, 4
-            face = ImageOps.fit(im, (size - 2 * ring,) * 2, Image.LANCZOS, centering=(0.5, 0.5))
-            out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-            ImageDraw.Draw(out).ellipse([0, 0, size - 1, size - 1], fill=(247, 245, 241, 255))
+            size, ring, k = 168, 6, 4  # shown at 56px: three times sharper; circles drawn 4x and scaled down
+            big = Image.new("RGBA", (size * k, size * k), (0, 0, 0, 0))
+            ImageDraw.Draw(big).ellipse([0, 0, size * k - 1, size * k - 1], fill=(247, 245, 241, 255))
+            face = ImageOps.fit(im, ((size - 2 * ring) * k,) * 2, Image.LANCZOS, centering=(0.5, 0.5))
             mask = Image.new("L", face.size, 0); ImageDraw.Draw(mask).ellipse([0, 0, face.size[0] - 1, face.size[1] - 1], fill=255)
-            out.paste(face, (ring, ring), mask)
+            big.paste(face, (ring * k, ring * k), mask)
+            out = big.resize((size, size), Image.LANCZOS)
             out.save(OUT / name, optimize=True)
             print(f"{name:26} {size}x{size}")
             continue

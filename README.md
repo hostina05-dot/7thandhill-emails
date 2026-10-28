@@ -50,7 +50,7 @@ python3 scripts/build.py --base-url https://cdn.jsdelivr.net/gh/hostina05-dot/7t
 
 ## Настройки в Klaviyo
 - **Купон VAULT15**: уникальные коды, одно использование, 30 дней, не суммируется со скидками (в том числе с Black Friday 20%). В письмах стоит тег `{% coupon_code 'VAULT15' %}`, код вручную нигде не прописан.
-- **Адрес** в подвале: Settings → Organization (190 Roslin Avenue, Toronto, Ontario M4N 1Z6).
+- **Адрес** в подвале убран: это домашний адрес Sally. CASL требует почтовый адрес отправителя (подойдёт абонентский ящик или адрес студии). Когда он будет, вписать его в Settings → Organization и вернуть `{{ organization.full_address }}` в подвал (`footer()` в `scripts/compose.py`).
 - **SALT**: шага согласия нет, только T1 с купоном VAULT15 в P.S. Ссылка отписки в подвале. Аудитория кампаний с K3: Vault + SALT. Sunset: SALT-контакты без открытий и кликов за 30 дней исключаются.
 - **Динамические блоки**: корзина (C1) берёт `event.Items`, браузинг (B1) берёт `event.ProductName/ImageURL/URL`, checkout (CO1 to CO3, CC1, CC2) ведёт на `event.extra.checkout_url`. Проверьте в Preview & test на реальном профиле.
 
@@ -71,7 +71,7 @@ python3 scripts/compose.py && python3 scripts/build.py
 Обновить после новых товаров на сайте: скачать `products.json?limit=250&page=1..3` и фото товаров в одну папку (`img/<id товара>_<номер фото>.jpg`), затем `python3 scripts/site_products.py <папка>`.
 
 ## Правила текста (из брифа)
-Без тире, без «Shop now», без «we love» и «stack»; мягкие кнопки (Step inside, Start a gift, Return to your bag). «Solid gold» вместо 14k. Ни слова о бесплатном ресайзе, вместо этого: «Not sure about size? Send me a photo of what you already wear, and I'll help you choose.» Праздники нейтрально: holiday, без ёлок. Слова Sally остаются как она написала.
+Без тире (кроме слов Sally, где тире её: W1 «…personalized jewelry—one piece, one story at a time»), без «Shop now», без «we love» и «stack»; мягкие кнопки (Step inside, Start a gift, Return to your bag). «Solid gold» вместо 14k. Ни слова о бесплатном ресайзе, вместо этого: «Not sure about size? Send me a photo of what you already wear, and I'll help you choose.» Праздники нейтрально: holiday, без ёлок. Слова Sally остаются как она написала.
 
 ## Waiting for Sally
 1. Бесплатный ресайз колец: есть или нет.

@@ -388,28 +388,33 @@ def light_list(items):
 {rows}              </table>
 """
 
-CATS_DEFAULT = CATS = [("Charms &amp; talismans", SITE + "/search?q=charm"), ("Necklaces &amp; chains", SITE + "/search?q=necklace"),
-        ("Rings", SITE + "/search?q=ring"), ("Earrings", SITE + "/search?q=earrings"),
-        ("Bracelets", SITE + "/search?q=bracelet"), ("Personalized", DYO)]
+# Necklaces and Chains are separate collections on the site (Sally), so seven tiles: the last one spans the row
+CATS_DEFAULT = CATS = [("Charms &amp; talismans", SITE + "/search?q=charm"), ("Necklaces", SITE + "/collections/necklaces"),
+        ("Chains", SITE + "/collections/chains-2"), ("Rings", SITE + "/collections/rings"),
+        ("Earrings", SITE + "/collections/earrings"), ("Bracelets", SITE + "/collections/bracelets"),
+        ("Personalized", SITE + "/collections/personalized-jewelry")]
 
 def find_your_piece(title="Find your piece", cats=None):
     CATS = cats or CATS_DEFAULT
-    cell = lambda t, u: f"""<td width="50%" style="padding:4px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="border:1px solid {GREEN}; padding:13px 6px;"><a class="sans t-sm" href="{u}" target="_blank" style="font-family:{SANS}; font-size:11px; line-height:14px; letter-spacing:2px; text-transform:uppercase; color:{GREEN}; text-decoration:none;">{t}</a></td></tr></table></td>"""
+    cell = lambda t, u, span=1: f"""<td width="{50 * span}%"{' colspan="2"' if span > 1 else ''} style="padding:4px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="border:1px solid {GREEN}; padding:13px 6px;"><a class="sans t-sm" href="{u}" target="_blank" style="font-family:{SANS}; font-size:11px; line-height:14px; letter-spacing:2px; text-transform:uppercase; color:{GREEN}; text-decoration:none;">{t}</a></td></tr></table></td>"""
     rows = "".join(f"""                <tr>{cell(*CATS[i])}{cell(*CATS[i + 1])}</tr>
-""" for i in range(0, 6, 2))
+""" for i in range(0, len(CATS) - 1, 2))
+    if len(CATS) % 2:  # an odd tile out spans the whole row
+        rows += f"""                <tr>{cell(*CATS[-1], span=2)}</tr>
+"""
     return block("FIND YOUR PIECE · categories", f"""              <p class="display" style="margin:0 0 14px; font-family:{DISPLAY}; font-size:26px; line-height:30px; color:{GREEN};">{title}</p>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
 {rows}              </table>
 """, pad="4px 36px 30px", cls="pxs")
 
 def cat_line():
-    links = " &nbsp;&middot;&nbsp; ".join(f'<a href="{u}" target="_blank" style="color:{INK}; text-decoration:none;">{t.replace("&amp; talismans","").replace("&amp; chains","").strip()}</a>' for t, u in CATS)
+    links = " &nbsp;&middot;&nbsp; ".join(f'<a href="{u}" target="_blank" style="color:{INK}; text-decoration:none;">{t.replace("&amp; talismans","").strip()}</a>' for t, u in CATS)
     return block("CATEGORY LINE", f"""              <p class="sans t-sm" style="margin:0; font-family:{SANS}; font-size:10px; line-height:22px; letter-spacing:2px; text-transform:uppercase; color:{INK};">{links}</p>
 """, pad="0 24px 22px", cls="pxs")
 
 def footer(reason):
     return f"""
-          <!-- ═══════════ BLOCK: FOOTER (keep: CASL needs sender name, mailing address, contact and unsubscribe) ═══════════ -->
+          <!-- ═══════════ BLOCK: FOOTER (sender name, contact, unsubscribe; no street address: Sally's is her home, add a business mailing address here when there is one) ═══════════ -->
           <tr>
             <td bgcolor="{BAR}" style="padding:16px 24px; background-color:{BAR};">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -426,7 +431,7 @@ def footer(reason):
               <p class="display" style="margin:0 0 10px; font-family:{DISPLAY}; font-size:15px; line-height:20px; font-weight:400; letter-spacing:1.5px; text-transform:uppercase; color:{GREEN};">Modern Heirlooms.<br>Timeless Classics.</p>
               <p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:12px; line-height:18px; font-weight:400;"><a href="mailto:hello@7thandhilljewelry.ca" style="color:{INK}; text-decoration:none;">hello@7thandhilljewelry.ca</a></p>
               <p class="sans legal" style="margin:0; font-family:{SANS}; font-size:11px; line-height:17px; font-weight:400; color:#9A958B;">
-                7th &amp; Hill Jewelry &middot; {{{{ organization.full_address }}}}<br>
+                7th &amp; Hill Jewelry<br>
                 {reason}<br>
                 {{% unsubscribe %}} &nbsp;&middot;&nbsp; {{% manage_preferences %}}
               </p>
@@ -519,6 +524,11 @@ def heading(eyebrow_text, title=None, pad="6px 40px 20px"):
     if title:
         inner += h1(title, mb=0, size_=28)
     return block("HEADING", inner, pad=pad)
+
+def tagline(pad="6px 40px 20px", color=GREEN):
+    """The brand line in Cormorant capitals on two lines, as on Sally's brand font sheet."""
+    return block("TAGLINE", f"""              <p class="display" style="margin:0; font-family:{DISPLAY}; font-size:17px; line-height:23px; font-weight:400; letter-spacing:1.5px; text-transform:uppercase; color:{color};">Modern Heirlooms.<br>Timeless Classics.</p>
+""", pad=pad)
 
 def letter(paras, pad="6px 48px 30px", sign=True, ps=None):
     """Sally's words beside her round portrait, signed, like her notes in Sally's edit."""
@@ -644,7 +654,7 @@ FACT_DELIVERY = "Worldwide shipping. Taxes and duties are covered."
 FACT_CARE = f'Three simple habits, on our <a href="{CARE}" target="_blank" style="color:{GOLD_L}; text-decoration:underline;">Jewelry Care page</a>.'
 FACT_SIZING = "Not sure about size? Send me a photo of what you already wear, and I&rsquo;ll help you choose."
 FACTS_W4 = [("Gold", FACT_GOLD), ("Timing", FACT_TIMING), ("Delivery", FACT_DELIVERY), ("Care", FACT_CARE)]
-CATS_W1 = CATS_DEFAULT[:5] + [("Design your own", DYO)]
+CATS_W1 = CATS_DEFAULT[:6] + [("Design your own", DYO)]
 HI = greet(f"Hi {FN},", "Hello,")
 
 SALT_WAVES = "Daily waves from Tue Oct 27: 200, 400, 800, then 1,500 a day while complaints stay under 0.1% and bounces under 2%"
@@ -669,7 +679,7 @@ doc("flow-w1-welcome.html", **W, code="W1", pos="email 1 of 5", when="Right afte
            "Perk iii (complimentary cleaning in the GTA) waits for Sally: keep or remove."],
     body=hero("hero-sally-fireplace.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill, by the fireplace")
     + title_block("The 7H Vault", "Welcome to 7th &amp; Hill",
-        "Welcome! I&rsquo;m Sally, I design modern heirlooms, timeless classics, and personalized jewelry, one piece, one story at a time. From now on, you&rsquo;ll be among the first to see what leaves the workbench.")
+        "Welcome! I&rsquo;m Sally, and I design modern heirlooms, timeless classics, and personalized jewelry&mdash;one piece, one story at a time. From now on, you&rsquo;ll be among the first to see what leaves the workbench.")
     + heading("First looks from the workbench", pad="0 40px 18px")
     + collage("FIRST LOOKS", (202, "charms"), ("feature-hands.jpg", "Marquise Art Deco rings worn on the hand", P[203]["url"]), ("rings", 16, "necklaces"), feature_side="left")
     + vault_key()
@@ -690,8 +700,8 @@ doc("flow-w2-story.html", **W, code="W2", pos="email 2 of 5", when="Day 1 after 
     + night("QUOTE", quote("&ldquo;Jewelry is more than metal and stone. It is a work of art, and a wearable memory.&rdquo;"), pad="34px 56px 40px")
     + line("That corner gave the brand its name, and it is still how I work. I listen to your story first, then I design around it.", pad="34px 64px 30px")
     + picture("BOOK BOX · animation", "unboxing.gif", 300, 403, "A 7th &amp; Hill book box opening to show diamond earrings and a ring",
-              cap="Every piece arrives in our green book box, lined in velvet")
-    + heading("Modern Heirlooms. Timeless Classics.", pad="0 40px 22px")
+              cap="Your jewellery arrives in our luxurious book packaging featuring velvet lining.")
+    + tagline(pad="0 40px 22px")
     + cta("Meet Sally", STORY)
     + cat_line())
 
@@ -866,7 +876,7 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
     + block("SPACER", "", pad="30px 0 0")
     + grid("GIFTS", GIFTS, cols=2, captions=GIFT_FOR)
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
-    + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 34px", size_=13, color=SOFT)
+    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 34px", size_=13, color=SOFT)
     + trust_strip())
 
 C = dict(status=DRAFT)
@@ -994,7 +1004,7 @@ doc("flow-pp1-thank-you.html", **B, code="PP1", flow="After-purchase flow 10", p
     + title_block("Thank you", greet(f"Thank you, {FN}", "Thank you"),
         "Your order is in good hands. Pieces in stock ship in 1 to 2 business days; anything made for you takes a little longer. We&rsquo;ll write to you the moment it ships.")
     + picture("UNBOXING · animation", "unboxing.gif", 300, 403, "A 7th &amp; Hill book box opening to show diamond earrings and a ring",
-              cap="Every piece arrives in our green book box, lined in velvet", pad="0 64px 10px")
+              cap="Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 10px")
     + sally_note("Thank you for choosing a piece of mine. I hope it becomes one you never take off.")
     + grid("ALONGSIDE", [13, 31, 17])
     + cat_line())
@@ -1143,7 +1153,7 @@ doc("camp-k4-gift-guide.html", status="Draft, not yet approved by Sally · waiti
     + grid("GIFTS", [201, 13, 21, (28, "iLove Smartphone Charm")], cols=2,
            captions=["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"])
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
-    + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 34px", size_=13, color=SOFT)
+    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 34px", size_=13, color=SOFT)
     + trust_strip())
 
 EDIT = dict(status=DRAFT, code="K2", flow="Campaign", pos="Sally’s Edit")
@@ -1186,7 +1196,7 @@ doc("camp-lc-last-call.html", status=DRAFT, code="LC", flow="Campaign", pos="who
         "In-stock pieces ordered by [date] ship in 1 to 2 business days and arrive in time for the holidays.")
     + collage("IN STOCK", (16, 13), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), ("rings", 28, 31))
     + cta("Start a gift", SHOP, pad="6px 64px 16px")
-    + line("Every piece arrives in our green book box, ready to give.", pad="0 64px 30px", size_=13, color=SOFT)
+    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 30px", size_=13, color=SOFT)
     + trust_strip())
 
 doc("camp-hn-holiday-note.html", status=DRAFT, code="HN", flow="Campaign", pos="whole list", when="Thu Dec 24",
@@ -1215,7 +1225,7 @@ SNIPS = {
     "letter-and-signature.html": ("Sally's words beside her portrait, signed.", letter([HI, "[Sally's words]"])),
     "facts-band.html": ("Facts in the dark band.", facts_band(FACTS_W4)),
     "night-quote.html": ("Dark band with a quote.", night("QUOTE", quote("[Quote]"), pad="34px 56px 38px")),
-    "find-your-place.html": ("Six collection tiles.", find_your_piece("Find your place", CATS_W1)),
+    "find-your-place.html": ("Seven collection tiles.", find_your_piece("Find your place", CATS_W1)),
     "trust-strip.html": ("Solid gold · Book box · Duties.", trust_strip()),
 }
 for fn, (desc, html) in SNIPS.items():
