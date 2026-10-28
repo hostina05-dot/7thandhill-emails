@@ -5,6 +5,7 @@
     python3 scripts/reel.py R012 R020 C072 ... # your own pick, in this order
     python3 scripts/reel.py R --hero R041      # opens on one ring, full screen (the default)
     python3 scripts/reel.py R --hero none      # straight to the board
+    python3 scripts/reel.py C --hero C018 --max 116 --silent   # charms, same length as the rings
 
 1080x1920, 30 fps, with an original score timed to the board (scripts/score.py; --silent for none). The reel opens on the hero piece full
 screen with a slow push-in, then it shrinks into the middle square and the board around it shows.
@@ -44,6 +45,8 @@ def pick(args):
         chosen = [r for r in rows if r["code"].rstrip("0123456789") == args[0].upper()]
         if args[0].upper() == "R":  # a few earrings are filed as rings on the site
             chosen = [r for r in chosen if not re.search(r"huggie|climber|studs\b|earring|hoops", r["title"], re.I)]
+        if args[0].upper() == "C":  # rondelles are beads for a chain, they read as rings on the board
+            chosen = [r for r in chosen if "rondelle" not in r["title"].lower()]
         random.Random(7).shuffle(chosen)  # mix stones and metals so neighbours differ
         return chosen
     return [by_code[c.upper()] for c in args]
