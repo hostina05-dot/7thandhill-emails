@@ -29,7 +29,7 @@ HERO, PUSH, ZOOM, HERO_HOLD = 1.5, 1.12, 0.8, 0.35  # hero on screen, push-in, s
 PAD = 1200                                          # backdrop added around the hero for the zoom
 HERO_CELL = 7                                       # the middle square, (column 1, row 2)
 HERO_SRC = ROOT / "assets" / "photos" / "site"      # full-size originals for hero pieces: <code>.jpg
-IVORY, GREEN, GOLD, CREAM = (247, 245, 241), (28, 58, 46), (201, 169, 106), (237, 232, 223)
+IVORY, GREEN, GOLD, CREAM = (247, 245, 241), (88, 116, 78), (201, 169, 106), (237, 232, 223)  # green = Sally's #58744E
 
 CW = (W - GAP * (COLS + 1)) // COLS
 CH = (H - GAP * (ROWS + 1)) // ROWS
@@ -144,6 +144,18 @@ def band(frame, fonts, fade=0.0):
     return out.convert("RGB")
 
 
+def seal_card(size, ring=0.06):
+    """The logo as it is, on a cream ring drawn four times larger and scaled down, so the edge is smooth."""
+    k = 4
+    big = Image.new("RGBA", (size * k, size * k), (0, 0, 0, 0))
+    ImageDraw.Draw(big).ellipse([0, 0, size * k - 1, size * k - 1], fill=CREAM + (255,))
+    out = big.resize((size, size), Image.LANCZOS)
+    inner = round(size * (1 - 2 * ring))
+    logo = Image.open(ROOT / "assets" / "images" / "logo.png").convert("RGBA").resize((inner, inner), Image.LANCZOS)
+    out.alpha_composite(logo, ((size - inner) // 2, (size - inner) // 2))
+    return out
+
+
 def frames(pieces, fonts, hero=None):
     if hero:  # the hero opens the board in the middle square
         pieces = [p for p in pieces if p["code"] != hero["code"]]
@@ -154,7 +166,7 @@ def frames(pieces, fonts, hero=None):
     else:
         lead, hold = 0.0, HOLD
     history = plan(pieces)
-    seal = Image.open(ROOT / "assets" / "images" / "seal.png").convert("RGBA").resize((300, 300), Image.LANCZOS)
+    seal = seal_card(300)
     serif = ImageFont.truetype(str(fonts / "Italiana-Regular.ttf"), 62)
     sans = ImageFont.truetype(str(fonts / "Jost[wght].ttf"), 30)
     try:

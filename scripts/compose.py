@@ -20,7 +20,7 @@ IMG = "../assets/images/"
 SITE_SET = {r["code"]: r for r in csv.DictReader(open(os.path.join(ROOT, "assets", "products", "index.csv"))) if r["code"]}
 
 OUTER = "#101613"; PAGE = "#FFFFFF"; INK = "#2E2A26"; BODY = "#4A463F"; SOFT = "#8A857C"
-GOLD = "#9C7E4A"; LINE = "#E6E2DB"; GREEN = "#1C3A2E"; GREEN_L = "#8FA79B"; BAR = "#111111"
+GOLD = "#9C7E4A"; LINE = "#E6E2DB"; GREEN = "#58744E"; GREEN_L = "#9DB092"; BAR = "#111111"
 NIGHT = "#111815"; IVORY = "#EDE8DF"; GOLD_L = "#C9A96A"; NDIM = "#9AA59F"
 DISPLAY = "Italiana, Georgia, 'Times New Roman', serif"
 SANS = "Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif"
@@ -834,7 +834,7 @@ POPUP = f"""<!DOCTYPE html>
     <b>Shows</b>New visitors, after 8 seconds or on exit, once every 14 days. Not to existing subscribers.
     <b>On submit</b>Adds to the Vault list, which starts Welcome flow 01 (W1 carries the unique VAULT15 coupon).
     <b>Image</b>The piece up close (option B), not Sally&rsquo;s portrait.
-    <b>Fonts</b>Italiana for the headline, Jost for the text, button #1C3A2E.
+    <b>Fonts</b>Italiana for the headline, Jost for the text, button #58744E (Sally's green).
   </div>
 </div>
 </body></html>
