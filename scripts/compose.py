@@ -714,9 +714,8 @@ doc("flow-w3-find-your-piece.html", **W, code="W3", pos="email 3 of 5", when="Da
     body=hero("hero-model-sweater-bag.jpg", "A woman in a green sweater wearing a gold enamel pendant, a heart charm necklace and a marquise ring, beside a 7th &amp; Hill bag")
     + title_block("Sally&rsquo;s edit", "Find the piece that feels like you.",
         "Some women start with a charm. Some with a ring they never take off. These are the nine pieces I would start with.")
-    + collage("SALLY'S NINE · all nine pieces, the two top cells change", ("w3-rings", "w3-hearts"),
-              ("feature-locket.jpg", "Talisman Keepsake Locket, worn", P[201]["url"]),
-              ((8, "The Working Scissors"), (28, "The iLove Smartphone"), 104), feature_side="left")
+    + grid("SALLY'S NINE · nine named pieces, three by three (Sally will send her own nine)",
+           [26, 101, 102, 103, (8, "The Working Scissors"), (28, "The iLove Smartphone"), 104, 105, 201])
     + cta("See every piece", SHOP, pad="16px 64px 10px")
     + sally_note("Not sure where to start? Reply and tell me who it&rsquo;s for.")
     + cat_line())
