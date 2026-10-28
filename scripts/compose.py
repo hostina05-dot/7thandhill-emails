@@ -22,8 +22,9 @@ SITE_SET = {r["code"]: r for r in csv.DictReader(open(os.path.join(ROOT, "assets
 OUTER = "#101613"; PAGE = "#FFFFFF"; INK = "#2E2A26"; BODY = "#4A463F"; SOFT = "#8A857C"
 GOLD = "#9C7E4A"; LINE = "#E6E2DB"; GREEN = "#58744E"; GREEN_L = "#9DB092"; BAR = "#111111"
 NIGHT = "#111815"; IVORY = "#EDE8DF"; GOLD_L = "#C9A96A"; NDIM = "#9AA59F"
-DISPLAY = "Italiana, Georgia, 'Times New Roman', serif"
-SANS = "Jost, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+DISPLAY = "Cormorant, 'Cormorant Garamond', Georgia, 'Times New Roman', serif"   # the site: headings
+SANS = "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"                   # the site: body text
+WORDMARK = "Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif"          # the site: text logo, medium
 
 def size(src):
     w, h = Image.open(os.path.join(ROOT, "assets/images", src)).size
@@ -48,7 +49,7 @@ HEAD = """<!DOCTYPE html>
 </style>
 <![endif]-->
 <!--[if !mso]><!-->
-<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500&amp;family=Inter:wght@400;500&amp;family=Montserrat:wght@500&amp;display=swap" rel="stylesheet">
 <!--<![endif]-->
 <style>
   :root { color-scheme: light; supported-color-schemes: light; }
@@ -62,7 +63,7 @@ HEAD = """<!DOCTYPE html>
   @media screen and (max-width: 599px) {
     .px { padding-left: 28px !important; padding-right: 28px !important; }
     .pxs { padding-left: 16px !important; padding-right: 16px !important; }
-    .h1 { font-size: 31px !important; line-height: 37px !important; }
+    .h1 { font-size: 32px !important; line-height: 38px !important; }
     .t-sm { font-size: 10px !important; letter-spacing: 1.5px !important; }
     .pname { font-size: 17px !important; line-height: 21px !important; }
     .ptext { padding-left: 8px !important; padding-right: 8px !important; }
@@ -112,7 +113,7 @@ def topbar():
           <!-- ═══════════ BLOCK: TOP BAR ═══════════ -->
           <tr>
             <td bgcolor="{BAR}" align="center" style="padding:14px 24px; background-color:{BAR};">
-              <a class="sans" href="{SITE}" target="_blank" style="font-family:{SANS}; font-size:11px; line-height:14px; letter-spacing:5px; text-transform:uppercase; color:#FFFFFF; text-decoration:none;">7th &amp; Hill</a>
+              <a class="sans" href="{SITE}" target="_blank" style="font-family:{WORDMARK}; font-size:11px; line-height:14px; font-weight:500; letter-spacing:5px; text-transform:uppercase; color:#FFFFFF; text-decoration:none;">7th &amp; Hill</a>
             </td>
           </tr>
 """
@@ -144,10 +145,8 @@ def eyebrow(text, mb=12, color=GOLD):
     return f"""              <p class="sans" style="margin:0 0 {mb}px; font-family:{SANS}; font-size:11px; line-height:16px; font-weight:400; letter-spacing:3.5px; text-transform:uppercase; color:{color};">{text}</p>
 """
 
-SEVEN = '<span style="font-family:Georgia, serif; font-size:0.9em;">7</span>'
 
-def h1(text, mb=16, color=INK, size_=34):
-    text = text.replace("7H ", SEVEN + "H ")   # Italiana's thin 7 reads as a dash before H
+def h1(text, mb=16, color=INK, size_=36):
     return f"""              <h1 class="display h1" style="margin:0 0 {mb}px; font-family:{DISPLAY}; font-size:{size_}px; line-height:{size_ + 6}px; font-weight:400; color:{color};">{text}</h1>
 """
 
@@ -158,11 +157,11 @@ def goldline(mt=0, mb=22, w=36):
 """
 
 def p(text, mb=14, color=BODY, size_=15, lh=26, align="center"):
-    return f"""              <p class="sans" style="margin:0 0 {mb}px; font-family:{SANS}; font-size:{size_}px; line-height:{lh}px; font-weight:300; color:{color}; text-align:{align};">{text}</p>
+    return f"""              <p class="sans" style="margin:0 0 {mb}px; font-family:{SANS}; font-size:{size_}px; line-height:{lh}px; font-weight:400; color:{color}; text-align:{align};">{text}</p>
 """
 
 def quote(text, color=IVORY, mb=0):
-    return f"""              <p class="display" style="margin:0 0 {mb}px; font-family:{DISPLAY}; font-size:26px; line-height:34px; color:{color};">{text}</p>
+    return f"""              <p class="display" style="margin:0 0 {mb}px; font-family:{DISPLAY}; font-size:28px; line-height:34px; color:{color};">{text}</p>
 """
 
 def title_block(eyebrow_text, title, text=None, pt=18):
@@ -295,7 +294,7 @@ def checker(name, ids):
         img = f"""                    <td width="50%" valign="middle" style="padding:0;">{pimg(n, 270)}</td>
 """
         txt = f"""                    <td class="ptext" width="50%" valign="middle" align="center" style="padding:10px 18px;">
-                      <p class="display pname" style="margin:0 0 12px; font-family:{DISPLAY}; font-size:20px; line-height:25px; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
+                      <p class="display pname" style="margin:0 0 12px; font-family:{DISPLAY}; font-size:22px; line-height:25px; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
                       <p class="sans t-sm" style="margin:0; font-family:{SANS}; font-size:10px; line-height:14px; letter-spacing:2.5px; text-transform:uppercase;"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none; border-bottom:1px solid {GOLD}; padding-bottom:2px;">View piece</a></p>
                     </td>
 """
@@ -317,7 +316,7 @@ def row3(name, ids):
         pr = piece(n)
         cells += f"""                    <td width="33.33%" valign="top" align="center" style="padding:4px 4px 0;">
                       {pimg(n, 172)}
-                      <p class="display tname" style="margin:12px 0 0; font-family:{DISPLAY}; font-size:17px; line-height:21px; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
+                      <p class="display tname" style="margin:12px 0 0; font-family:{DISPLAY}; font-size:18px; line-height:21px; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
                     </td>
 """
     return f"""
@@ -340,7 +339,7 @@ def vault_key():
     does not combine with sale prices. Never type a code by hand."""
     return night("YOUR KEY · VAULT15 unique coupon",
         eyebrow("Your key", mb=10, color=GOLD_L)
-        + h1("15% off your first piece", mb=22, color=IVORY, size_=30)
+        + h1("15% off your first piece", mb=22, color=IVORY, size_=32)
         + f"""              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto 18px;">
                 <tr><td align="center" style="border:1px solid {GOLD_L}; padding:14px 30px;">
                   <p class="sans" style="margin:0; font-family:{SANS}; font-size:18px; line-height:22px; letter-spacing:5px; color:{IVORY};">{{% coupon_code 'VAULT15' %}}</p>
@@ -359,13 +358,13 @@ def night_list(items, numerals=None):
     rows = ""
     for i, (t, d) in enumerate(items):
         top = f"border-top:1px solid #26302B; " if i == 0 else ""
-        mark = (f'<p class="display" style="margin:0; font-family:{DISPLAY}; font-size:19px; line-height:26px; color:{GOLD_L};">{numerals[i]}</p>'
+        mark = (f'<p class="display" style="margin:0; font-family:{DISPLAY}; font-size:21px; line-height:26px; color:{GOLD_L};">{numerals[i]}</p>'
                 if numerals else dot(True))
         rows += f"""                <tr>
                   <td width="30" valign="top" style="{top}border-bottom:1px solid #26302B; padding:14px 0;">{mark}</td>
                   <td valign="top" style="{top}border-bottom:1px solid #26302B; padding:14px 0;">
-                    <p class="display" style="margin:0 0 2px; font-family:{DISPLAY}; font-size:21px; line-height:26px; color:{IVORY};">{t}</p>
-                    {f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:300; color:{NDIM};">{d}</p>' if d else ''}
+                    <p class="display" style="margin:0 0 2px; font-family:{DISPLAY}; font-size:23px; line-height:26px; color:{IVORY};">{t}</p>
+                    {f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:400; color:{NDIM};">{d}</p>' if d else ''}
                   </td>
                 </tr>
 """
@@ -380,8 +379,8 @@ def light_list(items):
         rows += f"""                <tr>
                   <td width="30" valign="top" style="{top}border-bottom:1px solid {LINE}; padding:14px 0;">{dot()}</td>
                   <td valign="top" style="{top}border-bottom:1px solid {LINE}; padding:14px 0;">
-                    <p class="display" style="margin:0 0 2px; font-family:{DISPLAY}; font-size:21px; line-height:26px; color:{INK};">{t}</p>
-                    <p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:300; color:{BODY};">{d}</p>
+                    <p class="display" style="margin:0 0 2px; font-family:{DISPLAY}; font-size:23px; line-height:26px; color:{INK};">{t}</p>
+                    <p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:400; color:{BODY};">{d}</p>
                   </td>
                 </tr>
 """
@@ -398,7 +397,7 @@ def find_your_piece(title="Find your piece", cats=None):
     cell = lambda t, u: f"""<td width="50%" style="padding:4px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="border:1px solid {GREEN}; padding:13px 6px;"><a class="sans t-sm" href="{u}" target="_blank" style="font-family:{SANS}; font-size:11px; line-height:14px; letter-spacing:2px; text-transform:uppercase; color:{GREEN}; text-decoration:none;">{t}</a></td></tr></table></td>"""
     rows = "".join(f"""                <tr>{cell(*CATS[i])}{cell(*CATS[i + 1])}</tr>
 """ for i in range(0, 6, 2))
-    return block("FIND YOUR PIECE · categories", f"""              <p class="display" style="margin:0 0 14px; font-family:{DISPLAY}; font-size:24px; line-height:30px; color:{GREEN};">{title}</p>
+    return block("FIND YOUR PIECE · categories", f"""              <p class="display" style="margin:0 0 14px; font-family:{DISPLAY}; font-size:26px; line-height:30px; color:{GREEN};">{title}</p>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
 {rows}              </table>
 """, pad="4px 36px 30px", cls="pxs")
@@ -425,8 +424,8 @@ def footer(reason):
             <td class="px" align="center" style="padding:24px 40px 30px;">
               <img src="{IMG}sunburst-gold.png" width="40" height="20" alt="" style="display:block; width:40px; height:20px; margin:0 auto 12px; border:0;">
               <p class="sans" style="margin:0 0 8px; font-family:{SANS}; font-size:10px; line-height:14px; letter-spacing:3px; text-transform:uppercase; color:{GREEN};">Modern Heirlooms. Timeless Classics.</p>
-              <p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:12px; line-height:18px; font-weight:300;"><a href="mailto:hello@7thandhilljewelry.ca" style="color:{INK}; text-decoration:none;">hello@7thandhilljewelry.ca</a></p>
-              <p class="sans legal" style="margin:0; font-family:{SANS}; font-size:11px; line-height:17px; font-weight:300; color:#9A958B;">
+              <p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:12px; line-height:18px; font-weight:400;"><a href="mailto:hello@7thandhilljewelry.ca" style="color:{INK}; text-decoration:none;">hello@7thandhilljewelry.ca</a></p>
+              <p class="sans legal" style="margin:0; font-family:{SANS}; font-size:11px; line-height:17px; font-weight:400; color:#9A958B;">
                 7th &amp; Hill Jewelry &middot; {{{{ organization.full_address }}}}<br>
                 {reason}<br>
                 {{% unsubscribe %}} &nbsp;&middot;&nbsp; {{% manage_preferences %}}
@@ -475,7 +474,7 @@ def masthead(issue, theme):
     """Series masthead: the same in every issue so readers recognise it at a glance.
     Issue number and theme live in the subject line only."""
     return block("MASTHEAD · Sally's edit",
-        h1("Sally&rsquo;s edit", mb=16, size_=40)
+        h1("Sally&rsquo;s edit", mb=16, size_=43)
         + goldline(mb=0), pad="26px 40px 26px")
 
 def sally_note(text):
@@ -484,8 +483,8 @@ def sally_note(text):
                 <tr>
                   <td width="72" valign="top" style="padding:2px 16px 0 0;"><img src="{IMG}sally-avatar.png" width="56" height="56" alt="Sally Brooks" style="display:block; width:56px; height:56px; border:0;"></td>
                   <td valign="top" style="text-align:left;">
-                    <p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:15px; line-height:26px; font-weight:300; color:{BODY};">{text}</p>
-                    <p class="display" style="margin:0; font-family:{DISPLAY}; font-size:22px; line-height:26px; color:{INK};">Sally</p>
+                    <p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:15px; line-height:26px; font-weight:400; color:{BODY};">{text}</p>
+                    <p class="display" style="margin:0; font-family:{DISPLAY}; font-size:24px; line-height:26px; color:{INK};">Sally</p>
                   </td>
                 </tr>
               </table>
@@ -518,17 +517,17 @@ def caption(text, pad="12px 40px 0"):
 def heading(eyebrow_text, title=None, pad="6px 40px 20px"):
     inner = eyebrow(eyebrow_text, mb=8 if title else 0)
     if title:
-        inner += h1(title, mb=0, size_=26)
+        inner += h1(title, mb=0, size_=28)
     return block("HEADING", inner, pad=pad)
 
 def letter(paras, pad="6px 48px 30px", sign=True, ps=None):
     """Sally's words beside her round portrait, signed, like her notes in Sally's edit."""
-    body = "".join(f'<p class="sans" style="margin:0 0 14px; font-family:{SANS}; font-size:15px; line-height:26px; font-weight:300; color:{BODY};">{t}</p>' for t in paras)
+    body = "".join(f'<p class="sans" style="margin:0 0 14px; font-family:{SANS}; font-size:15px; line-height:26px; font-weight:400; color:{BODY};">{t}</p>' for t in paras)
     if sign:
-        body += (f'<p class="display" style="margin:4px 0 0; font-family:{DISPLAY}; font-size:26px; line-height:30px; color:{INK};">Sally</p>'
+        body += (f'<p class="display" style="margin:4px 0 0; font-family:{DISPLAY}; font-size:28px; line-height:30px; color:{INK};">Sally</p>'
                  f'<p class="sans t-sm" style="margin:2px 0 0; font-family:{SANS}; font-size:10px; line-height:15px; letter-spacing:2.5px; text-transform:uppercase; color:{SOFT};">Sally Brooks &middot; Founder &amp; designer</p>')
     if ps:
-        body += f'<p class="sans" style="margin:16px 0 0; font-family:{SANS}; font-size:14px; line-height:23px; font-weight:300; color:{BODY};"><span style="font-weight:400; color:{INK};">P.S.</span> {ps}</p>'
+        body += f'<p class="sans" style="margin:16px 0 0; font-family:{SANS}; font-size:14px; line-height:23px; font-weight:400; color:{BODY};"><span style="font-weight:400; color:{INK};">P.S.</span> {ps}</p>'
     return block("LETTER · Sally's words", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td width="72" valign="top" style="padding:4px 16px 0 0;"><img src="{IMG}sally-avatar.png" width="56" height="56" alt="Sally Brooks" style="display:block; width:56px; height:56px; border:0;"></td>
@@ -542,7 +541,7 @@ def facts_band(rows):
     return night("FACTS", night_list(rows), pad="34px 56px 40px")
 
 def signature(align="left", pad="0 56px 28px"):
-    return block("SIGNATURE · Sally", f"""              <p class="display" style="margin:0; font-family:{DISPLAY}; font-size:32px; line-height:38px; color:{INK}; text-align:{align};">Sally</p>
+    return block("SIGNATURE · Sally", f"""              <p class="display" style="margin:0; font-family:{DISPLAY}; font-size:35px; line-height:38px; color:{INK}; text-align:{align};">Sally</p>
               <p class="sans t-sm" style="margin:2px 0 0; font-family:{SANS}; font-size:10px; line-height:15px; letter-spacing:2.5px; text-transform:uppercase; color:{SOFT}; text-align:{align};">Sally Brooks &middot; Founder &amp; designer</p>
 """, pad=pad, align=align)
 
@@ -555,7 +554,7 @@ def facts(name, rows, pad="0 48px 32px"):
         top = f"border-top:1px solid {LINE}; " if i == 0 else ""
         trs += f"""                <tr>
                   <td width="30%" valign="top" style="{top}border-bottom:1px solid {LINE}; padding:14px 12px 14px 0;"><p class="sans" style="margin:0; font-family:{SANS}; font-size:11px; line-height:22px; letter-spacing:2px; text-transform:uppercase; color:{GOLD};">{k}</p></td>
-                  <td valign="top" style="{top}border-bottom:1px solid {LINE}; padding:14px 0;"><p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:300; color:{BODY};">{v}</p></td>
+                  <td valign="top" style="{top}border-bottom:1px solid {LINE}; padding:14px 0;"><p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:400; color:{BODY};">{v}</p></td>
                 </tr>
 """
     return block(name + " · facts", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="text-align:left;">
@@ -572,11 +571,11 @@ def grid(name, items, cols=3, captions=None):
         cells = ""
         for k in range(r, min(r + cols, len(items))):
             pr = piece(items[k])
-            cap = (f'<p class="sans" style="margin:4px 0 0; font-family:{SANS}; font-size:13px; line-height:19px; font-weight:300; color:{SOFT};">{captions[k]}</p>'
+            cap = (f'<p class="sans" style="margin:4px 0 0; font-family:{SANS}; font-size:13px; line-height:19px; font-weight:400; color:{SOFT};">{captions[k]}</p>'
                    if captions else "")
             cells += f"""                    <td width="{pct}" valign="top" align="center" style="padding:4px 4px 18px;">
                       {pimg(items[k], w)}
-                      <p class="display tname" style="margin:12px 0 0; font-family:{DISPLAY}; font-size:17px; line-height:21px; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
+                      <p class="display tname" style="margin:12px 0 0; font-family:{DISPLAY}; font-size:18px; line-height:21px; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
                       {cap}
                     </td>
 """
@@ -601,7 +600,7 @@ def trust_strip(items=(("Solid gold", "Never tarnishes"), ("Book box", "Ready to
     return night("TRUST STRIP", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
 """ + "".join(f"""                  <td width="33%" align="center" valign="top" style="{'border-left:1px solid #26302B; ' if i else ''}padding:2px 6px;">
-                    <p class="display tname" style="margin:0 0 4px; font-family:{DISPLAY}; font-size:18px; line-height:22px; color:{IVORY};">{a}</p>
+                    <p class="display tname" style="margin:0 0 4px; font-family:{DISPLAY}; font-size:19px; line-height:22px; color:{IVORY};">{a}</p>
                     <p class="sans t-sm" style="margin:0; font-family:{SANS}; font-size:9px; line-height:13px; letter-spacing:2px; text-transform:uppercase; color:{GOLD_L};">{b}</p>
                   </td>
 """ for i, (a, b) in enumerate(items)) + """                </tr>
@@ -619,7 +618,7 @@ def dyn_cart():
               {{% for item in event.Items %}}
                 <tr>
                   <td width="120" valign="middle" style="padding:10px 16px 10px 0; border-bottom:1px solid {LINE};"><a href="{{{{ item.ProductURL }}}}" target="_blank" style="text-decoration:none;"><img src="{{{{ item.ImageURL }}}}" width="104" height="104" alt="{{{{ item.ProductName }}}}" style="display:block; width:104px; height:104px; border:0; background-color:#E9EDF1;"></a></td>
-                  <td valign="middle" style="padding:10px 0; border-bottom:1px solid {LINE}; text-align:left;"><p class="display" style="margin:0; font-family:{DISPLAY}; font-size:20px; line-height:25px; color:{INK};"><a href="{{{{ item.ProductURL }}}}" target="_blank" style="color:{INK}; text-decoration:none;">{{{{ item.ProductName }}}}</a></p></td>
+                  <td valign="middle" style="padding:10px 0; border-bottom:1px solid {LINE}; text-align:left;"><p class="display" style="margin:0; font-family:{DISPLAY}; font-size:22px; line-height:25px; color:{INK};"><a href="{{{{ item.ProductURL }}}}" target="_blank" style="color:{INK}; text-decoration:none;">{{{{ item.ProductName }}}}</a></p></td>
                 </tr>
               {{% endfor %}}
               </table>
@@ -634,7 +633,7 @@ def dyn_viewed():
           <tr>
             <td class="px" align="center" style="padding:0 64px 26px;">
               <a href="{{{{ event.URL }}}}" target="_blank" style="display:block; text-decoration:none;"><img src="{{{{ event.ImageURL }}}}" width="300" height="300" alt="{{{{ event.ProductName }}}}" style="display:block; width:100%; max-width:300px; height:auto; margin:0 auto; border:0; background-color:#E9EDF1;"></a>
-              <p class="display" style="margin:16px 0 0; font-family:{DISPLAY}; font-size:24px; line-height:30px; color:{INK};"><a href="{{{{ event.URL }}}}" target="_blank" style="color:{INK}; text-decoration:none;">{{{{ event.ProductName }}}}</a></p>
+              <p class="display" style="margin:16px 0 0; font-family:{DISPLAY}; font-size:26px; line-height:30px; color:{INK};"><a href="{{{{ event.URL }}}}" target="_blank" style="color:{INK}; text-decoration:none;">{{{{ event.ProductName }}}}</a></p>
             </td>
           </tr>
 """
@@ -766,7 +765,7 @@ def gift_ps():
             f'</p><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:12px 0 10px;">'
             f'<tr><td align="center" style="border:1px solid {GOLD}; padding:11px 22px;">'
             f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:16px; line-height:20px; letter-spacing:4px; color:{INK};">{{% coupon_code \'VAULT15\' %}}</p>'
-            f'</td></tr></table><p class="sans" style="margin:0; font-family:{SANS}; font-size:13px; line-height:21px; font-weight:300; color:{SOFT};">'
+            f'</td></tr></table><p class="sans" style="margin:0; font-family:{SANS}; font-size:13px; line-height:21px; font-weight:400; color:{SOFT};">'
             f'Use it once, within 30 days. It does not combine with sale prices.')
 
 doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", when=SALT_WAVES,
@@ -790,7 +789,7 @@ doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", 
 POPUP = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>7H Vault popup</title>
-<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Jost:wght@300;400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500&amp;family=Inter:wght@400;500&amp;family=Montserrat:wght@500&amp;display=swap" rel="stylesheet">
 <style>
   body {{ margin:0; background:{OUTER}; font-family:{SANS}; color:{INK}; }}
   .stage {{ padding:32px 16px 40px; display:flex; flex-wrap:wrap; gap:28px; justify-content:center; }}
@@ -800,12 +799,12 @@ POPUP = f"""<!DOCTYPE html>
   .in {{ padding:26px 34px 30px; text-align:center; }}
   .eb {{ font-size:11px; letter-spacing:3.5px; text-transform:uppercase; color:{GOLD}; margin:0 0 10px; }}
   h1 {{ font-family:{DISPLAY}; font-weight:400; font-size:30px; line-height:36px; margin:0 0 14px; }}
-  .tx {{ font-size:14px; line-height:23px; font-weight:300; color:{BODY}; margin:0 0 20px; }}
+  .tx {{ font-size:14px; line-height:23px; font-weight:400; color:{BODY}; margin:0 0 20px; }}
   .field {{ border:1px solid #CFCFCF; padding:13px 14px; text-align:left; font-size:13px; color:{SOFT}; margin:0 0 10px; }}
   .btn {{ background:{GREEN}; color:#F7F5F1; padding:15px; font-size:12px; letter-spacing:3px; text-transform:uppercase; }}
-  .fine {{ font-size:11px; line-height:17px; color:{SOFT}; margin:14px 0 0; font-weight:300; }}
+  .fine {{ font-size:11px; line-height:17px; color:{SOFT}; margin:14px 0 0; font-weight:400; }}
   .done {{ padding:40px 34px; text-align:center; }}
-  .spec {{ max-width:420px; width:100%; color:{IVORY}; font-size:13px; line-height:21px; font-weight:300; }}
+  .spec {{ max-width:420px; width:100%; color:{IVORY}; font-size:13px; line-height:21px; font-weight:400; }}
   .spec b {{ color:{GOLD_L}; font-weight:400; letter-spacing:2px; text-transform:uppercase; font-size:11px; display:block; margin:14px 0 2px; }}
 </style></head><body>
 <div class="stage">
@@ -834,7 +833,7 @@ POPUP = f"""<!DOCTYPE html>
     <b>Shows</b>New visitors, after 8 seconds or on exit, once every 14 days. Not to existing subscribers.
     <b>On submit</b>Adds to the Vault list, which starts Welcome flow 01 (W1 carries the unique VAULT15 coupon).
     <b>Image</b>The piece up close (option B), not Sally&rsquo;s portrait.
-    <b>Fonts</b>Italiana for the headline, Jost for the text, button #58744E (Sally's green).
+    <b>Fonts</b>Cormorant for the headline, Inter for the text, as on the site; button #58744E (Sally's green).
   </div>
 </div>
 </body></html>
@@ -1068,8 +1067,8 @@ def offer_light(big, small):
     return block("OFFER · swap for each sale", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr><td align="center" style="border:1px solid {GOLD}; padding:26px 24px;">
                   {eyebrow("The offer", mb=8)}
-                  <p class="display" style="margin:0 0 8px; font-family:{DISPLAY}; font-size:40px; line-height:44px; color:{INK};">{big}</p>
-                  <p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:300; color:{BODY};">{small}</p>
+                  <p class="display" style="margin:0 0 8px; font-family:{DISPLAY}; font-size:43px; line-height:44px; color:{INK};">{big}</p>
+                  <p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:400; color:{BODY};">{small}</p>
                 </td></tr>
               </table>
 """, pad="0 48px 32px")
@@ -1095,7 +1094,7 @@ doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
     body=hero("hero-water-lilies.jpg", "A woman in a pale blue dress lying by a lily pond, wearing a heart charm necklace, a medallion and a gold bracelet")
     + night("OFFER · swap for each sale",
         eyebrow("Black Friday", mb=10, color=GOLD_L)
-        + h1("20% off our Exclusives", mb=12, color=IVORY, size_=34)
+        + h1("20% off our Exclusives", mb=12, color=IVORY, size_=37)
         + p("From today until Monday, every piece marked A 7th &amp; Hill Exclusive. Each is made in 2 to 4 weeks, in time for the holidays.", mb=0, color=NDIM),
         pad="34px 56px 40px")
     + block("SPACER", "", pad="28px 0 0")
