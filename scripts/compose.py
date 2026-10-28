@@ -19,7 +19,7 @@ IG = "https://www.instagram.com/7thandhilljewelry"; TT = "https://www.tiktok.com
 IMG = "../assets/images/"
 SITE_SET = {r["code"]: r for r in csv.DictReader(open(os.path.join(ROOT, "assets", "products", "index.csv"))) if r["code"]}
 
-OUTER = "#101613"; PAGE = "#FFFFFF"; INK = "#2E2A26"; BODY = "#4A463F"; SOFT = "#8A857C"
+OUTER = "#F3F1EC"; PAGE = "#FFFFFF"; INK = "#2E2A26"; BODY = "#4A463F"; SOFT = "#8A857C"
 GOLD = "#9C7E4A"; LINE = "#E6E2DB"; GREEN = "#58744E"; GREEN_L = "#9DB092"; BAR = "#111111"
 NIGHT = "#111815"; IVORY = "#EDE8DF"; GOLD_L = "#C9A96A"; NDIM = "#9AA59F"
 DISPLAY = "Cormorant, 'Cormorant Garamond', Georgia, 'Times New Roman', serif"   # the site: headings
@@ -63,11 +63,13 @@ HEAD = """<!DOCTYPE html>
   @media screen and (max-width: 599px) {
     .px { padding-left: 28px !important; padding-right: 28px !important; }
     .pxs { padding-left: 16px !important; padding-right: 16px !important; }
-    .h1 { font-size: 32px !important; line-height: 38px !important; }
+    .h1 { font-size: 32px !important; line-height: 35px !important; }
+    .outer { padding: 0 !important; }
+    .card { border: 0 !important; box-shadow: none !important; }
     .t-sm { font-size: 10px !important; letter-spacing: 1.5px !important; }
     .pname { font-size: 17px !important; line-height: 21px !important; }
     .ptext { padding-left: 8px !important; padding-right: 8px !important; }
-    .tname { font-size: 15px !important; line-height: 19px !important; }
+    .tname { font-size: 12px !important; line-height: 16px !important; }
   }
 </style>
 </head>
@@ -83,9 +85,10 @@ def open_body(title, preheader):
   <div role="article" aria-roledescription="email" aria-label="{title}" lang="en" style="background-color:{OUTER};">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{OUTER}" style="background-color:{OUTER};">
     <tr>
-      <td align="center" style="padding:0;">
+      <td class="outer" align="center" style="padding:28px 12px;">
         <!--[if mso]><table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{PAGE}" style="width:100%; max-width:600px; margin:0 auto; background-color:{PAGE};">
+        <!-- the letter: a white sheet on light paper, a hairline and a soft shadow around its edge -->
+        <table class="card" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{PAGE}" style="width:100%; max-width:600px; margin:0 auto; background-color:{PAGE}; border:1px solid #E6E1D8; box-shadow:0 4px 28px rgba(46,42,38,0.10);">
 """
 CLOSE_BODY = """        </table>
         <!--[if mso]></td></tr></table><![endif]-->
@@ -141,16 +144,16 @@ def dot(light=False):
     src = "sunburst-dot-light.png" if light else "sunburst-dot.png"
     return f'<img src="{IMG}{src}" width="14" height="7" alt="" style="display:block; width:14px; height:7px; border:0; margin-top:8px;">'
 
-def eyebrow(text, mb=12, color=GOLD):
+def eyebrow(text, mb=7, color=GOLD):
     return f"""              <p class="sans" style="margin:0 0 {mb}px; font-family:{SANS}; font-size:11px; line-height:16px; font-weight:400; letter-spacing:3.5px; text-transform:uppercase; color:{color};">{text}</p>
 """
 
 
-def h1(text, mb=16, color=INK, size_=36):
-    return f"""              <h1 class="display h1" style="margin:0 0 {mb}px; font-family:{DISPLAY}; font-size:{size_}px; line-height:{size_ + 6}px; font-weight:400; color:{color};">{text}</h1>
+def h1(text, mb=12, color=INK, size_=36):
+    return f"""              <h1 class="display h1" style="margin:0 0 {mb}px; font-family:{DISPLAY}; font-size:{size_}px; line-height:{round(size_ * 1.1)}px; font-weight:400; color:{color};">{text}</h1>
 """
 
-def goldline(mt=0, mb=22, w=36):
+def goldline(mt=0, mb=16, w=36):
     return f"""              <table role="presentation" width="{w}" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:{mt}px auto {mb}px;">
                 <tr><td height="1" style="height:1px; border-top:1px solid {GOLD}; font-size:0; line-height:0;">&nbsp;</td></tr>
               </table>
@@ -316,7 +319,7 @@ def row3(name, ids):
         pr = piece(n)
         cells += f"""                    <td width="33.33%" valign="top" align="center" style="padding:4px 4px 0;">
                       {pimg(n, 172)}
-                      <p class="display tname" style="margin:12px 0 0; font-family:{DISPLAY}; font-size:18px; line-height:21px; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
+                      <p class="sans tname" style="margin:10px 0 0; font-family:{SANS}; font-size:13px; line-height:18px; font-weight:400; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
                     </td>
 """
     return f"""
@@ -450,6 +453,17 @@ GROUPS = {"flow": "Flows · live from Tue, Oct 27 (automatic)",
 READY, DRAFT = "Ready for Sally", "Draft, not yet approved by Sally"
 WRITTEN = []
 
+def no_widows(html):
+    """Keep the last two words of every paragraph together, so no line ends on a single word.
+    Text with Klaviyo tags ({% %}, {{ }}) is left alone."""
+    def fix(m):
+        text = m.group(2)
+        if "{" in text or "}" in text or len(text.split()) < 4:
+            return m.group(0)
+        head, sep, tail = text.rstrip().rpartition(" ")
+        return m.group(1) + head + "&nbsp;" + tail + text[len(text.rstrip()):] + m.group(3)
+    return re.sub(r"(>)([^<>]*\S\s+\S+[^<>]*)(</(?:p|a|span|h1)>)", fix, html)
+
 def doc(fname, *, code, flow, pos, when, card, label=None, title, subject, preheader, body, status=READY,
         reason=SUB, logic=(), notes=(), page=False):
     """Write one letter. The comment header is what the preview reads: stage, card label, status, logic."""
@@ -466,6 +480,7 @@ def doc(fname, *, code, flow, pos, when, card, label=None, title, subject, prehe
               f"  Ready-to-paste copy with hosted images: klaviyo/{fname}"]
     top = "<!--\n" + "\n".join(lines) + "\n-->\n"
     html = top + (body if page else HEAD.replace("@@TITLE@@", title) + open_body(title, preheader) + topbar() + body + footer(reason) + CLOSE_BODY)
+    html = no_widows(html)
     with open(os.path.join(ROOT, "templates", fname), "w") as fh:
         fh.write(html)
     WRITTEN.append(fname)
@@ -515,12 +530,14 @@ def logo_header():
           </tr>
 """
 
+# Three voices, so the eye knows what it reads: gold capitals = the section, Cormorant = the headline,
+# Cormorant italic, small and soft = what the photo shows.
 def caption(text, pad="12px 40px 0"):
-    return block("CAPTION", f"""              <p class="sans" style="margin:0; font-family:{SANS}; font-size:11px; line-height:17px; letter-spacing:2px; text-transform:uppercase; color:{SOFT};">{text}</p>
+    return block("CAPTION", f"""              <p class="display" style="margin:0; font-family:{DISPLAY}; font-size:17px; line-height:22px; font-style:italic; color:#77726A;">{text}</p>
 """, pad=pad)
 
 def heading(eyebrow_text, title=None, pad="6px 40px 20px"):
-    inner = eyebrow(eyebrow_text, mb=8 if title else 0)
+    inner = eyebrow(eyebrow_text, mb=6 if title else 0)
     if title:
         inner += h1(title, mb=0, size_=28)
     return block("HEADING", inner, pad=pad)
@@ -535,7 +552,7 @@ def letter(paras, pad="6px 48px 30px", sign=True, ps=None):
     body = "".join(f'<p class="sans" style="margin:0 0 14px; font-family:{SANS}; font-size:15px; line-height:26px; font-weight:400; color:{BODY};">{t}</p>' for t in paras)
     if sign:
         body += (f'<p class="display" style="margin:4px 0 0; font-family:{DISPLAY}; font-size:28px; line-height:30px; color:{INK};">Sally</p>'
-                 f'<p class="sans t-sm" style="margin:2px 0 0; font-family:{SANS}; font-size:10px; line-height:15px; letter-spacing:2.5px; text-transform:uppercase; color:{SOFT};">Sally Brooks &middot; Founder &amp; designer</p>')
+                 f'<p class="sans t-sm" style="margin:2px 0 0; font-family:{SANS}; font-size:10px; line-height:15px; letter-spacing:1.2px; text-transform:uppercase; color:{SOFT};">Sally Brooks &middot; Founder &amp; designer</p>')
     if ps:
         body += f'<p class="sans" style="margin:16px 0 0; font-family:{SANS}; font-size:14px; line-height:23px; font-weight:400; color:{BODY};"><span style="font-weight:400; color:{INK};">P.S.</span> {ps}</p>'
     return block("LETTER · Sally's words", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -552,7 +569,7 @@ def facts_band(rows):
 
 def signature(align="left", pad="0 56px 28px"):
     return block("SIGNATURE · Sally", f"""              <p class="display" style="margin:0; font-family:{DISPLAY}; font-size:35px; line-height:38px; color:{INK}; text-align:{align};">Sally</p>
-              <p class="sans t-sm" style="margin:2px 0 0; font-family:{SANS}; font-size:10px; line-height:15px; letter-spacing:2.5px; text-transform:uppercase; color:{SOFT}; text-align:{align};">Sally Brooks &middot; Founder &amp; designer</p>
+              <p class="sans t-sm" style="margin:2px 0 0; font-family:{SANS}; font-size:10px; line-height:15px; letter-spacing:1.2px; text-transform:uppercase; color:{SOFT}; text-align:{align};">Sally Brooks &middot; Founder &amp; designer</p>
 """, pad=pad, align=align)
 
 def line(text, pad="0 56px 24px", size_=15, color=BODY):
@@ -583,9 +600,9 @@ def grid(name, items, cols=3, captions=None):
             pr = piece(items[k])
             cap = (f'<p class="sans" style="margin:4px 0 0; font-family:{SANS}; font-size:13px; line-height:19px; font-weight:400; color:{SOFT};">{captions[k]}</p>'
                    if captions else "")
-            cells += f"""                    <td width="{pct}" valign="top" align="center" style="padding:4px 4px 18px;">
+            cells += f"""                    <td width="{pct}" valign="top" align="center" style="padding:4px 7px 20px;">
                       {pimg(items[k], w)}
-                      <p class="display tname" style="margin:12px 0 0; font-family:{DISPLAY}; font-size:18px; line-height:21px; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
+                      <p class="sans tname" style="margin:10px 0 0; font-family:{SANS}; font-size:13px; line-height:18px; font-weight:400; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
                       {cap}
                     </td>
 """
@@ -601,7 +618,7 @@ def grid(name, items, cols=3, captions=None):
 """
 
 def picture(name, src, w, h, alt, cap=None, pad="0 64px 30px"):
-    c = (f'\n              <p class="sans" style="margin:12px 0 0; font-family:{SANS}; font-size:11px; line-height:17px; letter-spacing:2px; text-transform:uppercase; color:{SOFT};">{cap}</p>'
+    c = (f'\n              <p class="display" style="margin:12px 0 0; font-family:{DISPLAY}; font-size:17px; line-height:22px; font-style:italic; color:#77726A;">{cap}</p>'
          if cap else "")
     return block(name, f"""              <img src="{IMG}{src}" width="{w}" height="{h}" alt="{alt}" style="display:block; width:100%; max-width:{w}px; height:auto; margin:0 auto; border:0; background-color:#E9EDF1;">{c}
 """, pad=pad)
@@ -802,19 +819,19 @@ POPUP = f"""<!DOCTYPE html>
 <style>
   body {{ margin:0; background:{OUTER}; font-family:{SANS}; color:{INK}; }}
   .stage {{ padding:32px 16px 40px; display:flex; flex-wrap:wrap; gap:28px; justify-content:center; }}
-  .pop {{ width:100%; max-width:420px; background:#fff; position:relative; }}
+  .pop {{ width:100%; max-width:420px; background:#fff; position:relative; border:1px solid #E6E1D8; box-shadow:0 4px 28px rgba(46,42,38,0.10); }}
   .pop img {{ display:block; width:100%; height:auto; }}
   .x {{ position:absolute; top:10px; right:14px; color:#fff; font-size:22px; line-height:1; }}
   .in {{ padding:26px 34px 30px; text-align:center; }}
-  .eb {{ font-size:11px; letter-spacing:3.5px; text-transform:uppercase; color:{GOLD}; margin:0 0 10px; }}
-  h1 {{ font-family:{DISPLAY}; font-weight:400; font-size:30px; line-height:36px; margin:0 0 14px; }}
+  .eb {{ font-size:11px; letter-spacing:3.5px; text-transform:uppercase; color:{GOLD}; margin:0 0 7px; }}
+  h1 {{ font-family:{DISPLAY}; font-weight:400; font-size:32px; line-height:35px; margin:0 0 12px; }}
   .tx {{ font-size:14px; line-height:23px; font-weight:400; color:{BODY}; margin:0 0 20px; }}
   .field {{ border:1px solid #CFCFCF; padding:13px 14px; text-align:left; font-size:13px; color:{SOFT}; margin:0 0 10px; }}
   .btn {{ background:{GREEN}; color:#F7F5F1; padding:15px; font-size:12px; letter-spacing:3px; text-transform:uppercase; }}
   .fine {{ font-size:11px; line-height:17px; color:{SOFT}; margin:14px 0 0; font-weight:400; }}
   .done {{ padding:40px 34px; text-align:center; }}
-  .spec {{ max-width:420px; width:100%; color:{IVORY}; font-size:13px; line-height:21px; font-weight:400; }}
-  .spec b {{ color:{GOLD_L}; font-weight:400; letter-spacing:2px; text-transform:uppercase; font-size:11px; display:block; margin:14px 0 2px; }}
+  .spec {{ max-width:420px; width:100%; color:{BODY}; font-size:13px; line-height:21px; font-weight:400; }}
+  .spec b {{ color:{GOLD}; font-weight:400; letter-spacing:2px; text-transform:uppercase; font-size:11px; display:block; margin:14px 0 2px; }}
 </style></head><body>
 <div class="stage">
   <div class="pop">
