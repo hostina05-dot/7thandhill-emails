@@ -69,6 +69,7 @@ HEAD = """<!DOCTYPE html>
     .t-sm { font-size: 10px !important; letter-spacing: 1.5px !important; }
     .pname { font-size: 17px !important; line-height: 21px !important; }
     .ptext { padding-left: 8px !important; padding-right: 8px !important; }
+    .cats { letter-spacing: 0.6px !important; }
     .tname { font-size: 12px !important; line-height: 16px !important; }
   }
 </style>
@@ -415,13 +416,23 @@ def find_your_piece(title="Find your piece", cats=None):
 """, pad="4px 36px 30px", cls="pxs")
 
 def cat_line():
-    link = lambda t, u: f'<a href="{u}" target="_blank" style="color:{INK}; text-decoration:none;">{t}</a>'
-    sep = " &nbsp;&middot;&nbsp; "
-    charms = sep.join(link(t.replace(" charms", ""), u) for t, u in CHARM_CATS)
+    """An accent band before the footer: the charm collections on one line, the rest on the next."""
+    short = {"Amulets &amp; talismans": "Amulets"}
+    link = lambda t, u: f'<a href="{u}" target="_blank" style="color:{INK}; text-decoration:none;">{short.get(t, t.replace(" charms", ""))}</a>'
+    sep = f' <span style="color:{GOLD};">&middot;</span> '
+    style = f"font-family:{SANS}; font-size:10px; line-height:16px; letter-spacing:1.2px; text-transform:uppercase; color:{INK};"
+    charms = sep.join(link(t, u) for t, u in CHARM_CATS)
     rest = sep.join(link(t, u) for t, u in OTHER_CATS)
-    return block("CATEGORY LINE · charms by collection, then the rest", f"""              <p class="sans t-sm" style="margin:0 0 6px; font-family:{SANS}; font-size:10px; line-height:20px; letter-spacing:2px; text-transform:uppercase; color:{INK};"><span style="color:{GOLD};">Charms</span> &nbsp;&middot;&nbsp; {charms}</p>
-              <p class="sans t-sm" style="margin:0; font-family:{SANS}; font-size:10px; line-height:20px; letter-spacing:2px; text-transform:uppercase; color:{INK};">{rest}</p>
-""", pad="0 24px 22px", cls="pxs")
+    return f"""
+          <!-- ═══════════ BLOCK: CATEGORY BAND · charms by collection, then the rest ═══════════ -->
+          <tr>
+            <td class="pxs" align="center" bgcolor="#EEF1EA" style="padding:18px 16px 20px; background-color:#EEF1EA; border-top:1px solid #DCE3D6;">
+              <p class="display" style="margin:0 0 10px; font-family:{DISPLAY}; font-size:19px; line-height:22px; font-style:italic; color:{GREEN};">Find your piece</p>
+              <p class="sans cats" style="margin:0 0 5px; {style}"><span style="color:{GREEN}; font-weight:500; letter-spacing:1.6px;">Charms</span>&nbsp;&nbsp;{charms}</p>
+              <p class="sans cats" style="margin:0; {style}">{rest}</p>
+            </td>
+          </tr>
+"""
 
 def footer(reason):
     return f"""
