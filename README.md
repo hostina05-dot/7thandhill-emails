@@ -50,7 +50,7 @@ python3 scripts/build.py --base-url https://cdn.jsdelivr.net/gh/hostina05-dot/7t
 
 ## Настройки в Klaviyo
 - **Купон VAULT15**: уникальные коды, одно использование, 30 дней, не суммируется со скидками (в том числе с Black Friday 20%). В письмах стоит тег `{% coupon_code 'VAULT15' %}`, код вручную нигде не прописан.
-- **Адрес** в подвале убран: это домашний адрес Sally. CASL требует почтовый адрес отправителя (подойдёт абонентский ящик или адрес студии). Когда он будет, вписать его в Settings → Organization и вернуть `{{ organization.full_address }}` в подвал (`footer()` в `scripts/compose.py`).
+- **Адрес** в подвале: «Toronto, ON M4N 3N1, Canada» (офисное здание рядом с мастерской Sally, где сдают помещения). Вписан прямо в подвал (`footer()` в `scripts/compose.py`), не через `{{ organization.full_address }}`: в настройках Klaviyo стоит домашний адрес. Когда будет номер дома и офиса, дописать их туда же.
 - **SALT**: шага согласия нет, только T1 с купоном VAULT15 в P.S. Ссылка отписки в подвале. Аудитория кампаний с K3: Vault + SALT. Sunset: SALT-контакты без открытий и кликов за 30 дней исключаются.
 - **Динамические блоки**: корзина (C1) берёт `event.Items`, браузинг (B1) берёт `event.ProductName/ImageURL/URL`, checkout (CO1 to CO3, CC1, CC2) ведёт на `event.extra.checkout_url`. Проверьте в Preview & test на реальном профиле.
 

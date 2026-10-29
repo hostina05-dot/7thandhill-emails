@@ -417,7 +417,7 @@ def cat_line():
 
 def footer(reason):
     return f"""
-          <!-- ═══════════ BLOCK: FOOTER (sender name, contact, unsubscribe; no street address: Sally's is her home, add a business mailing address here when there is one) ═══════════ -->
+          <!-- ═══════════ BLOCK: FOOTER (CASL: sender name, mailing address, contact, unsubscribe. The address is written here, not taken from Klaviyo settings, which hold Sally's home address) ═══════════ -->
           <tr>
             <td bgcolor="{BAR}" style="padding:16px 24px; background-color:{BAR};">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -434,7 +434,7 @@ def footer(reason):
               <p class="display" style="margin:0 0 10px; font-family:{DISPLAY}; font-size:15px; line-height:20px; font-weight:400; letter-spacing:1.5px; text-transform:uppercase; color:{GREEN};">Modern Heirlooms.<br>Timeless Classics.</p>
               <p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:12px; line-height:18px; font-weight:400;"><a href="mailto:hello@7thandhilljewelry.ca" style="color:{INK}; text-decoration:none;">hello@7thandhilljewelry.ca</a></p>
               <p class="sans legal" style="margin:0; font-family:{SANS}; font-size:11px; line-height:17px; font-weight:400; color:#9A958B;">
-                7th &amp; Hill Jewelry<br>
+                7th &amp; Hill Jewelry &middot; Toronto, ON M4N 3N1, Canada<br>
                 {reason}<br>
                 {{% unsubscribe %}} &nbsp;&middot;&nbsp; {{% manage_preferences %}}
               </p>
@@ -763,7 +763,7 @@ doc("flow-w5-help-finding.html", **W, code="W5", pos="email 5 of 5", when="Day 8
               "And if what you have in mind doesn&rsquo;t exist yet, we can design it together, one on one.",
               "No pressure, and no follow-up barrage. One honest shortlist."],
              ps="If nothing fits, I&rsquo;m happy to suggest other options.")
-    + collage("THREE TO START", (105, 1), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), (103, "charms", "necklaces"))
+    + collage("THREE TO START", (105, 1), ("feature-necklaces-books.jpg", "Two gold pendants on snake chains, hung over old leather books", SITE + "/collections/necklaces"), (103, "charms", "necklaces"))
     + cta("Reply to Sally", MAIL + "?subject=Help%20me%20find%20the%20one", pad="4px 64px 8px",
           extra=text_link("Or start with Design Your Own", DYO, mt=18))
     + block("SPACER", "", pad="22px 0 0")
