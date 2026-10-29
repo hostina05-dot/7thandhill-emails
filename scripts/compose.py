@@ -481,7 +481,9 @@ def no_widows(html):
             return m.group(0)
         head, sep, tail = text.rstrip().rpartition(" ")
         return m.group(1) + head + "&nbsp;" + tail + text[len(text.rstrip()):] + m.group(3)
-    return re.sub(r"(>)([^<>]*\S\s+\S+[^<>]*)(</(?:p|a|span|h1)>)", fix, html)
+    html = re.sub(r"(>)([^<>]*\S\s+\S+[^<>]*)(</(?:p|a|span|h1)>)", fix, html)
+    # the brand name never breaks across lines
+    return re.sub(r">[^<>]*<", lambda m: re.sub(r"7th (&amp;|&) Hill", r"7th&nbsp;\1&nbsp;Hill", m.group(0)), html)
 
 def doc(fname, *, code, flow, pos, when, card, label=None, title, subject, preheader, body, status=READY,
         reason=SUB, logic=(), notes=(), page=False):
@@ -824,7 +826,7 @@ doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", 
     + letter([HI,
               "You may remember me as the previous Co-Founder of SALT Fine Jewelry. For eight years I designed for so many of you, and many of you became more than clients. I still remember the stories behind your pieces.",
               "Now I&rsquo;ve started something of my own: 7th &amp; Hill Jewelry. It&rsquo;s named after the corner in downtown Los Angeles where my dad ran his gold leaf lettering business, and where I first watched molten gold become a necklace.",
-              "Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. I still begin the same way. I listen, I design, and then you wear it.",
+              "Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. I&rsquo;ve created over 180 unique designs for you. I still begin the same way. I listen, I design, and then you wear it.",
               "You&rsquo;re receiving this because you were part of my SALT family."],
              ps=gift_ps())
     + moving_row("FROM THE WORKBENCH", ["rings", "necklaces", "earrings"], "From the workbench")
