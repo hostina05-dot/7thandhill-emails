@@ -46,6 +46,7 @@ SHOTS = {
     "feature-locket.jpg":        ("locket-closeup.jpg",              "feature", (0, 0.30, 1, 1)),
     "feature-rings-table.jpg":   ("rings-table-bag.jpg",             "feature", (0, 0.20, 1, 0.95)),
     "feature-necklaces-books.jpg": ("necklaces-books.jpg",           "feature", None),
+    "hero-pendants-books.jpg":   ("necklaces-books.jpg",             "hero",    (0, 0.10, 1, 0.80)),
     "feature-compass.jpg":       ("compass-horn-velvet.jpg",         "feature", (0, 0.06, 1, 0.86)),
     # small squares of worn pieces, same size as product tiles (tile)
     "tile-talisman-locket.jpg":  ("locket-closeup.jpg",              "tile",    (0.10, 0.44, 0.90, 0.90)),

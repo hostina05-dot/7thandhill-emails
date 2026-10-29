@@ -202,13 +202,13 @@ def ps(text):
 
 # ── images inside collages
 ANIM = {  # animated grid cells: cross-fade between pieces (GIF; Outlook for Windows shows the first one)
-    "rings": ("anim-rings.gif", "Rings", SITE + "/search?q=ring"),
-    "charms": ("anim-charms.gif", "Charms", SITE + "/search?q=charm"),
-    "pendants": ("anim-pendants.gif", "Pendants", SITE + "/search?q=pendant"),
-    "earrings": ("anim-earrings.gif", "Earrings", SITE + "/search?q=earrings"),
-    "necklaces": ("anim-necklaces.gif", "Necklaces", SITE + "/search?q=necklace"),
-    "w3-rings": ("anim-w3-rings.gif", "Marquise Art Deco Ring, Art Deco Sunburst Ring, Custom Date Ring", SITE + "/search?q=ring"),
-    "w3-hearts": ("anim-w3-hearts.gif", "Radiant Sunburst Heart, Hand &amp; Footprint Heart", SITE + "/search?q=heart"),
+    "rings": ("anim-rings.gif", "Rings", SITE + "/collections/rings"),
+    "charms": ("anim-charms.gif", "Charms", SITE + "/collections/talismans-medallions"),
+    "pendants": ("anim-pendants.gif", "Pendants", SITE + "/collections/talismans-medallions"),
+    "earrings": ("anim-earrings.gif", "Earrings", SITE + "/collections/earrings"),
+    "necklaces": ("anim-necklaces.gif", "Necklaces", SITE + "/collections/necklaces"),
+    "w3-rings": ("anim-w3-rings.gif", "Marquise Art Deco Ring, Art Deco Sunburst Ring, Custom Date Ring", SITE + "/collections/rings"),
+    "w3-hearts": ("anim-w3-hearts.gif", "Radiant Sunburst Heart, Hand &amp; Footprint Heart", SITE + "/collections/medium-charms-1"),
 }
 
 def is_anim(n):
@@ -342,7 +342,7 @@ def vault_key():
     does not combine with sale prices. Never type a code by hand."""
     return night("YOUR KEY · VAULT15 unique coupon",
         eyebrow("Your key", mb=10, color=GOLD_L)
-        + h1("15% off your first piece", mb=22, color=IVORY, size_=32)
+        + h1("15% off your first purchase", mb=22, color=IVORY, size_=32)
         + f"""              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto 18px;">
                 <tr><td align="center" style="border:1px solid {GOLD_L}; padding:14px 30px;">
                   <p class="sans" style="margin:0; font-family:{SANS}; font-size:18px; line-height:22px; letter-spacing:5px; color:{IVORY};">{{% coupon_code 'VAULT15' %}}</p>
@@ -391,11 +391,15 @@ def light_list(items):
 {rows}              </table>
 """
 
-# Necklaces and Chains are separate collections on the site (Sally), so seven tiles: the last one spans the row
-CATS_DEFAULT = CATS = [("Charms &amp; talismans", SITE + "/search?q=charm"), ("Necklaces", SITE + "/collections/necklaces"),
-        ("Chains", SITE + "/collections/chains-2"), ("Rings", SITE + "/collections/rings"),
-        ("Earrings", SITE + "/collections/earrings"), ("Bracelets", SITE + "/collections/bracelets"),
-        ("Personalized", SITE + "/collections/personalized-jewelry")]
+# Charms are the heart of the business, so each charm collection of the site gets its own link. Sally's ten:
+# the site's collections without Chains, Children's edit, the tennis necklaces, Bespoke bridal, Hardware,
+# Rondelles and Art Deco. An odd tile out spans its row.
+CHARM_CATS = [("Amulets &amp; talismans", SITE + "/collections/talismans-medallions"),
+              ("Large charms", SITE + "/collections/large-charms"), ("Medium charms", SITE + "/collections/medium-charms-1"),
+              ("Small charms", SITE + "/collections/small-charms"), ("Mini charms", SITE + "/collections/mini-charms")]
+OTHER_CATS = [("Necklaces", SITE + "/collections/necklaces"), ("Rings", SITE + "/collections/rings"), ("Earrings", SITE + "/collections/earrings"),
+              ("Bracelets", SITE + "/collections/bracelets"), ("Personalized", SITE + "/collections/personalized-jewelry")]
+CATS_DEFAULT = CATS = CHARM_CATS + OTHER_CATS
 
 def find_your_piece(title="Find your piece", cats=None):
     CATS = cats or CATS_DEFAULT
@@ -411,8 +415,12 @@ def find_your_piece(title="Find your piece", cats=None):
 """, pad="4px 36px 30px", cls="pxs")
 
 def cat_line():
-    links = " &nbsp;&middot;&nbsp; ".join(f'<a href="{u}" target="_blank" style="color:{INK}; text-decoration:none;">{t.replace("&amp; talismans","").strip()}</a>' for t, u in CATS)
-    return block("CATEGORY LINE", f"""              <p class="sans t-sm" style="margin:0; font-family:{SANS}; font-size:10px; line-height:22px; letter-spacing:2px; text-transform:uppercase; color:{INK};">{links}</p>
+    link = lambda t, u: f'<a href="{u}" target="_blank" style="color:{INK}; text-decoration:none;">{t}</a>'
+    sep = " &nbsp;&middot;&nbsp; "
+    charms = sep.join(link(t.replace(" charms", ""), u) for t, u in CHARM_CATS)
+    rest = sep.join(link(t, u) for t, u in OTHER_CATS)
+    return block("CATEGORY LINE · charms by collection, then the rest", f"""              <p class="sans t-sm" style="margin:0 0 6px; font-family:{SANS}; font-size:10px; line-height:20px; letter-spacing:2px; text-transform:uppercase; color:{INK};"><span style="color:{GOLD};">Charms</span> &nbsp;&middot;&nbsp; {charms}</p>
+              <p class="sans t-sm" style="margin:0; font-family:{SANS}; font-size:10px; line-height:20px; letter-spacing:2px; text-transform:uppercase; color:{INK};">{rest}</p>
 """, pad="0 24px 22px", cls="pxs")
 
 def footer(reason):
@@ -671,7 +679,7 @@ FACT_DELIVERY = "Worldwide shipping. Taxes and duties are covered."
 FACT_CARE = f'Four simple habits, on our <a href="{CARE}" target="_blank" style="color:{GOLD_L}; text-decoration:underline;">Jewelry Care page</a>.'
 FACT_SIZING = "Not sure about size? Send me a photo of what you already wear, and I&rsquo;ll help you choose."
 FACTS_W4 = [("Gold", FACT_GOLD), ("Timing", FACT_TIMING), ("Delivery", FACT_DELIVERY), ("Care", FACT_CARE)]
-CATS_W1 = CATS_DEFAULT[:6] + [("Design your own", DYO)]
+CATS_W1 = CATS_DEFAULT  # Sally's ten collections; Design Your Own has its own link under the button
 HI = greet(f"Hi {FN},", "Hello,")
 
 SALT_WAVES = "Daily waves from Tue Oct 27: 200, 400, 800, then 1,500 a day while complaints stay under 0.1% and bounces under 2%"
@@ -690,7 +698,7 @@ W = dict(flow="Welcome flow 01")
 doc("flow-w1-welcome.html", **W, code="W1", pos="email 1 of 5", when="Right after signup",
     card="Welcome 01 · email 1 of 5 · right after signup",
     title="Welcome to 7th &amp; Hill", subject="Your key to the Vault",
-    preheader="15% off your first piece, and first word on every sale.",
+    preheader="15% off your first purchase, and first word on every sale.",
     status="Waiting for Sally: GTA cleaning perk, collection tiles", reason=VAULT,
     notes=["Coupon: Klaviyo unique coupon VAULT15 (single use, 30 days, not with sale prices).",
            "Perk iii (complimentary cleaning in the GTA) waits for Sally: keep or remove."],
@@ -787,7 +795,7 @@ def moving_row(name, cells, eyebrow_text):
 
 def gift_ps():
     """P.S. with Sally's welcome gift and the unique coupon (Klaviyo coupon VAULT15)."""
-    return (f'A small welcome gift from me: 15% off your first 7th &amp; Hill piece.'
+    return (f'A small welcome gift from me: 15% off your first 7th &amp; Hill purchase.'
             f'</p><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:12px 0 10px;">'
             f'<tr><td align="center" style="border:1px solid {GOLD}; padding:11px 22px;">'
             f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:16px; line-height:20px; letter-spacing:4px; color:{INK};">{{% coupon_code \'VAULT15\' %}}</p>'
@@ -805,7 +813,7 @@ doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", 
     + letter([HI,
               "You may remember me as the previous Co-Founder of SALT Fine Jewelry. For eight years I designed for so many of you, and many of you became more than clients. I still remember the stories behind your pieces.",
               "Now I&rsquo;ve started something of my own: 7th &amp; Hill Jewelry. It&rsquo;s named after the corner in downtown Los Angeles where my dad ran his gold leaf lettering business, and where I first watched molten gold become a necklace.",
-              "Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. And I still begin the same way. I listen, I design, and then you wear it.",
+              "Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. I still begin the same way. I listen, I design, and then you wear it.",
               "You&rsquo;re receiving this because you were part of my SALT family."],
              ps=gift_ps())
     + moving_row("FROM THE WORKBENCH", ["rings", "necklaces", "earrings"], "From the workbench")
@@ -883,7 +891,7 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
     logic=["Audience: Vault list plus SALT contacts. This is the first campaign the SALT list receives."],
     notes=["Suggested order-by dates for Sally to confirm: curated designs Nov 6, Exclusives Nov 30, in stock Dec 17.",
            "Neutral holiday wording on purpose: no trees, no Christmas."],
-    body=hero("hero-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag")
+    body=hero("hero-pendants-books.jpg", "Two gold pendants on snake chains, hung over old leather books", SITE + "/collections/necklaces")
     + title_block("The only deadline we have", "For holiday gifts, the clock starts now",
         "Some pieces are ready to go, others are made for you over a few weeks. Here&rsquo;s when to order so yours arrives in time.")
     + facts_band([("In stock", "Order by [date]. Ships in 1 to 2 business days."),
@@ -999,7 +1007,7 @@ doc("flow-b1-still-thinking.html", **B, code="B1", flow="Browse flow 05", pos="e
     + dyn_viewed()
     + cta("See it again", "{{ event.URL|default:'https://www.7thandhilljewelry.ca/collections' }}", pad="0 64px 30px")
     + heading("Beside it", pad="0 40px 18px")
-    + collage("BESIDE IT", (13, "pendants"), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/search?q=pendant"), (21, 16, 31))
+    + collage("BESIDE IT", (13, "pendants"), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), (21, 16, 31))
     + cat_line())
 
 doc("flow-b2-worth-knowing.html", **B, code="B2", flow="Browse flow 05", pos="email 2 of 2", when="24 h after B1",
@@ -1054,7 +1062,7 @@ doc("flow-pp3-next-piece.html", **B, code="PP3", flow="After-purchase flow 10", 
     body=hero("hero-model-armchair-locket.jpg", "A woman in a green velvet armchair wearing a gold capsule locket")
     + title_block("New from the workbench", "Your next piece",
         "A few new arrivals, in case something speaks to you.")
-    + collage("NEW ARRIVALS", ("pendants", 31), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), (4, "rings", 32))
+    + collage("NEW ARRIVALS", ("pendants", 31), ("feature-necklaces-books.jpg", "Two gold pendants on snake chains, hung over old leather books", SITE + "/collections/necklaces"), (4, "rings", 32))
     + cta("Step inside", SHOP)
     + cat_line())
 
@@ -1066,7 +1074,7 @@ doc("flow-an1-a-year-ago.html", **B, code="AN1", flow="Anniversary flow 15", pos
     body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
     + title_block("A year ago", "A year with your piece",
         "A year ago this month, a 7th &amp; Hill piece became yours. If the year deserves marking, a charm, a date or a new piece can carry it.")
-    + collage("TO MARK THE YEAR", (103, 105), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/search?q=pendant"), (7, 3, "charms"), feature_side="left")
+    + collage("TO MARK THE YEAR", (103, 105), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), (7, 3, "charms"), feature_side="left")
     + cta("Mark the year", SHOP)
     + cat_line())
 
@@ -1078,7 +1086,7 @@ doc("camp-k1-new-in-studio.html", status=DRAFT, code="K1", flow="Weekly campaign
     + title_block("New in the studio", "[This week&rsquo;s headline]",
         "[Two calm sentences about what just left the workbench.]")
     + heading("What just left the workbench", pad="0 40px 18px")
-    + collage("THIS WEEK", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/search?q=pendant"), (7, 3, "rings"))
+    + collage("THIS WEEK", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), (7, 3, "rings"))
     + cta("Step inside", SHOP)
     + cat_line())
 
@@ -1177,9 +1185,9 @@ doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign ·
     title="Sally&rsquo;s edit", subject="Sally's edit · [theme]", preheader="The pieces I kept reaching for this week.",
     notes=["The green library layout Sally chose. Reusable: swap the photo, the note and the pieces."],
     body=masthead("", "")
-    + hero("hero-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring")
+    + hero("hero-necklaces-book.jpg", "Gold necklaces laid across a green leather book", SITE + "/collections/necklaces")
     + sally_note("This week I kept reaching for small talismans: a compass, a horseshoe, a crown. Pieces that carry a wish, worn every day.")
-    + collage("THE EDIT", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/search?q=pendant"), (7, 3, "rings"))
+    + collage("THE EDIT", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), (7, 3, "rings"))
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
 doc("camp-k2-sallys-edit-oct27.html", **EDIT, when="Tue Oct 27, 11:00", card="Campaign · Sally’s Edit · Tue Oct 27, 11:00",
@@ -1187,7 +1195,7 @@ doc("camp-k2-sallys-edit-oct27.html", **EDIT, when="Tue Oct 27, 11:00", card="Ca
     logic=["Audience: Vault list only. SALT contacts join the campaign audience from K3 (Tue Nov 3)."],
     notes=["Layout: photo, note, pieces with names."],
     body=masthead("", "")
-    + hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", SITE + "/search?q=pendant")
+    + hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", SITE + "/collections/talismans-medallions")
     + sally_note("Every pendant here holds something: a name, a date, a small superstition. These are the ones I&rsquo;d give, and the ones I&rsquo;d keep.")
     + checker("THE EDIT", [1, 12, 4, 3])
     + cta("Discover 7th &amp; Hill", SHOP)
@@ -1196,9 +1204,9 @@ doc("camp-k2-sallys-edit-spare.html", **EDIT, when="No date yet (spare layout)",
     title="Sally&rsquo;s edit", subject="Sally's edit · [the piece]", preheader="[One line from Sally]",
     notes=["Alternative layout: one piece. Sally writes the two lines about it; nothing is invented for her."],
     body=masthead("", "")
-    + hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn", SITE + "/search?q=locket")
+    + hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn", SITE + "/collections/talismans-medallions")
     + title_block("The piece of the week", "[Name of the piece]", "[Two lines from Sally about this piece.]", pt=18)
-    + cta("View the piece", SITE + "/search?q=locket", pad="0 64px 34px")
+    + cta("View the piece", SITE + "/collections/talismans-medallions", pad="0 64px 34px")
     + heading("Wear it with")
     + grid("WEAR IT WITH", [13, 16, (23, "Signature Toggle Charm")])
     + cat_line())
@@ -1210,7 +1218,7 @@ doc("camp-lc-last-call.html", status=DRAFT, code="LC", flow="Campaign", pos="who
     body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
     + title_block("Last call", "Last call for in-stock pieces",
         "In-stock pieces ordered by [date] ship in 1 to 2 business days and arrive in time for the holidays.")
-    + collage("IN STOCK", (16, 13), ("feature-rings-table.jpg", "Gold rings on a library table beside a 7th &amp; Hill bag", SITE + "/search?q=ring"), ("rings", 28, 31))
+    + collage("IN STOCK", (16, 13), ("feature-locket.jpg", "Talisman Keepsake Locket, worn", P[201]["url"]), ("rings", 28, 31))
     + cta("Start a gift", SHOP, pad="6px 64px 16px")
     + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 30px", size_=13, color=SOFT)
     + trust_strip())
@@ -1241,7 +1249,7 @@ SNIPS = {
     "letter-and-signature.html": ("Sally's words beside her portrait, signed.", letter([HI, "[Sally's words]"])),
     "facts-band.html": ("Facts in the dark band.", facts_band(FACTS_W4)),
     "night-quote.html": ("Dark band with a quote.", night("QUOTE", quote("[Quote]"), pad="34px 56px 38px")),
-    "find-your-place.html": ("Seven collection tiles.", find_your_piece("Find your place", CATS_W1)),
+    "find-your-place.html": ("Ten collection tiles: five charm collections, then the rest.", find_your_piece("Find your place", CATS_W1)),
     "trust-strip.html": ("Solid gold · Book box · Duties.", trust_strip()),
 }
 for fn, (desc, html) in SNIPS.items():
