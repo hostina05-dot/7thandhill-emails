@@ -25,6 +25,9 @@ SITE = "https://www.7thandhilljewelry.ca/products/"
 TYPES = {"Earrings": "Earring", "Necklaces": "Necklace", "Charms & Pendants": "Charm", "": "Other"}
 CODES = {"Charm": "C", "Ring": "R", "Earring": "E", "Necklace": "N", "Chain": "CH", "Bracelet": "B",
          "Connector": "CN", "Lock": "L"}
+# The site's product type is sometimes wrong; the site's own collections decide instead.
+MAIN = {"bracelets": "Bracelet", "chains-2": "Chain", "necklaces": "Necklace", "earrings": "Earring", "rings": "Ring"}
+GROUP_FIX = {"the-1-1-oval-link-chain-5-2mm": "Chain"}  # in Bracelets and Chains on the site; it is a chain (Sally)
 SIZE, FILL = 600, 0.74  # the piece's longer side takes 74% of the square
 
 
@@ -182,6 +185,7 @@ def main(src):
     for page in sorted(src.glob("p*.json")):
         products += json.load(open(page))["products"]
     OUT.mkdir(parents=True, exist_ok=True)
+    member = {k: set(v) for k, v in json.load(open(OUT / "collections.json")).items()} if (OUT / "collections.json").exists() else {}
     index = OUT / "index.csv"
     known = {r["url"]: r.get("code", "") for r in csv.DictReader(open(index))} if index.exists() else {}
     known = {u: c for u, c in known.items() if c}
@@ -193,10 +197,16 @@ def main(src):
         if p["handle"].startswith("gift-card"):
             continue
         group = TYPES.get(p["product_type"], p["product_type"])
+        inside = [MAIN[c] for c in MAIN if p["handle"] in member.get(c, ())]
+        if len(inside) == 1 and group in MAIN.values():
+            group = inside[0]  # e.g. huggies filed as rings, a pendant necklace filed as a chain
+        group = GROUP_FIX.get(p["handle"], group)
         shots = [src / "img" / f"{p['id']}_{k}.jpg" for k in range(len(p["images"]))]
         pick = next((f for f in shots if f.exists() and on_white(Image.open(f))), None)
         url = SITE + p["handle"]
         code = known.get(url, "")
+        if code and code.rstrip("0123456789") != CODES.get(group, "O"):
+            code = ""  # moved to another category: it takes the next free code there
         if pick and not code:
             pre = CODES.get(group, "O"); count[pre] = count.get(pre, 0) + 1
             code = f"{pre}{count[pre]:03d}"

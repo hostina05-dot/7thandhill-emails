@@ -16,7 +16,6 @@ Code = what to name in a letter (R012 = ring no. 12). Pictures: products.html. T
 | B010 | 14k Gold Logan Diamond Bangle | https://www.7thandhilljewelry.ca/products/hannah-square-link-diamond-bracelet-copy |
 | B011 | Pyramid Diamond Stud Bangle Medium | https://www.7thandhilljewelry.ca/products/pyramid-diamond-stud-bangle-large-copy |
 | B012 | Cindy Baguette Diamond Bangle | https://www.7thandhilljewelry.ca/products/baguette-diamond-bangle |
-| B013 | The 1+1 Oval Link Chain 5.2Mm | https://www.7thandhilljewelry.ca/products/the-1-1-oval-link-chain-5-2mm |
 | B014 | 14k Gold Infinity Greek Key Bracelet | https://www.7thandhilljewelry.ca/products/the-infinity-greek-key-bracelet |
 | B015 | 14k Hollow Classic Oval And Circle Link Bracelet | https://www.7thandhilljewelry.ca/products/14k-hollow-classic-oval-and-circle-link-bracelet |
 | B016 | Luminous Saltwater Pearl Bracelet | https://www.7thandhilljewelry.ca/products/luminous-saltwater-pearl-bracelet |
@@ -305,8 +304,8 @@ Code = what to name in a letter (R012 = ring no. 12). Pictures: products.html. T
 | CH027 | Iconic 14k Solid Gold Italian Medium Link Paperclip Chain | https://www.7thandhilljewelry.ca/products/paperclip-chain |
 | CH028 | Iconic 14k Solid Gold Italian Large Link Paperclip Chain | https://www.7thandhilljewelry.ca/products/medium-paperclip-chain |
 | CH029 | Winslet 14k Solid Gold Italian Multi-Link Paperclip Chain | https://www.7thandhilljewelry.ca/products/oval-multi-link-solid-chain |
-| CH030 | Emerald Cut Topaz Necklace With Cuban Chain | https://www.7thandhilljewelry.ca/products/emerald-cut-topaz-necklace-with-cuban-chain |
 | CH031 | Iconic 14k Solid Gold Italian Small Link Paperclip Chain | https://www.7thandhilljewelry.ca/products/iconic-14k-solid-gold-italian-small-link-paperclip-chain |
+| CH032 | The 1+1 Oval Link Chain 5.2Mm | https://www.7thandhilljewelry.ca/products/the-1-1-oval-link-chain-5-2mm |
 | CN001 | 14k Gold 7H Signature Toggle Charm Connector | https://www.7thandhilljewelry.ca/products/14k-gold-7h-signature-toggle-charm-connector |
 | CN002 | 14k Gold Diamond Push-Gate Hardware Charm Connector | https://www.7thandhilljewelry.ca/products/14k-gold-diamond-push-gate-charm-connector-change-photo |
 | CN003 | 14k Gold Round Chunky Push Connector | https://www.7thandhilljewelry.ca/products/14k-gold-round-connector |
@@ -432,6 +431,9 @@ Code = what to name in a letter (R012 = ring no. 12). Pictures: products.html. T
 | E114 | Baguette Diamond Crown Climbers | https://www.7thandhilljewelry.ca/products/baguette-diamond-crown-climbers |
 | E115 | Annie Baguette Diamond Hoops | https://www.7thandhilljewelry.ca/products/jagged-huggie-earrings |
 | E116 | 14k Gold Diamond Feather Moveable Earrings | https://www.7thandhilljewelry.ca/products/diamond-feather-earrings |
+| E117 | Gold And Diamond Noa Fluted Huggies | https://www.7thandhilljewelry.ca/products/gold-and-diamond-samantha-fluted-huggies |
+| E118 | 14k Yellow Gold Pink Sapphire And Ruby Blossom Climber Studs | https://www.7thandhilljewelry.ca/products/14k-yellow-gold-pink-sapphire-and-ruby-blossom-climber-studs |
+| E119 | 14k Gold And Diamond Carissa Huggies | https://www.7thandhilljewelry.ca/products/gold-and-diamond-clair-huggies |
 | L001 | Carabiner Lock With Diamond Clasp | https://www.7thandhilljewelry.ca/products/carabiner-lock-with-diamonds-and-hexagonal-clasp |
 | L002 | 14k Gold Mini Push Connector | https://www.7thandhilljewelry.ca/products/14k-gold-mini-connector |
 | L003 | Diamond Lobster Connector Charm | https://www.7thandhilljewelry.ca/products/diamond-lobster-connector-charm |
@@ -510,6 +512,7 @@ Code = what to name in a letter (R012 = ring no. 12). Pictures: products.html. T
 | N071 | 14k Gold Mixed-Cut Diamond Curved Necklace | https://www.7thandhilljewelry.ca/products/graduated-delicate-diamond-necklace-copy-1 |
 | N072 | Emerald Cut Topaz With Diamond Surround Necklace | https://www.7thandhilljewelry.ca/products/emerald-cut-topaz-with-diamond-surround-necklace-with-cuban-chain |
 | N073 | 14k Large Diamond Heart Necklace | https://www.7thandhilljewelry.ca/products/large-diamond-heart-necklace |
+| N074 | Emerald Cut Topaz Necklace With Cuban Chain | https://www.7thandhilljewelry.ca/products/emerald-cut-topaz-necklace-with-cuban-chain |
 | O001 | Horoscope Compass Birthstone Spinning Pendant | https://www.7thandhilljewelry.ca/products/horoscope-compass-birthstone-spinning-pendant |
 | O002 | 14k Gold And Diamond Pyramid Eternity Rondelle | https://www.7thandhilljewelry.ca/products/baguette-lab-diamond-chevron-eternity-rondelle-copy |
 | R001 | Solid 14k Gold Onyx Triple Oval Statement Ring | https://www.7thandhilljewelry.ca/products/solid-14k-gold-onyx-triple-oval-statement-ring |
@@ -573,13 +576,11 @@ Code = what to name in a letter (R012 = ring no. 12). Pictures: products.html. T
 | R059 | 14k Gold Art Deco White Sapphire Or White Topaz Statement Ring | https://www.7thandhilljewelry.ca/products/14k-gold-art-deco-white-topaz-statement-ring |
 | R060 | Diamond Evil Eye Cuban Link Ring | https://www.7thandhilljewelry.ca/products/diamond-evil-eye-cuban-link-ring |
 | R061 | The Beaded Pave Cigar Band | https://www.7thandhilljewelry.ca/products/the-beaded-pave-cigar-band |
-| R062 | Gold And Diamond Noa Fluted Huggies | https://www.7thandhilljewelry.ca/products/gold-and-diamond-samantha-fluted-huggies |
 | R063 | 14k Gold Art Deco Vintage Signet Ring | https://www.7thandhilljewelry.ca/products/14k-gold-art-deco-vintage-signet-ring |
 | R064 | 14k Gold Art Deco Black And White Diamond Ring | https://www.7thandhilljewelry.ca/products/14k-gold-art-deco-black-and-white-diamond-ring |
 | R065 | 14k Gold Custom Enamel Evil Eye Celestial Ring | https://www.7thandhilljewelry.ca/products/14k-gold-custom-enamel-diamond-ring |
 | R066 | 14k Gold With Diamond Cigar Band Ring | https://www.7thandhilljewelry.ca/products/copy-of-gold-with-diamond-edging-cigar-band-ring |
 | R067 | Toi Et Moi "You And Me" Ring | https://www.7thandhilljewelry.ca/products/toi-et-moi-cocktail-ring |
-| R068 | 14k Yellow Gold Pink Sapphire And Ruby Blossom Climber Studs | https://www.7thandhilljewelry.ca/products/14k-yellow-gold-pink-sapphire-and-ruby-blossom-climber-studs |
 | R069 | 14k Yellow Gold Textured Woven Band | https://www.7thandhilljewelry.ca/products/14k-yellow-gold-textured-woven-band |
 | R070 | 14k Yellow Gold Diamond Chevron Ring | https://www.7thandhilljewelry.ca/products/14k-yellow-gold-diamond-chevron-ring |
 | R071 | 14k Gold Textured Pinched Band | https://www.7thandhilljewelry.ca/products/14k-gold-textured-pinched-band |
@@ -616,7 +617,6 @@ Code = what to name in a letter (R012 = ring no. 12). Pictures: products.html. T
 | R102 | Moonstone And Diamond Ring | https://www.7thandhilljewelry.ca/products/in-stock-moonstone-and-diamond-ring |
 | R103 | Carrie 14k Gold Diamond Ring | https://www.7thandhilljewelry.ca/products/carrie-14k-gold-diamond-ring |
 | R104 | Mikki Baguette Stepped Baguette Diamond Ring | https://www.7thandhilljewelry.ca/products/mikki-baguette-diamond-band |
-| R105 | 14k Gold And Diamond Carissa Huggies | https://www.7thandhilljewelry.ca/products/gold-and-diamond-clair-huggies |
 | R106 | 14k Gold Dome Ring | https://www.7thandhilljewelry.ca/products/diamond-dome-ring-copy |
 | R107 | Asymmetrical Pavé Esme Split Band Ring | https://www.7thandhilljewelry.ca/products/asymmetrical-pave-esme-split-band-ring |
 | R108 | 14k Gold Graduated Bezel Diamond Frida Open Ring | https://www.7thandhilljewelry.ca/products/14k-gold-graduated-bezel-diamond-frida-open-ring |
