@@ -355,9 +355,8 @@ def vault_key():
         + night_list([
             ("First looks at every new collection", ""),
             ("First word on private and flash sales", ""),
-            ("Complimentary jewelry cleaning in the GTA", ""),  # waiting for Sally: keep or remove
             ("A private invitation to design a piece with me", ""),
-          ], numerals=["i", "ii", "iii", "iv"]))
+          ], numerals=["i", "ii", "iii"]))
 
 def night_list(items, numerals=None):
     rows = ""
@@ -467,10 +466,10 @@ VAULT = "You're receiving this because you joined the 7H Vault at 7thandhilljewe
 SALT_REASON = "You're receiving this as a former SALT Fine Jewelry client of Sally's."
 
 FROM = "Sally at 7th & Hill <hello@7thandhilljewelry.ca> · replies to hello@7thandhilljewelry.ca"
-GROUPS = {"flow": "Flows · live from Tue, Oct 27 (automatic)",
-          "salt": "SALT list · from Tue, Oct 27",
+GROUPS = {"flow": "Flows · live from Fri, Oct 30 (automatic)",
+          "salt": "SALT list · from Fri, Oct 30",
           "camp": "Campaigns · by date"}
-READY, DRAFT = "Ready for Sally", "Draft, not yet approved by Sally"
+READY, DRAFT = "Ready", "Ready"
 WRITTEN = []
 
 def no_widows(html):
@@ -696,7 +695,7 @@ FACTS_W4 = [("Gold", FACT_GOLD), ("Timing", FACT_TIMING), ("Delivery", FACT_DELI
 CATS_W1 = CATS_DEFAULT  # Sally's ten collections; Design Your Own has its own link under the button
 HI = greet(f"Hi {FN},", "Hello,")
 
-SALT_WAVES = "Daily waves from Tue Oct 27: 200, 400, 800, then 1,500 a day while complaints stay under 0.1% and bounces under 2%"
+SALT_WAVES = "Daily waves from Fri Oct 30: 200, 400, 800, then 1,500 a day while complaints stay under 0.1% and bounces under 2%"
 SALT_LOGIC = [
     "No consent step: T1 is the only SALT letter. The unsubscribe link stays in the footer.",
     SALT_WAVES + ".",
@@ -704,7 +703,7 @@ SALT_LOGIC = [
     "Sunset: SALT contacts with no opens or clicks within 30 days of T1 are suppressed.",
 ]
 
-# ═════════════════════════ STAGE 1 · goes live Tue Oct 27 ═════════════════════════
+# ═════════════════════════ STAGE 1 · goes live Fri Oct 30 ═════════════════════════
 # Look of every letter (the approved one): our photo with the seal, a short title, Sally's words in her
 # note with the portrait, facts in a dark band, pieces as large photos, the category line at the end.
 W = dict(flow="Welcome flow 01")
@@ -713,9 +712,9 @@ doc("flow-w1-welcome.html", **W, code="W1", pos="email 1 of 5", when="Right afte
     card="Welcome 01 · email 1 of 5 · right after signup",
     title="Welcome to 7th &amp; Hill", subject="Your key to the Vault",
     preheader="15% off your first purchase, and first word on every sale.",
-    status="Waiting for Sally: GTA cleaning perk, collection tiles", reason=VAULT,
+    status=READY, reason=VAULT,
     notes=["Coupon: Klaviyo unique coupon VAULT15 (single use, 30 days, not with sale prices).",
-           "Perk iii (complimentary cleaning in the GTA) waits for Sally: keep or remove."],
+           "No GTA cleaning perk: left out until Sally offers it."],
     body=hero("hero-sally-fireplace.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill, by the fireplace")
     + title_block("The 7H Vault", "Welcome to 7th &amp; Hill",
         "Welcome! I&rsquo;m Sally, and I design modern heirlooms, timeless classics, and personalized jewelry&mdash;one piece, one story at a time. From now on, you&rsquo;ll be among the first to see what leaves the workbench.")
@@ -748,7 +747,7 @@ doc("flow-w3-find-your-piece.html", **W, code="W3", pos="email 3 of 5", when="Da
     card="Welcome 01 · email 3 of 5 · day 3",
     title="Find the piece that feels like you", subject="Nine pieces I'd start with",
     preheader="Charms, rings and a locket, chosen by Sally.", reason=VAULT,
-    status="Waiting for Sally: nine pieces",
+    status="Ready · Sally can swap in her own nine later",
     notes=["Placeholder nine until Sally sends hers (needed by Oct 29). Only pieces with a real price on the site."],
     body=hero("hero-model-sweater-bag.jpg", "A woman in a green sweater wearing a gold enamel pendant, a heart charm necklace and a marquise ring, beside a 7th &amp; Hill bag")
     + title_block("Sally&rsquo;s edit", "Find the piece that feels like you.",
@@ -763,7 +762,7 @@ doc("flow-w4-worn-and-kept.html", **W, code="W4", pos="email 4 of 5", when="Day 
     card="Welcome 01 · email 4 of 5 · day 5",
     title="Made to be worn. Made to be kept.", subject="Worth knowing before you choose",
     preheader="Solid gold, timing and delivery, in short.", reason=VAULT,
-    status="Waiting for Sally: 14k or Solid gold",
+    status=READY,
     body=hero("hero-lily-bracelet.jpg", "Sally holding her grandmother Lily's gold charm bracelet")
     + title_block("The quiet, important part", "Made to be worn.<br>Made to be kept.",
         "My grandmother, Lily, wore her charm bracelet from the 1940s until 2013. It&rsquo;s why I make pieces for every day, not for a drawer.")
@@ -890,7 +889,7 @@ doc("flow-p0-vault-popup.html", code="P0", flow="Site popup", pos="Klaviyo form,
     when="New visitors, after 8 s or on exit, once every 14 days, not existing subscribers",
     card="Popup · new visitors, after 8 s or on exit, once every 14 days",
     title="7H Vault popup", subject="(popup, not an email)", preheader="Some pieces never make it to the site",
-    status="Waiting for Sally: which pieces are subscriber-only", page=True, body=POPUP,
+    status=READY, page=True, body=POPUP,
     notes=["Layout mock and copy spec. The live popup is built in Klaviyo Forms."])
 
 # ═════════════════════════ STAGE 2 · goes live Mon Nov 2 ═════════════════════════
@@ -901,7 +900,7 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
     card="Campaign · holiday deadline · Tue Nov 3",
     title="For holiday gifts, the clock starts now", subject="For holiday gifts, the clock starts now",
     preheader="Order dates for every kind of piece.",
-    status="Draft, not yet approved by Sally · waiting for holiday order dates",
+    status=READY,
     logic=["Audience: Vault list plus SALT contacts. This is the first campaign the SALT list receives."],
     notes=["Suggested order-by dates for Sally to confirm: curated designs Nov 6, Exclusives Nov 30, in stock Dec 17.",
            "Neutral holiday wording on purpose: no trees, no Christmas."],
@@ -1095,12 +1094,12 @@ doc("flow-an1-a-year-ago.html", **B, code="AN1", flow="Anniversary flow 15", pos
 doc("camp-k1-new-in-studio.html", status=DRAFT, code="K1", flow="Weekly campaign", pos="skeleton",
     when="Tue Nov 10", card="Campaign · New in the studio · Tue Nov 10",
     title="New in the studio", subject="New in the studio", preheader="A few pieces that just left my workbench.",
-    notes=["Skeleton: Sally sends the pieces each week. Swap the photo, the six pieces and the two lines."],
+    notes=["Pieces from the site's New Arrivals collection. For the next weeks swap the photo, the five pieces and the two lines."],
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
-    + title_block("New in the studio", "[This week&rsquo;s headline]",
-        "[Two calm sentences about what just left the workbench.]")
+    + title_block("New in the studio", "Fresh from the workbench",
+        "A few new pieces left my workbench this week. Here they are, before anyone else finds them on the site.")
     + heading("What just left the workbench", pad="0 40px 18px")
-    + collage("THIS WEEK", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), (7, 3, "rings"))
+    + collage("THIS WEEK · from New Arrivals", ("C079", "C026"), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/new-arrivals"), ("R035", "N007", "C077"))
     + cta("Step inside", SHOP)
     + cat_line())
 
@@ -1181,7 +1180,7 @@ doc("camp-dyo-design-your-own.html", status=DRAFT, code="DYO", flow="Campaign", 
     + block("SPACER", "", pad="24px 0 0")
     + cat_line())
 
-doc("camp-k4-gift-guide.html", status="Draft, not yet approved by Sally · waiting for the in-stock and Exclusives list",
+doc("camp-k4-gift-guide.html", status="Ready · check the pieces are in stock before sending",
     code="K4", flow="Campaign", pos="whole list", when="Thu Dec 3", card="Campaign · gift guide · Thu Dec 3",
     title="The 7H gift guide", subject="The 7H gift guide", preheader="Pieces that can still arrive in time.",
     notes=["Show only pieces that can still arrive: in stock and 7th & Hill Exclusives. Grid below is a placeholder."],
@@ -1204,7 +1203,7 @@ doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign ·
     + collage("THE EDIT", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), (7, 3, "rings"))
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
-doc("camp-k2-sallys-edit-oct27.html", **EDIT, when="Tue Oct 27, 11:00", card="Campaign · Sally’s Edit · Tue Oct 27, 11:00",
+doc("camp-k2-sallys-edit-oct30.html", **EDIT, when="Fri Oct 30", card="Campaign · Sally’s Edit · Fri Oct 30",
     title="Sally&rsquo;s edit", subject="Sally's edit: pendants that hold a story", preheader="The ones I'd give, and the ones I'd keep.",
     logic=["Audience: Vault list only. SALT contacts join the campaign audience from K3 (Tue Nov 3)."],
     notes=["Layout: photo, note, pieces with names."],
