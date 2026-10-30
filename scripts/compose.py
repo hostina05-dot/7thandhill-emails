@@ -204,6 +204,7 @@ def ps(text):
 # ── images inside collages
 ANIM = {  # animated grid cells: cross-fade between pieces (GIF; Outlook for Windows shows the first one)
     "rings": ("anim-rings.gif", "Rings", SITE + "/collections/rings"),
+    "t1-rings": ("anim-t1-rings.gif", "Rings", SITE + "/collections/rings"),
     "charms": ("anim-charms.gif", "Charms", SITE + "/collections/talismans-medallions"),
     "pendants": ("anim-pendants.gif", "Pendants", SITE + "/collections/talismans-medallions"),
     "earrings": ("anim-earrings.gif", "Earrings", SITE + "/collections/earrings"),
@@ -829,7 +830,7 @@ doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", 
               "Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. I&rsquo;ve created over 180 unique designs for you. I still begin the same way. I listen, I design, and then you wear it.",
               "You&rsquo;re receiving this because you were part of my SALT family."],
              ps=gift_ps())
-    + moving_row("FROM THE WORKBENCH", ["rings", "necklaces", "earrings"], "From the workbench")
+    + moving_row("FROM THE WORKBENCH", ["t1-rings", "necklaces", "earrings"], "From the workbench")
     + cta("Meet 7th &amp; Hill", utm(SITE, "salt_t1", "meet"), pad="0 64px 38px"))
 
 # P0 popup: a layout mock and spec (the live popup is built in Klaviyo Forms)

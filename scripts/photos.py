@@ -99,6 +99,7 @@ SLIDES = {
 # animated grid cells: one square that cross-fades between catalog pieces (numbers from assets/catalog.json)
 CELLS = {
     "anim-rings.gif":     ([21, 20, 19], 0),
+    "anim-t1-rings.gif":  ([18, 20, 19], 0),   # T1: Sally's Art Deco Statement Ring first, not the wing ring
     "anim-charms.gif":    ([2, 28, 31], 12),
     "anim-pendants.gif":  ([25, 1, 15], 0),
     "anim-earrings.gif":  ([16, 17, 11], 12),
