@@ -818,7 +818,7 @@ def gift_ps():
 
 doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", when=SALT_WAVES,
     card="", label="SALT list · T1 only · " + SALT_WAVES[0].lower() + SALT_WAVES[1:],
-    title="A note from Sally", subject="A note from Sally", preheader="You may remember me from SALT.",
+    title="A note from Sally", subject="It's Sally, from SALT", preheader="I've started something new, and I wanted you to hear it from me first.",
     reason=SALT_REASON, logic=SALT_LOGIC,
     notes=["Coupon: the same Klaviyo unique coupon VAULT15 (single use, 30 days, does not combine with sale prices).",
            "No prices. One light row of three moving cells (rings, necklaces, earrings) to invite a first look."],
@@ -908,9 +908,9 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
     body=hero("hero-pendants-books.jpg", "Two gold pendants on snake chains, hung over old leather books", SITE + "/collections/necklaces")
     + title_block("The only deadline we have", "For holiday gifts, the clock starts now",
         "Some pieces are ready to go, others are made for you over a few weeks. Here&rsquo;s when to order so yours arrives in time.")
-    + facts_band([("In stock", "Order by [date]. Ships in 1 to 2 business days."),
-                  ("7th &amp; Hill Exclusives", "Order by [date]. Made in 2 to 4 weeks."),
-                  ("Curated designs", "Order by [date]. Made in 6 to 8 weeks.")])
+    + facts_band([("In stock", "Order by Dec 17. Ships in 1 to 2 business days."),
+                  ("7th &amp; Hill Exclusives", "Order by Nov 30. Made in 2 to 4 weeks."),
+                  ("Curated designs", "Order by Nov 6. Made in 6 to 8 weeks.")])
     + block("SPACER", "", pad="30px 0 0")
     + grid("GIFTS", GIFTS, cols=2, captions=GIFT_FOR)
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
@@ -1094,7 +1094,7 @@ doc("flow-an1-a-year-ago.html", **B, code="AN1", flow="Anniversary flow 15", pos
 
 doc("camp-k1-new-in-studio.html", status=DRAFT, code="K1", flow="Weekly campaign", pos="skeleton",
     when="Tue Nov 10", card="Campaign · New in the studio · Tue Nov 10",
-    title="New in the studio", subject="New in the studio: [this week]", preheader="[What just left the workbench]",
+    title="New in the studio", subject="New in the studio", preheader="A few pieces that just left my workbench.",
     notes=["Skeleton: Sally sends the pieces each week. Swap the photo, the six pieces and the two lines."],
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
     + title_block("New in the studio", "[This week&rsquo;s headline]",
@@ -1196,7 +1196,7 @@ doc("camp-k4-gift-guide.html", status="Draft, not yet approved by Sally · waiti
 
 EDIT = dict(status=DRAFT, code="K2", flow="Campaign", pos="Sally’s Edit")
 doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign · Sally’s Edit · green library · Tue Dec 8",
-    title="Sally&rsquo;s edit", subject="Sally's edit · [theme]", preheader="The pieces I kept reaching for this week.",
+    title="Sally&rsquo;s edit", subject="Sally's edit: small talismans for every day", preheader="The pieces I kept reaching for this week.",
     notes=["The green library layout Sally chose. Reusable: swap the photo, the note and the pieces."],
     body=masthead("", "")
     + hero("hero-necklaces-book.jpg", "Gold necklaces laid across a green leather book", SITE + "/collections/necklaces")
@@ -1205,7 +1205,7 @@ doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign ·
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
 doc("camp-k2-sallys-edit-oct27.html", **EDIT, when="Tue Oct 27, 11:00", card="Campaign · Sally’s Edit · Tue Oct 27, 11:00",
-    title="Sally&rsquo;s edit", subject="Sally's edit · [theme]", preheader="Four I'd give, and four I'd keep.",
+    title="Sally&rsquo;s edit", subject="Sally's edit: pendants that hold a story", preheader="The ones I'd give, and the ones I'd keep.",
     logic=["Audience: Vault list only. SALT contacts join the campaign audience from K3 (Tue Nov 3)."],
     notes=["Layout: photo, note, pieces with names."],
     body=masthead("", "")
@@ -1215,7 +1215,7 @@ doc("camp-k2-sallys-edit-oct27.html", **EDIT, when="Tue Oct 27, 11:00", card="Ca
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
 doc("camp-k2-sallys-edit-spare.html", **EDIT, when="No date yet (spare layout)", card="Campaign · Sally’s Edit · spare layout, no date yet",
-    title="Sally&rsquo;s edit", subject="Sally's edit · [the piece]", preheader="[One line from Sally]",
+    title="Sally&rsquo;s edit", subject="Sally's edit: the piece of the week", preheader="One piece, and the story behind it.",
     notes=["Alternative layout: one piece. Sally writes the two lines about it; nothing is invented for her."],
     body=masthead("", "")
     + hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn", SITE + "/collections/talismans-medallions")
@@ -1227,11 +1227,11 @@ doc("camp-k2-sallys-edit-spare.html", **EDIT, when="No date yet (spare layout)",
 
 doc("camp-lc-last-call.html", status=DRAFT, code="LC", flow="Campaign", pos="whole list", when="Tue Dec 15",
     card="Campaign · last call · Tue Dec 15", title="Last call for in-stock pieces", subject="Last call for in-stock pieces",
-    preheader="Order by [date] and it arrives in time.",
+    preheader="Order by Dec 17 and it arrives in time.",
     notes=["Pieces: in-stock only (placeholders below)."],
     body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
     + title_block("Last call", "Last call for in-stock pieces",
-        "In-stock pieces ordered by [date] ship in 1 to 2 business days and arrive in time for the holidays.")
+        "In-stock pieces ordered by Dec 17 ship in 1 to 2 business days and arrive in time for the holidays.")
     + collage("IN STOCK", (16, 13), ("feature-locket.jpg", "Talisman Keepsake Locket, worn", P[201]["url"]), ("rings", 28, 31))
     + cta("Start a gift", SHOP, pad="6px 64px 16px")
     + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 30px", size_=13, color=SOFT)
