@@ -486,13 +486,14 @@ def no_widows(html):
     return re.sub(r">[^<>]*<", lambda m: re.sub(r"7th (&amp;|&) Hill", r"7th&nbsp;\1&nbsp;Hill", m.group(0)), html)
 
 def doc(fname, *, code, flow, pos, when, card, label=None, title, subject, preheader, body, status=READY,
-        reason=SUB, logic=(), notes=(), page=False):
+        reason=SUB, logic=(), notes=(), page=False, subject_b=None):
     """Write one letter. The comment header is what the preview reads: stage, card label, status, logic."""
     group = GROUPS[fname.split("-", 1)[0]]
     lines = [f"  {group} · {flow} · {code} ({pos}) · {when}",
              f"  Card: {label or code + ' · ' + card}",
              f"  Status: {status}",
              f"  Subject: {subject}",
+             *([f"  Subject B (A/B test): {subject_b}"] if subject_b else []),
              f"  Preheader: {preheader}",
              f"  From: {FROM}"]
     lines += [f"  Logic: {l}" for l in logic]
@@ -697,6 +698,8 @@ HI = greet(f"Hi {FN},", "Hello,")
 
 SALT_WAVES = "Daily waves from Fri Oct 30: 200, 400, 800, then 1,500 a day while complaints stay under 0.1% and bounces under 2%"
 SALT_LOGIC = [
+    "A/B test of the two subject lines Sally wrote: waves 1 and 2 (200 and 400) split 50/50 between Subject and Subject B. "
+    "From wave 3 every wave uses the winner. Pick the winner on clicks as well as opens: Apple Mail counts opens that never happened.",
     "No consent step: T1 is the only SALT letter. The unsubscribe link stays in the footer.",
     SALT_WAVES + ".",
     "After T1, SALT contacts join the campaign audience from K3 (Tue Nov 3). They do not get the welcome flow.",
@@ -817,7 +820,7 @@ def gift_ps():
 
 doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", when=SALT_WAVES,
     card="", label="SALT list · T1 only · " + SALT_WAVES[0].lower() + SALT_WAVES[1:],
-    title="A note from Sally", subject="It's Sally, from SALT", preheader="I've started something new, and I wanted you to hear it from me first.",
+    title="A note from Sally", subject="From SALT. to 7th & Hill Jewelry (Hi, it’s Sally!)", subject_b="It’s Sally (from SALT.) — my next chapter is here… ✨ 7th & Hill Jewelry", preheader="I've started something new, and I wanted you to hear it from me first.",
     reason=SALT_REASON, logic=SALT_LOGIC,
     notes=["Coupon: the same Klaviyo unique coupon VAULT15 (single use, 30 days, does not combine with sale prices).",
            "No prices. One light row of three moving cells (rings, necklaces, earrings) to invite a first look."],
