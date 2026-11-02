@@ -54,7 +54,7 @@ SHOTS = {
     "story-bookbox.jpg":         ("bookbox-library.jpg",             "story",   None),
     "popup-locket.jpg":          ("locket-closeup.jpg",              "story",   (0, 0.36, 1, 0.86)),
     # round portrait for Sally's notes
-    "sally-avatar.png":          ("sally-fireplace.jpg",             "avatar",  (0.330, 0.245, 0.710, 0.499)),
+    "sally-avatar.png":          ("sally-sketching.jpg",             "avatar",  (0.37, 0.33, 0.65, 0.75)),  # Sally's hand sketching, ring and pencil tip
 }
 
 # white-background packshots -> product tiles on the soft moonlit backdrop all catalog pieces share
@@ -68,7 +68,7 @@ PACKSHOTS = {
 
 
 # Photos kept bright and true, as on the site (Sally: the fireplace photo looked dark in the letters)
-LIGHT = {"hero-sally-fireplace.jpg"}
+LIGHT = {"hero-sally-fireplace.jpg", "sally-avatar.png"}
 
 
 def grade(im: Image.Image, light=False) -> Image.Image:
