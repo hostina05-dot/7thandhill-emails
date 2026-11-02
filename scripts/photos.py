@@ -67,8 +67,17 @@ PACKSHOTS = {
 }
 
 
-def grade(im: Image.Image) -> Image.Image:
-    """Warm, slightly muted, matte: deep green-tinted shadows, soft warm highlights."""
+# Photos kept bright and true, as on the site (Sally: the fireplace photo looked dark in the letters)
+LIGHT = {"hero-sally-fireplace.jpg"}
+
+
+def grade(im: Image.Image, light=False) -> Image.Image:
+    """Warm, slightly muted, matte: deep green-tinted shadows, soft warm highlights.
+    light=True keeps the photo's own brightness and only warms it a touch."""
+    if light:
+        a = np.asarray(im.convert("RGB")).astype(np.float32) / 255.0
+        a = a * np.array([1.01, 1.0, 0.985])
+        return Image.fromarray((np.clip(a, 0, 1) * 255).astype(np.uint8))
     a = np.asarray(im.convert("RGB")).astype(np.float32) / 255.0
     lum = (0.299 * a[..., 0] + 0.587 * a[..., 1] + 0.114 * a[..., 2])[..., None]
     a = lum + (a - lum) * 0.80                                  # mute colour a little
@@ -99,7 +108,10 @@ SLIDES = {
 # animated grid cells: one square that cross-fades between catalog pieces (numbers from assets/catalog.json)
 CELLS = {
     "anim-rings.gif":     ([21, 20, 19], 0),
-    "anim-t1-rings.gif":  ([18, 21, 20, 19], 0),   # T1: Sally's Art Deco Statement Ring first, the wing ring stays in
+    # T1: Sally's nine pieces (site codes from products.html), three per cell
+    "anim-t1-rings.gif":  (["R059", "R037", "R064"], 0),
+    "anim-t1-charms.gif": (["C032", "C034", "C055"], 12),
+    "anim-t1-mixed.gif":  (["C102", "C120", "E015"], 6),
     "anim-charms.gif":    ([2, 28, 31], 12),
     "anim-pendants.gif":  ([25, 1, 15], 0),
     "anim-earrings.gif":  ([16, 17, 11], 12),
@@ -162,7 +174,7 @@ def main():
             out.save(OUT / name, quality=82, optimize=True, progressive=True)
             print(f"{name:26} {out.size[0]}x{out.size[1]}")
             continue
-        im = grade(crop(Image.open(PHOTOS / src).convert("RGB"), box))
+        im = grade(crop(Image.open(PHOTOS / src).convert("RGB"), box), light=name in LIGHT)
         if kind == "avatar":  # round portrait with a cream ring, transparent corners
             size, ring, k = 168, 6, 4  # shown at 56px: three times sharper; circles drawn 4x and scaled down
             big = Image.new("RGBA", (size * k, size * k), (0, 0, 0, 0))
@@ -234,6 +246,16 @@ def slides():
         print(f"{name:26} {width}x{frames[0].size[1]}  {(OUT / name).stat().st_size // 1024} KB  ({len(frames)} slides)")
 
 
+def tile(n):
+    """A catalog number (assets/images/product-NN.jpg) or a site code (assets/products/<code>-….jpg)."""
+    import csv, json
+    if isinstance(n, str):
+        rows = {r["code"]: r for r in csv.DictReader(open(ROOT / "assets" / "products" / "index.csv")) if r["code"]}
+        return Image.open(ROOT / "assets" / "products" / rows[n]["file"]).convert("RGB")
+    cat = json.load(open(ROOT / "assets" / "catalog.json"))
+    return Image.open(OUT / cat[str(n)]["img"]).convert("RGB")
+
+
 def cells(size=260, hold=24, fade=3):
     """Each piece holds about 2.5 s, then fades into the next. lead = extra frames before the first fade,
     so two cells in one letter do not change at the same moment."""
@@ -241,7 +263,7 @@ def cells(size=260, hold=24, fade=3):
     cat = json.load(open(ROOT / "assets" / "catalog.json"))
     for name, (ids, lead) in CELLS.items():
         tmp = Path(tempfile.mkdtemp())
-        imgs = [Image.open(OUT / cat[str(n)]["img"]).convert("RGB").resize((size, size), Image.LANCZOS) for n in ids]
+        imgs = [tile(n).resize((size, size), Image.LANCZOS) for n in ids]
         k = 0
         for i, a in enumerate(imgs):
             b = imgs[(i + 1) % len(imgs)]

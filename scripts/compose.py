@@ -205,6 +205,8 @@ def ps(text):
 ANIM = {  # animated grid cells: cross-fade between pieces (GIF; Outlook for Windows shows the first one)
     "rings": ("anim-rings.gif", "Rings", SITE + "/collections/rings"),
     "t1-rings": ("anim-t1-rings.gif", "Rings", SITE + "/collections/rings"),
+    "t1-charms": ("anim-t1-charms.gif", "Charms", SITE + "/collections/large-charms"),
+    "t1-mixed": ("anim-t1-mixed.gif", "Medallions, pendants and earrings", SITE + "/collections/talismans-medallions"),
     "charms": ("anim-charms.gif", "Charms", SITE + "/collections/talismans-medallions"),
     "pendants": ("anim-pendants.gif", "Pendants", SITE + "/collections/talismans-medallions"),
     "earrings": ("anim-earrings.gif", "Earrings", SITE + "/collections/earrings"),
@@ -463,7 +465,7 @@ def footer(reason):
 
 SUB = "You're receiving this because you subscribed at 7thandhilljewelry.ca or shopped with us."
 VAULT = "You're receiving this because you joined the 7H Vault at 7thandhilljewelry.ca."
-SALT_REASON = "You're receiving this as a former SALT Fine Jewelry client of Sally's."
+SALT_REASON = "You're receiving this as a former SALT. Fine Jewelry client of Sally's."
 
 FROM = "Sally at 7th & Hill <hello@7thandhilljewelry.ca> · replies to hello@7thandhilljewelry.ca"
 GROUPS = {"flow": "Flows · live from Fri, Oct 30 (automatic)",
@@ -843,7 +845,7 @@ doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", 
     notes=["Text: Sally's own version, word for word (her dashes kept).",
            "Coupon: Sally's code VIP15, shown as plain text (one shared code, set up in Shopify). For one-use codes per person, "
            "create a Klaviyo coupon and put {% coupon_code 'NAME' %} in the box instead.",
-           "One light row of moving cells (rings, necklaces, earrings) after the P.S.; each cell opens its collection."],
+           "One row of three moving cells after the P.S. with Sally's nine pieces (R059, R037, R064 · C032, C034, C055 · C102, C120, E015); each cell opens a collection."],
     body=hero("hero-sally-fireplace.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill, by the fireplace")
     + title_block(None, "A note from Sally")
     + letter([HI,
@@ -858,7 +860,7 @@ doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", 
     + sign_off("Warmly,", "Founder &amp; Designer, 7th &amp; Hill Jewelry",
                "As a heartfelt thank you for being part of my journey, I&rsquo;d love to offer you 15% off your first 7th &amp; Hill purchase with code VIP15 at checkout.",
                code="VIP15")
-    + moving_row("FROM THE WORKBENCH", ["t1-rings", "necklaces", "earrings"], "From the workbench"))
+    + moving_row("FROM THE WORKBENCH", ["t1-rings", "t1-charms", "t1-mixed"], "From the workbench"))
 
 # P0 popup: a layout mock and spec (the live popup is built in Klaviyo Forms)
 POPUP = f"""<!DOCTYPE html>
