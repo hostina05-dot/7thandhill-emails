@@ -585,6 +585,24 @@ def letter(paras, pad="6px 48px 30px", sign=True, ps=None):
               </table>
 """, pad=pad, align="left")
 
+def sign_off(close, role, ps_text, code=None, pad="0 48px 34px"):
+    """Closing line, signature and P.S. under the letter, lined up with the letter's text."""
+    box = (f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:12px 0 0;"><tr>'
+           f'<td align="center" style="border:1px solid {GOLD}; padding:11px 22px;"><p class="sans" style="margin:0; font-family:{SANS}; '
+           f'font-size:16px; line-height:20px; letter-spacing:4px; color:{INK};">{code}</p></td></tr></table>') if code else ""
+    body = (f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:15px; line-height:26px; font-weight:400; color:{BODY};">{close}</p>'
+            f'<p class="display" style="margin:2px 0 0; font-family:{DISPLAY}; font-size:28px; line-height:30px; color:{INK};">Sally</p>'
+            f'<p class="sans t-sm" style="margin:2px 0 0; font-family:{SANS}; font-size:10px; line-height:15px; letter-spacing:1.2px; text-transform:uppercase; color:{SOFT};">{role}</p>'
+            f'<p class="sans" style="margin:18px 0 0; font-family:{SANS}; font-size:14px; line-height:23px; font-weight:400; color:{BODY};"><span style="color:{INK};">P.S.</span> {ps_text}</p>'
+            + box)
+    return block("SIGN-OFF · Sally", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td class="avcol" width="72" style="padding:0 16px 0 0;">&nbsp;</td>
+                  <td valign="top" style="text-align:left;">{body}</td>
+                </tr>
+              </table>
+""", pad=pad, align="left")
+
 def facts_band(rows):
     """Facts in the dark band, as in the approved letters (title on top, line under it)."""
     return night("FACTS", night_list(rows), pad="34px 56px 40px")
@@ -822,18 +840,25 @@ doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", 
     card="", label="SALT list · T1 only · " + SALT_WAVES[0].lower() + SALT_WAVES[1:],
     title="A note from Sally", subject="From SALT. to 7th & Hill Jewelry (Hi, it’s Sally!)", subject_b="It’s Sally (from SALT.) — my next chapter is here… ✨ 7th & Hill Jewelry", preheader="I've started something new, and I wanted you to hear it from me first.",
     reason=SALT_REASON, logic=SALT_LOGIC,
-    notes=["Coupon: the same Klaviyo unique coupon VAULT15 (single use, 30 days, does not combine with sale prices).",
-           "No prices. One light row of three moving cells (rings, necklaces, earrings) to invite a first look."],
+    notes=["Text: Sally's own version, word for word (her dashes kept).",
+           "Coupon: Sally's code VIP15, shown as plain text (one shared code, set up in Shopify). For one-use codes per person, "
+           "create a Klaviyo coupon and put {% coupon_code 'NAME' %} in the box instead.",
+           "One light row of moving cells (rings, necklaces, earrings) after the P.S.; each cell opens its collection."],
     body=hero("hero-sally-fireplace.jpg", "Sally Brooks, founder and designer of 7th &amp; Hill, by the fireplace")
     + title_block(None, "A note from Sally")
     + letter([HI,
-              "You may remember me as the previous Co-Founder of SALT Fine Jewelry. For eight years I designed for so many of you, and many of you became more than clients. I still remember the stories behind your pieces.",
-              "Now I&rsquo;ve started something of my own: 7th &amp; Hill Jewelry. It&rsquo;s named after the corner in downtown Los Angeles where my dad ran his gold leaf lettering business, and where I first watched molten gold become a necklace.",
-              "Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. I&rsquo;ve created over 180 unique designs for you. I still begin the same way. I listen, I design, and then you wear it.",
-              "You&rsquo;re receiving this because you were part of my SALT family."],
-             ps=gift_ps())
-    + moving_row("FROM THE WORKBENCH", ["t1-rings", "necklaces", "earrings"], "From the workbench")
-    + cta("Meet 7th &amp; Hill", utm(SITE, "salt_t1", "meet"), pad="0 64px 38px"))
+              "It&rsquo;s Sally&mdash;you might remember me as the Co-Founder and designer of SALT. Fine Jewelry!",
+              "For eight years, I had the privilege of designing and curating for so many of you, and along the way, many of you became so much more than clients. I still remember the personal stories and milestones behind your pieces.",
+              "Today, I&rsquo;m so excited to share that I&rsquo;ve begun a brand-new chapter of my own: 7th &amp; Hill Jewelry.",
+              "This brand is deeply personal to me. 7th &amp; Hill is named after the exact corner in downtown Los Angeles where my dad ran his gold leaf lettering business&mdash;and where I first watched liquid gold become a necklace.",
+              "Every piece in my new collection is crafted in solid gold and made to order in Toronto, Los Angeles, and Italy. While the name is new, my heart and process haven&rsquo;t changed. I still begin the exact same way: I listen, I design, and then you wear it.",
+              "I&rsquo;ve already created over 180 unique designs for you to explore, and because you were such a special part of my SALT. family, I wanted you to be the very first to see them."],
+             sign=False, pad="6px 48px 10px")
+    + cta("Explore the 7th &amp; Hill Collection", utm(SITE + "/collections/all", "salt_t1", "explore"), pad="14px 40px 30px")
+    + sign_off("Warmly,", "Founder &amp; Designer, 7th &amp; Hill Jewelry",
+               "As a heartfelt thank you for being part of my journey, I&rsquo;d love to offer you 15% off your first 7th &amp; Hill purchase with code VIP15 at checkout.",
+               code="VIP15")
+    + moving_row("FROM THE WORKBENCH", ["t1-rings", "necklaces", "earrings"], "From the workbench"))
 
 # P0 popup: a layout mock and spec (the live popup is built in Klaviyo Forms)
 POPUP = f"""<!DOCTYPE html>

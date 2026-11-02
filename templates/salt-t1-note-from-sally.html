@@ -11,8 +11,9 @@
   Logic: Daily waves from Fri Oct 30: 200, 400, 800, then 1,500 a day while complaints stay under 0.1% and bounces under 2%.
   Logic: After T1, SALT contacts join the campaign audience from K3 (Tue Nov 3). They do not get the welcome flow.
   Logic: Sunset: SALT contacts with no opens or clicks within 30 days of T1 are suppressed.
-  Note: Coupon: the same Klaviyo unique coupon VAULT15 (single use, 30 days, does not combine with sale prices).
-  Note: No prices. One light row of three moving cells (rings, necklaces, earrings) to invite a first look.
+  Note: Text: Sally's own version, word for word (her dashes kept).
+  Note: Coupon: Sally's code VIP15, shown as plain text (one shared code, set up in Shopify). For one-use codes per person, create a Klaviyo coupon and put {% coupon_code 'NAME' %} in the box instead.
+  Note: One light row of moving cells (rings, necklaces, earrings) after the P.S.; each cell opens its collection.
   Images use relative paths (../assets/images/) for local preview.
   Ready-to-paste copy with hosted images: klaviyo/salt-t1-note-from-sally.html
 -->
@@ -101,11 +102,43 @@
 
           <!-- ═══════════ BLOCK: LETTER · Sally's words ═══════════ -->
           <tr>
-            <td class="px" align="left" style="padding:6px 48px 30px;">
+            <td class="px" align="left" style="padding:6px 48px 10px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td width="72" valign="top" style="padding:4px 16px 0 0;"><img src="../assets/images/sally-avatar.png" width="56" height="56" alt="Sally Brooks" style="display:block; width:56px; height:56px; border:0;"></td>
-                  <td valign="top" style="text-align:left;"><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">{% if first_name %}Hi {{ first_name|default:'' }},{% else %}Hello,{% endif %}</p><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">You may remember me as the previous Co-Founder of SALT Fine Jewelry. For eight years I designed for so many of you, and many of you became more than clients. I still remember the stories behind your&nbsp;pieces.</p><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">Now I&rsquo;ve started something of my own: 7th&nbsp;&amp;&nbsp;Hill Jewelry. It&rsquo;s named after the corner in downtown Los Angeles where my dad ran his gold leaf lettering business, and where I first watched molten gold become a&nbsp;necklace.</p><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">Every piece is solid gold, made to order in Toronto, Los Angeles and Italy. I&rsquo;ve created over 180 unique designs for you. I still begin the same way. I listen, I design, and then you wear&nbsp;it.</p><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">You&rsquo;re receiving this because you were part of my SALT&nbsp;family.</p><p class="display" style="margin:4px 0 0; font-family:Cormorant, 'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-size:28px; line-height:30px; color:#2E2A26;">Sally</p><p class="sans t-sm" style="margin:2px 0 0; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:15px; letter-spacing:1.2px; text-transform:uppercase; color:#8A857C;">Sally Brooks &middot; Founder &amp;&nbsp;designer</p><p class="sans" style="margin:16px 0 0; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:14px; line-height:23px; font-weight:400; color:#4A463F;"><span style="font-weight:400; color:#2E2A26;">P.S.</span> A small welcome gift from me: 15% off your first 7th&nbsp;&amp;&nbsp;Hill&nbsp;purchase.</p><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:12px 0 10px;"><tr><td align="center" style="border:1px solid #9C7E4A; padding:11px 22px;"><p class="sans" style="margin:0; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:16px; line-height:20px; letter-spacing:4px; color:#2E2A26;">{% coupon_code 'VAULT15' %}</p></td></tr></table><p class="sans" style="margin:0; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:13px; line-height:21px; font-weight:400; color:#8A857C;">Use it once, within 30 days. It does not combine with sale&nbsp;prices.</p></td>
+                  <td valign="top" style="text-align:left;"><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">{% if first_name %}Hi {{ first_name|default:'' }},{% else %}Hello,{% endif %}</p><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">It&rsquo;s Sally&mdash;you might remember me as the Co-Founder and designer of SALT. Fine&nbsp;Jewelry!</p><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">For eight years, I had the privilege of designing and curating for so many of you, and along the way, many of you became so much more than clients. I still remember the personal stories and milestones behind your&nbsp;pieces.</p><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">Today, I&rsquo;m so excited to share that I&rsquo;ve begun a brand-new chapter of my own: 7th&nbsp;&amp;&nbsp;Hill&nbsp;Jewelry.</p><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">This brand is deeply personal to me. 7th&nbsp;&amp;&nbsp;Hill is named after the exact corner in downtown Los Angeles where my dad ran his gold leaf lettering business&mdash;and where I first watched liquid gold become a&nbsp;necklace.</p><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">Every piece in my new collection is crafted in solid gold and made to order in Toronto, Los Angeles, and Italy. While the name is new, my heart and process haven&rsquo;t changed. I still begin the exact same way: I listen, I design, and then you wear&nbsp;it.</p><p class="sans" style="margin:0 0 14px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">I&rsquo;ve already created over 180 unique designs for you to explore, and because you were such a special part of my SALT. family, I wanted you to be the very first to see&nbsp;them.</p></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: CTA · button ═══════════ -->
+          <tr>
+            <td class="px" align="center" style="padding:14px 40px 30px;">
+              <!-- BUTTON: edit label and href -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0px auto 0px;">
+                <tr>
+                  <td bgcolor="#58744E" style="background-color:#58744E; padding:3px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" style="border:1px solid #9DB092; mso-padding-alt:0;">
+                          <a class="sans" href="https://www.7thandhilljewelry.ca/collections/all?utm_source=klaviyo&amp;utm_medium=email&amp;utm_campaign=salt_t1&amp;utm_content=explore" target="_blank" style="display:inline-block; padding:16px 40px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:14px; font-weight:400; letter-spacing:3px; text-transform:uppercase; color:#F7F5F1; text-decoration:none; mso-padding-alt:0;"><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%; mso-text-raise:20pt;" hidden>&nbsp;</i><![endif]--><span style="mso-text-raise:10pt;">Explore the 7th&nbsp;&amp;&nbsp;Hill&nbsp;Collection</span><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%;" hidden>&nbsp;</i><![endif]--></a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ═══════════ BLOCK: SIGN-OFF · Sally ═══════════ -->
+          <tr>
+            <td class="px" align="left" style="padding:0 48px 34px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td class="avcol" width="72" style="padding:0 16px 0 0;">&nbsp;</td>
+                  <td valign="top" style="text-align:left;"><p class="sans" style="margin:0; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:15px; line-height:26px; font-weight:400; color:#4A463F;">Warmly,</p><p class="display" style="margin:2px 0 0; font-family:Cormorant, 'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-size:28px; line-height:30px; color:#2E2A26;">Sally</p><p class="sans t-sm" style="margin:2px 0 0; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:10px; line-height:15px; letter-spacing:1.2px; text-transform:uppercase; color:#8A857C;">Founder &amp; Designer, 7th&nbsp;&amp;&nbsp;Hill&nbsp;Jewelry</p><p class="sans" style="margin:18px 0 0; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:14px; line-height:23px; font-weight:400; color:#4A463F;"><span style="color:#2E2A26;">P.S.</span> As a heartfelt thank you for being part of my journey, I&rsquo;d love to offer you 15% off your first 7th&nbsp;&amp;&nbsp;Hill purchase with code VIP15 at&nbsp;checkout.</p><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:12px 0 0;"><tr><td align="center" style="border:1px solid #9C7E4A; padding:11px 22px;"><p class="sans" style="margin:0; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:16px; line-height:20px; letter-spacing:4px; color:#2E2A26;">VIP15</p></td></tr></table></td>
                 </tr>
               </table>
             </td>
@@ -126,26 +159,6 @@
                     <td width="33.33%" valign="top" style="padding:4px;"><a href="https://www.7thandhilljewelry.ca/collections/rings" target="_blank" style="display:block; text-decoration:none;"><img src="../assets/images/anim-t1-rings.gif" width="172" height="172" alt="Rings" style="display:block; width:100%; max-width:172px; height:auto; border:0; background-color:#E9EDF1; color:#8A857C; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;"></a></td>
                     <td width="33.33%" valign="top" style="padding:4px;"><a href="https://www.7thandhilljewelry.ca/collections/necklaces" target="_blank" style="display:block; text-decoration:none;"><img src="../assets/images/anim-necklaces.gif" width="172" height="172" alt="Necklaces" style="display:block; width:100%; max-width:172px; height:auto; border:0; background-color:#E9EDF1; color:#8A857C; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;"></a></td>
                     <td width="33.33%" valign="top" style="padding:4px;"><a href="https://www.7thandhilljewelry.ca/collections/earrings" target="_blank" style="display:block; text-decoration:none;"><img src="../assets/images/anim-earrings.gif" width="172" height="172" alt="Earrings" style="display:block; width:100%; max-width:172px; height:auto; border:0; background-color:#E9EDF1; color:#8A857C; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;"></a></td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- ═══════════ BLOCK: CTA · button ═══════════ -->
-          <tr>
-            <td class="px" align="center" style="padding:0 64px 38px;">
-              <!-- BUTTON: edit label and href -->
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0px auto 0px;">
-                <tr>
-                  <td bgcolor="#58744E" style="background-color:#58744E; padding:3px;">
-                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td align="center" style="border:1px solid #9DB092; mso-padding-alt:0;">
-                          <a class="sans" href="https://www.7thandhilljewelry.ca?utm_source=klaviyo&amp;utm_medium=email&amp;utm_campaign=salt_t1&amp;utm_content=meet" target="_blank" style="display:inline-block; padding:16px 40px; font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:14px; font-weight:400; letter-spacing:3px; text-transform:uppercase; color:#F7F5F1; text-decoration:none; mso-padding-alt:0;"><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%; mso-text-raise:20pt;" hidden>&nbsp;</i><![endif]--><span style="mso-text-raise:10pt;">Meet 7th &amp;&nbsp;Hill</span><!--[if mso]><i style="letter-spacing:34px; mso-font-width:-100%;" hidden>&nbsp;</i><![endif]--></a>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
                 </tr>
               </table>
             </td>
