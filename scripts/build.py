@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""7th&Hill email build.
+"""7th & Hill email build.
 
-    python3 scripts/build.py
-        Rebuilds preview.html: every template side by side, images embedded,
-        Klaviyo tags filled with sample data. Open it in any browser.
+    python3 scripts/compose.py   # writes templates/ from the copy and blocks
+    python3 scripts/build.py     # preview.html grouped by stage + klaviyo/ copies
+
+    build.py rebuilds preview.html: every template grouped by launch stage, with labels,
+        a plain overview of the three groups on top, images embedded, Klaviyo tags filled
+        with sample data. Open it in any browser.
 
         Also writes klaviyo/*.html: the same templates with image paths pointed
         at the image host (by default this public repo's main branch via jsDelivr),
@@ -24,21 +27,44 @@ IMAGES = ROOT / "assets" / "images"
 LOCAL_PREFIX = "../assets/images/"
 DEFAULT_BASE = "https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/"
 
-# Order and labels in the preview
+# Preview order: three groups (from the file prefix flow-, salt-, camp-), letters in send order
 ORDER = [
-    ("welcome-1.html", "Welcome · 1 of 3"),
-    ("welcome-2.html", "Welcome · 2 of 3"),
-    ("welcome-3.html", "Welcome · 3 of 3"),
-    ("campaign-master.html", "Campaign master"),
-    ("thank-you.html", "Post-purchase"),
-    ("abandoned-cart.html", "Abandoned cart"),
-    ("salt-welcome.html", "SALT list · welcome"),
+    "flow-p0", "flow-w1", "flow-w2", "flow-w3", "flow-w4", "flow-w5",
+    "flow-c1", "flow-c2", "flow-co1", "flow-co2", "flow-co3", "flow-cc1", "flow-cc2",
+    "flow-b1", "flow-b2", "flow-pp1", "flow-pp2", "flow-pp3", "flow-an1",
+    "salt-t1",
+    "camp-k2-sallys-edit-oct30", "camp-k3", "camp-k1", "camp-dyo", "camp-s1", "camp-s2", "camp-s3",
+    "camp-k4", "camp-k2-sallys-edit-dec8", "camp-lc", "camp-hn", "camp-k2-sallys-edit-spare",
+]
+STAGES = {
+    "flow": "FLOWS · live from Fri, Oct 30 (automatic)",
+    "salt": "SALT LIST · T1 only, from Fri, Oct 30",
+    "camp": "CAMPAIGNS · by date",
+}
+# Plain overview at the top of the preview
+OVERVIEW = [
+    ("Flows · live from Fri, Oct 30 (automatic)",
+     "Every automatic series: welcome, cart, checkout with the concierge notes, browse, after purchase and the purchase anniversary. "
+     "How many letters go out depends on what people do on the site."),
+    ("SALT list · T1 only, from Fri, Oct 30",
+     "One letter from Sally to former SALT clients, with a 15% welcome gift. It goes out in daily waves: 200, 400, 800, "
+     "then 1,500 a day while complaints stay under 0.1% and bounces under 2%. After T1 they join the campaigns from K3 "
+     "(Tue Nov 3); no welcome flow for them. Anyone with no opens or clicks within 30 days is suppressed."),
+    ("Campaigns · by date",
+     "For everyone who has already given consent. The first, K2 Sally’s Edit, goes out on Fri, Oct 30, then once a week on Tuesdays: "
+     "K3 holiday dates, K1, Design Your Own, then Black Friday, the gift guide, the December letters and the New Year sale."),
 ]
 
 SAMPLE = {
     "first_name": "Margaret",
-    "organization.full_address": "190 Roslin Avenue, Toronto, Ontario M4N 1Z6",
+    "organization.full_address": "",
 }
+# sample event data so dynamic blocks show something in the preview (Klaviyo fills the real values)
+SAMPLE_ITEMS = [
+    {"ProductName": "Marquise Diamond Open Wing Ring", "ImageURL": LOCAL_PREFIX + "product-21.jpg", "ProductURL": "#"},
+    {"ProductName": "Pear Lab Diamond Studs", "ImageURL": LOCAL_PREFIX + "product-16.jpg", "ProductURL": "#"},
+]
+SAMPLE_EVENT = {"ProductName": "Lovers Tarot Pendant", "ImageURL": LOCAL_PREFIX + "product-01.jpg", "URL": "#"}
 
 
 def fill_klaviyo(src: str, first_name: str) -> str:
@@ -46,23 +72,32 @@ def fill_klaviyo(src: str, first_name: str) -> str:
     def if_block(m):
         return m.group(1) if first_name else m.group(2)
 
+    def items(m):
+        body = m.group(1)
+        return "".join(re.sub(r"{{\s*item\.(\w+)\s*}}", lambda v: it.get(v.group(1), ""), body) for it in SAMPLE_ITEMS)
+
     src = re.sub(r"{%\s*if first_name\s*%}(.*?){%\s*else\s*%}(.*?){%\s*endif\s*%}", if_block, src, flags=re.S)
     src = re.sub(r"{{\s*first_name\|default:'[^']*'\s*}}", first_name, src)
+    src = re.sub(r"{%\s*for item in event\.Items\s*%}(.*?){%\s*endfor\s*%}", items, src, flags=re.S)
+    src = re.sub(r"{{\s*event\.(ProductName|ImageURL)\s*}}", lambda v: SAMPLE_EVENT[v.group(1)], src)
+    src = re.sub(r"{{\s*event\.URL\s*}}", "#", src)
     src = re.sub(r"{{\s*organization\.full_address\s*}}", SAMPLE["organization.full_address"], src)
     src = re.sub(r"{%\s*unsubscribe\s*%}", '<a href="#">Unsubscribe</a>', src)
+    src = re.sub(r"{%\s*unsubscribe_url\s*%}", "#", src)
     src = re.sub(r"{%\s*manage_preferences\s*%}", '<a href="#">Manage preferences</a>', src)
-    src = re.sub(r"{%\s*coupon_code\s+'([^']+)'\s*%}", r"\1-K8Q2", src)
+    src = re.sub(r"{%\s*coupon_code\s+'([^']+)'\s*%}", r"\1-SAMPLE", src)   # Klaviyo makes a unique code per person
     src = re.sub(r"{{\s*[\w.]+\|default:'([^']*)'\s*}}", r"\1", src)  # any other var -> its default
     return src
 
 
-def embed_images(src: str) -> str:
-    def repl(m):
-        path = IMAGES / m.group(1)
+def image_map(names) -> dict:
+    """Each image once, as a data URI, so the preview stays self-contained without repeating files."""
+    out = {}
+    for name in sorted(names):
+        path = IMAGES / name
         mime = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
-        return "data:%s;base64,%s" % (mime, base64.b64encode(path.read_bytes()).decode())
-
-    return re.sub(re.escape(LOCAL_PREFIX) + r"([\w.-]+)", repl, src)
+        out[name] = "data:%s;base64,%s" % (mime, base64.b64encode(path.read_bytes()).decode())
+    return out
 
 
 def meta(src: str, key: str) -> str:
@@ -70,20 +105,35 @@ def meta(src: str, key: str) -> str:
     return m.group(1).strip() if m else ""
 
 
+def order_key(path: Path):
+    stem = path.name
+    for i, prefix in enumerate(ORDER):
+        if stem.startswith(prefix + "-") or stem == prefix + ".html":
+            return (i, stem)
+    return (len(ORDER), stem)
+
+
 def build_preview():
-    cards = []
-    for name, label in ORDER:
-        raw = (TEMPLATES / name).read_text(encoding="utf-8")
+    cards, used = [], set()
+    for path in sorted(TEMPLATES.glob("*.html"), key=order_key):
+        raw = path.read_text(encoding="utf-8")
+        used.update(re.findall(re.escape(LOCAL_PREFIX) + r"([\w.-]+)", raw))
+        head = raw.split("-->", 1)[0]
+        stage = path.name.split("-", 1)[0]
         cards.append({
-            "file": name,
-            "label": label,
-            "subject": meta(raw, "Subject"),
-            "preheader": meta(raw, "Preheader"),
+            "file": path.name,
+            "stage": stage,
+            "label": meta(head, "Card"),
+            "subject": meta(head, "Subject"),
+            "preheader": meta(head, "Preheader"),
             "kb": round(len(raw.encode("utf-8")) / 1024, 1),
-            "named": embed_images(fill_klaviyo(raw, SAMPLE["first_name"])),
-            "anon": embed_images(fill_klaviyo(raw, "")),
+            "named": fill_klaviyo(raw, SAMPLE["first_name"]),
+            "anon": fill_klaviyo(raw, ""),
         })
-    page = PREVIEW.replace("/*DATA*/[]", json.dumps(cards))
+    page = (PREVIEW.replace("/*DATA*/[]", json.dumps(cards))
+            .replace("/*IMAGES*/{}", json.dumps(image_map(used)))
+            .replace("/*STAGES*/{}", json.dumps(STAGES))
+            .replace("/*OVERVIEW*/[]", json.dumps(OVERVIEW, ensure_ascii=False)))
     (ROOT / "preview.html").write_text(page, encoding="utf-8")
     print("preview.html written (%d templates)" % len(cards))
 
@@ -92,9 +142,11 @@ def build_dist(base_url: str):
     base = base_url if base_url.endswith("/") else base_url + "/"
     out = ROOT / "klaviyo"
     out.mkdir(exist_ok=True)
+    for old in out.glob("*.html"):
+        old.unlink()
     for path in sorted(TEMPLATES.glob("*.html")):
         src = path.read_text(encoding="utf-8").replace(LOCAL_PREFIX, base)
-        src = re.sub(r"  Images use relative paths.*?\n.*?\(see README\)\.\n",
+        src = re.sub(r"  Images use relative paths.*?\n.*?klaviyo/[\w.-]+\n",
                      "  Ready to paste into Klaviyo: images load from %s\n" % base, src)
         (out / path.name).write_text(src, encoding="utf-8")
         print("klaviyo/%s" % path.name)
@@ -105,37 +157,44 @@ PREVIEW = r"""<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>7th&amp;Hill Email Preview</title>
+<title>7th &amp; Hill Launch Letters</title>
 <style>
-  :root { --bg:#101613; --panel:#161E1A; --line:#26302B; --ink:#EDE8DF; --dim:#9AA59F; --accent:#C9A96A; }
+  :root { --bg:#101613; --panel:#161E1A; --line:#26302B; --ink:#EDE8DF; --dim:#9AA59F; --accent:#C9A96A; --ok:#8FA79B; }
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); font:300 14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
   header { position:sticky; top:0; z-index:5; display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; justify-content:space-between;
-           padding:18px 24px; background:rgba(16,22,19,.94); border-bottom:1px solid var(--line); backdrop-filter:blur(6px); }
-  h1 { margin:0; font:400 26px/1.2 "Bodoni Moda", Didot, Georgia, serif; }
-  h1 small { display:block; margin-top:4px; font:300 10px/1.4 "Helvetica Neue", Arial, sans-serif; letter-spacing:3px; color:var(--dim); }
-  .controls { display:flex; flex-wrap:wrap; gap:14px; }
+           padding:16px 24px; background:rgba(16,22,19,.95); border-bottom:1px solid var(--line); backdrop-filter:blur(6px); }
+  h1 { margin:0; font:400 24px/1.2 Georgia, serif; }
+  h1 small { display:block; margin-top:4px; font:300 10px/1.4 "Helvetica Neue", Arial, sans-serif; letter-spacing:3px; color:var(--dim); text-transform:uppercase; }
+  .controls { display:flex; flex-wrap:wrap; gap:12px; }
   .seg { display:inline-flex; border:1px solid var(--line); }
-  .seg button { appearance:none; border:0; background:transparent; color:var(--dim); padding:8px 14px; cursor:pointer;
+  .seg button { appearance:none; border:0; background:transparent; color:var(--dim); padding:8px 13px; cursor:pointer;
                 font:400 10px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing:2.5px; text-transform:uppercase; }
   .seg button[aria-pressed="true"] { background:var(--ink); color:var(--bg); }
   .seg button:focus-visible { outline:1px solid var(--accent); outline-offset:2px; }
-  main { display:flex; gap:32px; padding:32px 24px 64px; overflow-x:auto; align-items:flex-start; }
+  .overview { margin:24px 24px 0; display:flex; flex-wrap:wrap; gap:18px; }
+  .overview div { flex:1 1 300px; max-width:520px; padding:18px 22px; border:1px solid var(--line); }
+  .overview h2 { margin:0 0 8px; font:400 11px/1.5 "Helvetica Neue", Arial, sans-serif; letter-spacing:2.5px; text-transform:uppercase; color:var(--accent); }
+  .overview p { margin:0; color:var(--ink); font-size:14px; line-height:22px; }
+  .stage { padding:28px 0 8px; }
+  .stage h2 { margin:0 24px 16px; font:400 12px/1.4 "Helvetica Neue", Arial, sans-serif; letter-spacing:3.5px; color:var(--accent);
+              border-bottom:1px solid var(--line); padding-bottom:10px; }
+  .row { display:flex; gap:32px; padding:0 24px 24px; overflow-x:auto; align-items:flex-start; }
   .card { flex:0 0 auto; }
-  .meta { margin:0 0 14px; max-width:600px; }
-  .meta .label { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); }
-  .meta .file { float:right; font:12px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); }
-  .meta .subject { margin-top:6px; font:400 18px/1.3 Georgia, serif; color:var(--ink); }
+  .meta { margin:0 0 12px; }
+  .meta .label { font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--accent); }
+  .meta .file { font:11px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); margin-top:2px; }
+  .meta .subject { margin-top:6px; font:400 17px/1.3 Georgia, serif; color:var(--ink); }
   .meta .pre { color:var(--dim); font-size:12px; }
   .frame { border:1px solid var(--line); background:var(--panel); }
   iframe { display:block; border:0; width:600px; height:900px; background:#101613; }
-  footer { padding:0 24px 40px; color:var(--dim); font-size:12px; }
-  @media (max-width:700px) { main { flex-direction:column; } iframe { width:100% !important; } .card { width:100%; } }
+  footer { padding:8px 24px 40px; color:var(--dim); font-size:12px; }
+  @media (max-width:700px) { .row { flex-direction:column; } iframe { width:100% !important; } .card { width:100%; } }
 </style>
 </head>
 <body>
 <header>
-  <h1>7th&amp;Hill <small>Klaviyo templates · preview</small></h1>
+  <h1>7th &amp; Hill <small>Launch letters · flows, SALT, campaigns</small></h1>
   <div class="controls">
     <div class="seg" data-key="width" aria-label="Width">
       <button data-v="600" aria-pressed="true">Desktop</button><button data-v="375">Mobile</button>
@@ -144,42 +203,61 @@ PREVIEW = r"""<!DOCTYPE html>
       <button data-v="named" aria-pressed="true">With name</button><button data-v="anon">No name</button>
     </div>
     <div class="seg" data-key="zoom" aria-label="Zoom">
-      <button data-v="1" aria-pressed="true">100%</button><button data-v="0.75">75%</button><button data-v="0.5">50%</button>
+      <button data-v="1">100%</button><button data-v="0.75">75%</button><button data-v="0.5" aria-pressed="true">50%</button>
     </div>
   </div>
 </header>
-<main id="grid"></main>
-<footer>Generated by scripts/build.py. Sample name and address are placeholders.</footer>
+<section class="overview" id="overview"></section>
+<main id="stages"></main>
+<footer>Generated by scripts/build.py. Sample name, address, coupon and bag contents are placeholders; Klaviyo fills the real ones.</footer>
 <script>
   const DATA = /*DATA*/[];
-  const state = { width: "600", name: "named", zoom: "1" };
-  const grid = document.getElementById("grid");
+  const IMAGES = /*IMAGES*/{};
+  const STAGES = /*STAGES*/{};
+  const OVERVIEW = /*OVERVIEW*/[];
+  const state = { width: "600", name: "named", zoom: "0.5" };
+  const root = document.getElementById("stages");
+  OVERVIEW.forEach(([t, d]) => {
+    const box = document.createElement("div");
+    box.innerHTML = "<h2></h2><p></p>";
+    box.querySelector("h2").textContent = t; box.querySelector("p").textContent = d;
+    document.getElementById("overview").appendChild(box);
+  });
 
   function source(c) {
-    let s = c[state.name];
-    return s;
+    return c[state.name].replace(/\.\.\/assets\/images\/([\w.-]+)/g, (m, f) => IMAGES[f] || m);
   }
   function fit(f) {
     try { f.style.height = f.contentDocument.documentElement.scrollHeight + "px"; } catch (e) {}
   }
   function render() {
-    grid.innerHTML = "";
-    DATA.forEach(c => {
-      const card = document.createElement("section");
-      card.className = "card";
-      card.style.zoom = state.zoom;
-      card.innerHTML = '<div class="meta" style="width:' + state.width + 'px"><span class="file"></span><div class="label"></div>' +
-                       '<div class="subject"></div><div class="pre"></div></div><div class="frame"><iframe></iframe></div>';
-      card.querySelector(".file").textContent = c.file + " · " + c.kb + " KB";
-      card.querySelector(".label").textContent = c.label;
-      card.querySelector(".subject").textContent = c.subject;
-      card.querySelector(".pre").textContent = c.preheader;
-      const f = card.querySelector("iframe");
-      f.title = c.label;
-      f.style.width = state.width + "px";
-      f.addEventListener("load", () => { fit(f); setTimeout(() => fit(f), 600); });
-      f.srcdoc = source(c);
-      grid.appendChild(card);
+    root.innerHTML = "";
+    Object.keys(STAGES).forEach(n => {
+      const cards = DATA.filter(c => String(c.stage) === n);
+      if (!cards.length) return;
+      const sec = document.createElement("section");
+      sec.className = "stage";
+      sec.innerHTML = '<h2></h2><div class="row"></div>';
+      sec.querySelector("h2").textContent = STAGES[n];
+      const row = sec.querySelector(".row");
+      cards.forEach(c => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.style.zoom = state.zoom;
+        card.innerHTML = '<div class="meta" style="width:' + state.width + 'px"><div class="label"></div><div class="file"></div>' +
+                         '<div class="subject"></div><div class="pre"></div></div><div class="frame"><iframe></iframe></div>';
+        card.querySelector(".label").textContent = c.label;
+        card.querySelector(".file").textContent = c.file + " · " + c.kb + " KB";
+        card.querySelector(".subject").textContent = c.subject;
+        card.querySelector(".pre").textContent = c.preheader;
+        const f = card.querySelector("iframe");
+        f.title = c.label;
+        f.style.width = state.width + "px";
+        f.addEventListener("load", () => { fit(f); setTimeout(() => fit(f), 700); });
+        f.srcdoc = source(c);
+        row.appendChild(card);
+      });
+      root.appendChild(sec);
     });
   }
   document.querySelectorAll(".seg").forEach(seg => {
