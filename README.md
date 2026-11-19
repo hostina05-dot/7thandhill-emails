@@ -42,10 +42,10 @@ https://raw.githack.com/hostina05-dot/7thandhill-emails/main/preview.html (по�
 3. Во флоу или кампании: письмо → **Change template → Saved templates**.
 4. Тему, прехедер и отправителя возьмите из комментария в начале файла.
 
-Картинки в `klaviyo/` грузятся через jsDelivr из конкретного коммита этого репозитория (адрес вида `…@<коммит>/assets/images/`). Так Klaviyo всегда показывает именно те фото, что в превью, без задержки кэша jsDelivr для ветки `main`. После замены фото: закоммитить и запушить картинки, затем пересобрать письма с новым коммитом:
+Картинки в `klaviyo/` грузятся напрямую с GitHub (raw.githubusercontent.com) из конкретного коммита этого репозитория (адрес вида `…/<коммит>/assets/images/`). jsDelivr не используем: новые файлы он отдавал не сразу, и часть картинок в письме была пустой. После замены фото: закоммитить и запушить картинки, затем пересобрать письма с новым коммитом:
 
 ```
-python3 scripts/build.py --base-url https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@$(git rev-parse HEAD)/assets/images/
+python3 scripts/build.py --base-url https://raw.githubusercontent.com/hostina05-dot/7thandhill-emails/$(git rev-parse HEAD)/assets/images/
 ```
 
 ## Настройки в Klaviyo

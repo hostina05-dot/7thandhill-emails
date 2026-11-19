@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TEMPLATES = ROOT / "templates"
 IMAGES = ROOT / "assets" / "images"
 LOCAL_PREFIX = "../assets/images/"
-DEFAULT_BASE = "https://cdn.jsdelivr.net/gh/hostina05-dot/7thandhill-emails@main/assets/images/"
+DEFAULT_BASE = "https://raw.githubusercontent.com/hostina05-dot/7thandhill-emails/main/assets/images/"
 
 # Preview order: three groups (from the file prefix flow-, salt-, camp-), letters in send order
 ORDER = [
