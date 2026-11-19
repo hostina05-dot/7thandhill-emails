@@ -238,6 +238,8 @@ def piece(n):
     """n = catalog number or site code (R012), or (number or code, display name) to rename a piece in one letter."""
     if isinstance(n, tuple):
         d = dict(piece(n[0])); d["name"] = n[1]
+        if len(n) > 2:  # (code, name, link): the piece's picture leading somewhere else, e.g. a collection
+            d["url"] = n[2]
         return d
     if isinstance(n, str) and not is_anim(n):
         return site_piece(n)
@@ -518,7 +520,7 @@ def masthead(issue, theme):
     """Series masthead: the same in every issue so readers recognise it at a glance.
     Issue number and theme live in the subject line only."""
     return block("MASTHEAD · Sally's edit",
-        h1("Sally&rsquo;s edit", mb=16, size_=43)
+        h1("Sally&rsquo;s Edit", mb=16, size_=43)
         + goldline(mb=0), pad="26px 40px 26px")
 
 def sally_note(text):
@@ -773,7 +775,7 @@ doc("flow-w3-find-your-piece.html", **W, code="W3", pos="email 3 of 5", when="Da
     status="Ready · Sally can swap in her own nine later",
     notes=["Placeholder nine until Sally sends hers (needed by Oct 29). Only pieces with a real price on the site."],
     body=hero("hero-model-sweater-bag.jpg", "A woman in a green sweater wearing a gold enamel pendant, a heart charm necklace and a marquise ring, beside a 7th &amp; Hill bag")
-    + title_block("Sally&rsquo;s edit", "Find the piece that feels like you.",
+    + title_block("Sally&rsquo;s Edit", "Find the piece that feels like you.",
         "Some women start with a charm. Some with a ring they never take off. These are the nine pieces I would start with.")
     + grid("SALLY'S NINE · nine named pieces, three by three (Sally will send her own nine)",
            [26, 101, 102, 103, (8, "The Working Scissors"), (28, "The iLove Smartphone"), 104, 105, 201])
@@ -1225,7 +1227,7 @@ doc("camp-k4-gift-guide.html", status="Ready · check the pieces are in stock be
 
 EDIT = dict(status=DRAFT, code="K2", flow="Campaign", pos="Sally’s Edit")
 doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign · Sally’s Edit · green library · Tue Dec 8",
-    title="Sally&rsquo;s edit", subject="Sally's edit: small talismans for every day", preheader="The pieces I kept reaching for this week.",
+    title="Sally&rsquo;s Edit", subject="Sally's Edit: small talismans for every day", preheader="The pieces I kept reaching for this week.",
     notes=["The green library layout Sally chose. Reusable: swap the photo, the note and the pieces."],
     body=masthead("", "")
     + hero("hero-necklaces-book.jpg", "Gold necklaces laid across a green leather book", SITE + "/collections/necklaces")
@@ -1235,19 +1237,19 @@ doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign ·
     + cat_line())
 # The first letter to the warm list (Vault + SALT contacts who opened or clicked T1): who Sally is,
 # nine pieces to give, and a first nudge towards the holidays. None of T1's nine pieces repeat here.
-FIRST_GIFTS = [("C016", "Radiant Sunburst Heart"), ("C030", "Initial Locket"), ("C001", "Hand &amp; Footprint Heart"),
-               ("C003", "Spinning Engraved Pendant"), ("C079", "Heirloom Royal Crown"), ("R003", "Heirloom Date Ring"),
-               ("C018", "Midnight Sky Moon &amp; Star"), ("C072", "Sacred Scarab Medallion"), ("N006", "Talisman Keepsake Locket")]
-FIRST_FOR = ["For someone you love", "For her initial", "For a new mother",
-             "For a story only you know", "For the queen of the family", "For a year to remember",
-             "For the dreamer", "For a fresh start", "For yourself"]
+FIRST_GIFTS = [("C123", "Moon Tarot Pendant"), ("C102", "Always With You Medallion"), ("C113", "Longevity Amulet Locket"),
+               ("C034", "Personalized Gemstone Pendant"), ("C003", "Spinning Engraved Pendant"), ("R003", "Heirloom Date Ring"),
+               ("N006", "Necklaces", SITE + "/collections/necklaces"), ("R032", "Seamless Baguette Ring"), ("B007", "Sally Bangle")]
+FIRST_FOR = ["For the dreamer", "For someone you love", "For a wish that lasts",
+             "For her birthstone", "For a story only you know", "For a year to remember",
+             "To finish the look", "For a quiet sparkle", "For every day"]
 doc("camp-k2-sallys-edit-gifts.html", **EDIT, when="Next to send: the first letter to the warm list",
     card="Campaign · Sally’s Edit · gifts that hold a story · first letter to the warm list",
-    title="Sally&rsquo;s edit", subject="The gifts I’d give this season", preheader="Nine pieces that hold a story, chosen by Sally.",
+    title="Sally&rsquo;s Edit", subject="The gifts I’d give this season", preheader="Nine pieces that hold a story, chosen by Sally.",
     logic=["Audience: Vault list plus SALT contacts who opened or clicked T1. The first campaign the warm list receives.",
            "Send on a weekday morning, 10:00 Toronto time. Smart Sending on."],
     notes=["Introduction, nine giftable pieces with a line for whom, and the first nudge towards the holidays.",
-           "No prices, no countdown. None of the nine pieces from T1 repeat."],
+           "The nine are Sally's own picks (8 pieces and the Necklaces collection). No prices, no countdown."],
     body=masthead("", "")
     + hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", SITE + "/collections/talismans-medallions")
     + sally_note("I&rsquo;m Sally, the designer behind 7th &amp; Hill. Every piece is solid gold and made to mean something: "
@@ -1258,7 +1260,7 @@ doc("camp-k2-sallys-edit-gifts.html", **EDIT, when="Next to send: the first lett
            pad="0 64px 34px", size_=13, color=SOFT)
     + cat_line())
 doc("camp-k2-sallys-edit-spare.html", **EDIT, when="No date yet (spare layout)", card="Campaign · Sally’s Edit · spare layout, no date yet",
-    title="Sally&rsquo;s edit", subject="Sally's edit: the piece of the week", preheader="One piece, and the story behind it.",
+    title="Sally&rsquo;s Edit", subject="Sally's Edit: the piece of the week", preheader="One piece, and the story behind it.",
     notes=["Alternative layout: one piece. Sally writes the two lines about it; nothing is invented for her."],
     body=masthead("", "")
     + hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn", SITE + "/collections/talismans-medallions")
