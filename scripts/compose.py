@@ -618,7 +618,8 @@ def signature(align="left", pad="0 56px 28px"):
 """, pad=pad, align=align)
 
 def line(text, pad="0 56px 24px", size_=15, color=BODY):
-    return block("LINE", p(text, mb=0, size_=size_, color=color), pad=pad)
+    """One short paragraph; small notes get a tighter line height so the lines stay together."""
+    return block("LINE", p(text, mb=0, size_=size_, color=color, lh=26 if size_ >= 15 else round(size_ * 1.55)), pad=pad)
 
 def facts(name, rows, pad="0 48px 32px"):
     trs = ""
@@ -643,7 +644,7 @@ def grid(name, items, cols=3, captions=None):
         cells = ""
         for k in range(r, min(r + cols, len(items))):
             pr = piece(items[k])
-            cap = (f'<p class="display tcap" style="margin:3px 0 0; font-family:{DISPLAY}; font-size:15px; line-height:18px; font-style:italic; font-weight:400; color:{GOLD};">{captions[k]}</p>'
+            cap = (f'<p class="display tcap" style="margin:0; font-family:{DISPLAY}; font-size:15px; line-height:17px; font-style:italic; font-weight:400; color:{GOLD};">{captions[k]}</p>'
                    if captions else "")
             cells += f"""                    <td width="{pct}" valign="top" align="center" style="padding:4px 7px 20px;">
                       {pimg(items[k], w)}
