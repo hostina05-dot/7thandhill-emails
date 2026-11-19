@@ -6,7 +6,7 @@ Number = key in `assets/catalog.json`, used in `scripts/compose.py`. 1 to 32: ph
 |---|---|---|---|
 | 1 | Lovers Tarot Pendant | product-01.jpg | https://www.7thandhilljewelry.ca/products/14k-gold-and-diamond-lovers-tarot-pendant |
 | 2 | Fortune Horseshoe Charm | product-02.jpg | https://www.7thandhilljewelry.ca/products/the-fortune-horseshoe-medallion-charm |
-| 3 | Always With You Medallion | product-03.jpg | https://www.7thandhilljewelry.ca/products/14k-gold-always-with-you-medallion |
+| 3 | I Want To Be With You Always Medallion | product-03.jpg | https://www.7thandhilljewelry.ca/products/14k-gold-always-with-you-medallion |
 | 4 | Longevity Amulet Locket | product-04.jpg | https://www.7thandhilljewelry.ca/products/14k-gold-and-diamond-longevity-amulet-locket |
 | 5 | Personalized Gemstone Pendant | product-05.jpg | https://www.7thandhilljewelry.ca/products/14k-gold-custom-gemstone-baguette-diamond-pendant |
 | 6 | Diamond Horse Pendant | product-06.jpg | https://www.7thandhilljewelry.ca/products/14k-gold-diamond-horse-pendant |
