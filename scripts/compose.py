@@ -468,8 +468,8 @@ VAULT = "You're receiving this because you joined the 7H Vault at 7thandhilljewe
 SALT_REASON = "You're receiving this as a former SALT. Fine Jewelry client of Sally's."
 
 FROM = "Sally at 7th & Hill <hello@7thandhilljewelry.ca> · replies to hello@7thandhilljewelry.ca"
-GROUPS = {"flow": "Flows · live from Fri, Oct 30 (automatic)",
-          "salt": "SALT list · from Fri, Oct 30",
+GROUPS = {"flow": "Flows · automatic, always on",
+          "salt": "SALT list · sent from Fri, Oct 30",
           "camp": "Campaigns · by date"}
 READY, DRAFT = "Ready", "Ready"
 WRITTEN = []
@@ -722,7 +722,7 @@ SALT_LOGIC = [
     "From wave 3 every wave uses the winner. Pick the winner on clicks as well as opens: Apple Mail counts opens that never happened.",
     "No consent step: T1 is the only SALT letter. The unsubscribe link stays in the footer.",
     SALT_WAVES + ".",
-    "After T1, SALT contacts join the campaign audience from K3 (Tue Nov 3). They do not get the welcome flow.",
+    "After T1, SALT contacts who opened or clicked join the campaign audience from K2 (Fri Nov 20). They do not get the welcome flow.",
     "Sunset: SALT contacts with no opens or clicks within 30 days of T1 are suppressed.",
 ]
 
@@ -926,20 +926,20 @@ doc("flow-p0-vault-popup.html", code="P0", flow="Site popup", pos="Klaviyo form,
 GIFTS = [201, 202, 203, (28, "iLove Smartphone Charm")]
 GIFT_FOR = ["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"]
 
-doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list", when="Tue Nov 3",
-    card="Campaign · holiday deadline · Tue Nov 3",
+doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list", when="Mon Nov 23",
+    card="Campaign · holiday deadline · Mon Nov 23",
     title="For holiday gifts, the clock starts now", subject="For holiday gifts, the clock starts now",
     preheader="Order dates for every kind of piece.",
     status=READY,
-    logic=["Audience: Vault list plus SALT contacts. This is the first campaign the SALT list receives."],
-    notes=["Suggested order-by dates for Sally to confirm: curated designs Nov 6, Exclusives Nov 30, in stock Dec 17.",
+    logic=["Audience: Vault list plus engaged SALT contacts."],
+    notes=["Order-by dates counted from Nov 23: Exclusives (2 to 4 weeks) by Nov 26, in stock by Dec 17. Curated designs (6 to 8 weeks) can no longer arrive by the holidays, so they are offered for the new year.",
            "Neutral holiday wording on purpose: no trees, no Christmas."],
     body=hero("hero-pendants-books.jpg", "Two gold pendants on snake chains, hung over old leather books", SITE + "/collections/necklaces")
     + title_block("The only deadline we have", "For holiday gifts, the clock starts now",
         "Some pieces are ready to go, others are made for you over a few weeks. Here&rsquo;s when to order so yours arrives in time.")
     + facts_band([("In stock", "Order by Dec 17. Ships in 1 to 2 business days."),
-                  ("7th &amp; Hill Exclusives", "Order by Nov 30. Made in 2 to 4 weeks."),
-                  ("Curated designs", "Order by Nov 6. Made in 6 to 8 weeks.")])
+                  ("7th &amp; Hill Exclusives", "Order by Nov 26. Made in 2 to 4 weeks."),
+                  ("Curated designs", "Made in 6 to 8 weeks: a gift for the new year.")])
     + block("SPACER", "", pad="30px 0 0")
     + grid("GIFTS", GIFTS, cols=2, captions=GIFT_FOR)
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
@@ -1122,7 +1122,7 @@ doc("flow-an1-a-year-ago.html", **B, code="AN1", flow="Anniversary flow 15", pos
     + cat_line())
 
 doc("camp-k1-new-in-studio.html", status=DRAFT, code="K1", flow="Weekly campaign", pos="skeleton",
-    when="Tue Nov 10", card="Campaign · New in the studio · Tue Nov 10",
+    when="Thu Dec 10", card="Campaign · New in the studio · Thu Dec 10",
     title="New in the studio", subject="New in the studio", preheader="A few pieces that just left my workbench.",
     notes=["Pieces from the site's New Arrivals collection. For the next weeks swap the photo, the five pieces and the two lines."],
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
@@ -1192,7 +1192,7 @@ doc("camp-s3-last-day.html", **SALE, code="S3", when="Mon Nov 30",
     + cta("Step inside", SHOP, pad="0 64px 40px"))
 
 doc("camp-dyo-design-your-own.html", status=DRAFT, code="DYO", flow="Campaign", pos="whole list",
-    when="Tue Nov 17", card="Campaign · Design Your Own · Tue Nov 17",
+    when="Tue Jan 12", card="Campaign · Design Your Own · Tue Jan 12, after the holidays",
     title="Design your own", subject="Some pieces don't exist yet", preheader="Let's make yours together.",
     body=hero("hero-necklaces-book.jpg", "Gold necklaces resting on an old green leather book")
     + title_block("Design your own", "Listen. Design. Adorn.",
@@ -1233,9 +1233,9 @@ doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign ·
     + collage("THE EDIT", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), (7, 3, "rings"))
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
-doc("camp-k2-sallys-edit-oct30.html", **EDIT, when="Fri Oct 30", card="Campaign · Sally’s Edit · Fri Oct 30",
+doc("camp-k2-sallys-edit-nov20.html", **EDIT, when="Fri Nov 20, 10:00", card="Campaign · Sally’s Edit · Fri Nov 20, 10:00",
     title="Sally&rsquo;s edit", subject="Sally's edit: pendants that hold a story", preheader="The ones I'd give, and the ones I'd keep.",
-    logic=["Audience: Vault list only. SALT contacts join the campaign audience from K3 (Tue Nov 3)."],
+    logic=["Audience: Vault list plus SALT contacts who opened or clicked T1. The first campaign the warm list receives."],
     notes=["Layout: photo, note, pieces with names."],
     body=masthead("", "")
     + hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", SITE + "/collections/talismans-medallions")
