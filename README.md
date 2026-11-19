@@ -30,7 +30,7 @@ scripts/build.py     preview.html и klaviyo/
 |---|---|---|
 | `flow-` · Flows | автоматически, всегда включены | P0 попап · Welcome 01 (W1 to W5) · Cart 06 (C1, C2) · Checkout 07 (CO1 to CO3, консьерж CC1, CC2 от $5,500) · Browse 05 (B1, B2) · After purchase 10 (PP1 to PP3) · Anniversary 15 (AN1) |
 | `salt-` · SALT list | с Fri Oct 30 | только T1, ежедневными волнами 200, 400, 800, затем по 1,500 в день, пока жалобы ниже 0.1% и отказы ниже 2% · дальше SALT (кто открыл или кликнул) получает кампании с K2 (Fri Nov 20), без welcome-флоу · кто не открыл и не кликнул за 30 дней, исключается (sunset) |
-| `camp-` · Campaigns | по датам | K2 Sally’s Edit Fri Nov 20 10:00 · K3 Mon Nov 23 · S1 Wed Nov 25 18:00 · S2 Fri Nov 27 08:00 · S3 Mon Nov 30 · K4 Thu Dec 3 · K2 Tue Dec 8 · K1 Thu Dec 10 · LC Tue Dec 15 · HN Thu Dec 24 · DYO Tue Jan 12 (+ запасной макет K2 без даты) |
+| `camp-` · Campaigns | по датам | K2 Sally’s Edit Fri Nov 20 10:00 · K3 Tue Nov 24 10:00 · S1 Wed Nov 25 18:00 · S2 Fri Nov 27 08:00 · S3 Mon Nov 30 · K4 Thu Dec 3 · K2 Tue Dec 8 · K1 Thu Dec 10 · LC Tue Dec 15 · HN Thu Dec 24 · DYO Tue Jan 12 (+ запасной макет K2 без даты) |
 
 ## Как посмотреть
 https://raw.githack.com/hostina05-dot/7thandhill-emails/main/preview.html (после слияния в `main`).
@@ -76,7 +76,7 @@ python3 scripts/compose.py && python3 scripts/build.py
 ## Waiting for Sally
 1. Бесплатный ресайз колец: есть или нет.
 2. Какие изделия только для подписчиков Vault.
-3. Даты заказа к праздникам для K3: Exclusives до Nov 26, в наличии до Dec 17; curated designs уже не успевают к праздникам и предлагаются на новый год.
+3. Даты заказа к праздникам для K3: Exclusives до Nov 30, в наличии до Dec 17; curated designs уже не успевают к праздникам и предлагаются на новый год.
 4. Девять изделий для W3 (до Oct 29).
 5. Шесть плиток коллекций в W1.
 6. 14k или «Solid gold».

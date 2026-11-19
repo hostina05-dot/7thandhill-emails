@@ -930,24 +930,29 @@ doc("flow-p0-vault-popup.html", code="P0", flow="Site popup", pos="Klaviyo form,
 GIFTS = [201, 202, 203, (28, "iLove Smartphone Charm")]
 GIFT_FOR = ["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"]
 
-doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list", when="Mon Nov 23",
-    card="Campaign · holiday deadline · Mon Nov 23",
+doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list", when="Tue Nov 24, 10:00",
+    card="Campaign · holiday deadline · Tue Nov 24, 10:00",
     title="For holiday gifts, the clock starts now", subject="For holiday gifts, the clock starts now",
     preheader="Order dates for every kind of piece.",
     status=READY,
     logic=["Audience: Vault list plus engaged SALT contacts."],
-    notes=["Order-by dates counted from Nov 23: Exclusives (2 to 4 weeks) by Nov 26, in stock by Dec 17. Curated designs (6 to 8 weeks) can no longer arrive by the holidays, so they are offered for the new year.",
+    notes=["Second letter to the warm list, the day before Black Friday early access (S1, Wed Nov 25, 18:00).",
+           "Order-by dates: Exclusives (2 to 4 weeks) by Nov 30, the last day of the sale; in stock by Dec 17. Curated designs (6 to 8 weeks) can no longer arrive by the holidays, so they are offered for the new year.",
            "Neutral holiday wording on purpose: no trees, no Christmas."],
     body=hero("hero-pendants-books.jpg", "Two gold pendants on snake chains, hung over old leather books", SITE + "/collections/necklaces")
     + title_block("The only deadline we have", "For holiday gifts, the clock starts now",
         "Some pieces are ready to go, others are made for you over a few weeks. Here&rsquo;s when to order so yours arrives in time.")
     + facts_band([("In stock", "Order by Dec 17. Ships in 1 to 2 business days."),
-                  ("7th &amp; Hill Exclusives", "Order by Nov 26. Made in 2 to 4 weeks."),
+                  ("7th &amp; Hill Exclusives", "Order by Nov 30. Made in 2 to 4 weeks."),
                   ("Curated designs", "Made in 6 to 8 weeks: a gift for the new year.")])
     + block("SPACER", "", pad="30px 0 0")
     + grid("GIFTS", GIFTS, cols=2, captions=GIFT_FOR)
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
-    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 34px", size_=13, color=SOFT)
+    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 30px", size_=13, color=SOFT)
+    + block("TEASER · Black Friday early access tomorrow",
+            eyebrow("Black Friday", mb=6)
+            + p("Tomorrow evening, you&rsquo;ll get early access to our Black Friday, before anyone else. Keep an eye on your inbox.", mb=0),
+            pad="0 56px 34px")
     + trust_strip())
 
 C = dict(status=DRAFT)
@@ -1224,7 +1229,11 @@ doc("camp-k4-gift-guide.html", status="Ready · check the pieces are in stock be
     + grid("GIFTS", [201, 13, 21, (28, "iLove Smartphone Charm")], cols=2,
            captions=["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"])
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
-    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 34px", size_=13, color=SOFT)
+    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 30px", size_=13, color=SOFT)
+    + block("TEASER · Black Friday early access tomorrow",
+            eyebrow("Black Friday", mb=6)
+            + p("Tomorrow evening, you&rsquo;ll get early access to our Black Friday, before anyone else. Keep an eye on your inbox.", mb=0),
+            pad="0 56px 34px")
     + trust_strip())
 
 EDIT = dict(status=DRAFT, code="K2", flow="Campaign", pos="Sally’s Edit")

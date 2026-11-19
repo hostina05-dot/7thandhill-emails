@@ -51,7 +51,7 @@ OVERVIEW = [
      "then 1,500 a day while complaints stay under 0.1% and bounces under 2%. After T1, those who opened or clicked join the campaigns from K2 "
      "(Fri Nov 20); no welcome flow for them. Anyone with no opens or clicks within 30 days is suppressed."),
     ("Campaigns · by date",
-     "For the Vault list and engaged SALT contacts. The first, K2 Sally’s Edit, goes out on Fri, Nov 20, then K3 holiday dates (Mon Nov 23), "
+     "For the Vault list and engaged SALT contacts. The first, K2 Sally’s Edit, goes out on Fri, Nov 20, then K3 holiday dates (Tue Nov 24), "
      "Black Friday (Nov 25, 27, 30), the gift guide, the December letters, and Design Your Own after the holidays (Tue Jan 12)."),
 ]
 
