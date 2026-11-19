@@ -49,7 +49,7 @@ HEAD = """<!DOCTYPE html>
 </style>
 <![endif]-->
 <!--[if !mso]><!-->
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500&amp;family=Inter:wght@400;500&amp;family=Montserrat:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;1,400&amp;family=Inter:wght@400;500&amp;family=Montserrat:wght@500&amp;display=swap" rel="stylesheet">
 <!--<![endif]-->
 <style>
   :root { color-scheme: light; supported-color-schemes: light; }
@@ -70,6 +70,7 @@ HEAD = """<!DOCTYPE html>
     .pname { font-size: 17px !important; line-height: 21px !important; }
     .ptext { padding-left: 8px !important; padding-right: 8px !important; }
     .cats { letter-spacing: 0.6px !important; }
+    .tcap { font-size: 14px !important; line-height: 17px !important; }
     .tname { font-size: 12px !important; line-height: 16px !important; }
   }
 </style>
@@ -642,7 +643,7 @@ def grid(name, items, cols=3, captions=None):
         cells = ""
         for k in range(r, min(r + cols, len(items))):
             pr = piece(items[k])
-            cap = (f'<p class="sans" style="margin:4px 0 0; font-family:{SANS}; font-size:13px; line-height:19px; font-weight:400; color:{SOFT};">{captions[k]}</p>'
+            cap = (f'<p class="display tcap" style="margin:3px 0 0; font-family:{DISPLAY}; font-size:15px; line-height:18px; font-style:italic; font-weight:400; color:{GOLD};">{captions[k]}</p>'
                    if captions else "")
             cells += f"""                    <td width="{pct}" valign="top" align="center" style="padding:4px 7px 20px;">
                       {pimg(items[k], w)}
@@ -868,7 +869,7 @@ doc("salt-t1-note-from-sally.html", code="T1", flow="SALT list", pos="T1 only", 
 POPUP = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>7H Vault popup</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500&amp;family=Inter:wght@400;500&amp;family=Montserrat:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;1,400&amp;family=Inter:wght@400;500&amp;family=Montserrat:wght@500&amp;display=swap" rel="stylesheet">
 <style>
   body {{ margin:0; background:{OUTER}; font-family:{SANS}; color:{INK}; }}
   .stage {{ padding:32px 16px 40px; display:flex; flex-wrap:wrap; gap:28px; justify-content:center; }}
