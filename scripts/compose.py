@@ -1233,15 +1233,29 @@ doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign ·
     + collage("THE EDIT", ("charms", 9), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), (7, 3, "rings"))
     + cta("Discover 7th &amp; Hill", SHOP)
     + cat_line())
-doc("camp-k2-sallys-edit-nov20.html", **EDIT, when="Fri Nov 20, 10:00", card="Campaign · Sally’s Edit · Fri Nov 20, 10:00",
-    title="Sally&rsquo;s edit", subject="Sally's edit: pendants that hold a story", preheader="The ones I'd give, and the ones I'd keep.",
-    logic=["Audience: Vault list plus SALT contacts who opened or clicked T1. The first campaign the warm list receives."],
-    notes=["Layout: photo, note, pieces with names."],
+# The first letter to the warm list (Vault + SALT contacts who opened or clicked T1): who Sally is,
+# nine pieces to give, and a first nudge towards the holidays. None of T1's nine pieces repeat here.
+FIRST_GIFTS = [("C016", "Radiant Sunburst Heart"), ("C030", "Initial Locket"), ("C001", "Hand &amp; Footprint Heart"),
+               ("C003", "Spinning Engraved Pendant"), ("C079", "Heirloom Royal Crown"), ("R003", "Heirloom Date Ring"),
+               ("C018", "Midnight Sky Moon &amp; Star"), ("C072", "Sacred Scarab Medallion"), ("N006", "Talisman Keepsake Locket")]
+FIRST_FOR = ["For someone you love", "For her initial", "For a new mother",
+             "For a story only you know", "For the queen of the family", "For a year to remember",
+             "For the dreamer", "For a fresh start", "For yourself"]
+doc("camp-k2-sallys-edit-gifts.html", **EDIT, when="Next to send: the first letter to the warm list",
+    card="Campaign · Sally’s Edit · gifts that hold a story · first letter to the warm list",
+    title="Sally&rsquo;s edit", subject="The gifts I’d give this season", preheader="Nine pieces that hold a story, chosen by Sally.",
+    logic=["Audience: Vault list plus SALT contacts who opened or clicked T1. The first campaign the warm list receives.",
+           "Send on a weekday morning, 10:00 Toronto time. Smart Sending on."],
+    notes=["Introduction, nine giftable pieces with a line for whom, and the first nudge towards the holidays.",
+           "No prices, no countdown. None of the nine pieces from T1 repeat."],
     body=masthead("", "")
     + hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", SITE + "/collections/talismans-medallions")
-    + sally_note("Every pendant here holds something: a name, a date, a small superstition. These are the ones I&rsquo;d give, and the ones I&rsquo;d keep.")
-    + checker("THE EDIT", [1, 12, 4, 3])
-    + cta("Discover 7th &amp; Hill", SHOP)
+    + sally_note("I&rsquo;m Sally, the designer behind 7th &amp; Hill. Every piece is solid gold and made to mean something: "
+                 "a name, a date, a small wish. With the holidays close, these are the nine I&rsquo;d give, and maybe one I&rsquo;d keep.")
+    + grid("NINE TO GIVE · named pieces with who they are for", FIRST_GIFTS, captions=FIRST_FOR)
+    + cta("Start a gift", SITE + "/collections/talismans-medallions", pad="12px 64px 16px")
+    + line("In-stock pieces ship in 1 to 2 business days. Your jewellery arrives in our luxurious book packaging featuring velvet lining.",
+           pad="0 64px 34px", size_=13, color=SOFT)
     + cat_line())
 doc("camp-k2-sallys-edit-spare.html", **EDIT, when="No date yet (spare layout)", card="Campaign · Sally’s Edit · spare layout, no date yet",
     title="Sally&rsquo;s edit", subject="Sally's edit: the piece of the week", preheader="One piece, and the story behind it.",

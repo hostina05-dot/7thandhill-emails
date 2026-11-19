@@ -33,7 +33,7 @@ ORDER = [
     "flow-c1", "flow-c2", "flow-co1", "flow-co2", "flow-co3", "flow-cc1", "flow-cc2",
     "flow-b1", "flow-b2", "flow-pp1", "flow-pp2", "flow-pp3", "flow-an1",
     "salt-t1",
-    "camp-k2-sallys-edit-nov20", "camp-k3", "camp-s1", "camp-s2", "camp-s3",
+    "camp-k2-sallys-edit-gifts", "camp-k3", "camp-s1", "camp-s2", "camp-s3",
     "camp-k4", "camp-k2-sallys-edit-dec8", "camp-k1", "camp-lc", "camp-hn", "camp-dyo", "camp-k2-sallys-edit-spare",
 ]
 STAGES = {
