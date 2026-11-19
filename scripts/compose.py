@@ -15,7 +15,7 @@ P = {int(k): v for k, v in json.load(open(os.path.join(ROOT, "assets", "catalog.
 SITE = "https://www.7thandhilljewelry.ca"
 SHOP = SITE + "/collections"; DYO = SITE + "/collections/design-your-own-jewelry"
 STORY = SITE + "/pages/about-salt"; CARE = SITE + "/pages/jewelry-care"; CONTACT = SITE + "/pages/contact"
-IG = "https://www.instagram.com/7thandhilljewelry"; TT = "https://www.tiktok.com/@7thandhilljewelry"
+IG = "https://www.instagram.com/7thandhilljewelry"
 IMG = "../assets/images/"
 SITE_SET = {r["code"]: r for r in csv.DictReader(open(os.path.join(ROOT, "assets", "products", "index.csv"))) if r["code"]}
 
@@ -447,7 +447,7 @@ def footer(reason):
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td class="sans t-sm" align="left" style="font-family:{SANS}; font-size:11px; line-height:14px; letter-spacing:2px; text-transform:uppercase;"><a href="{SITE}" target="_blank" style="color:#F7F5F1; text-decoration:none;">7thandhilljewelry.ca</a></td>
-                  <td class="sans t-sm" align="right" style="font-family:{SANS}; font-size:11px; line-height:14px; letter-spacing:2px; text-transform:uppercase;"><a href="{IG}" target="_blank" style="color:#F7F5F1; text-decoration:none;">Instagram</a>&nbsp;&nbsp;&nbsp;<a href="{TT}" target="_blank" style="color:#F7F5F1; text-decoration:none;">TikTok</a></td>
+                  <td class="sans t-sm" align="right" style="font-family:{SANS}; font-size:11px; line-height:14px; letter-spacing:2px; text-transform:uppercase;"><a href="{IG}" target="_blank" style="color:#F7F5F1; text-decoration:none;">Instagram</a></td>
                 </tr>
               </table>
             </td>
@@ -1239,7 +1239,7 @@ doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign ·
     + cat_line())
 # The first letter to the warm list (Vault + SALT contacts who opened or clicked T1): who Sally is,
 # nine pieces to give, and a first nudge towards the holidays. None of T1's nine pieces repeat here.
-FIRST_GIFTS = [("C034", "Personalized Gemstone Pendant"), ("C102", "Always With You Medallion"), ("C113", "Longevity Amulet Locket"),
+FIRST_GIFTS = [("C034", "Personalized Gemstone Pendant"), ("C102", "I Want To Be With You Always Medallion"), ("C113", "Longevity Amulet Locket"),
                ("C123", "Moon Tarot Pendant"), ("C003", "Spinning Engraved Pendant"), ("R003", "Heirloom Date Ring"),
                ("N030", "Pinky Promise Necklace"), ("R032", "Seamless Baguette Ring"), ("B007", "Sally Bangle")]
 FIRST_FOR = ["For her birthstone", "For someone you love", "For a wish that lasts",
