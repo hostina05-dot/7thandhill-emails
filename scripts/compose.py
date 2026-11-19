@@ -1239,19 +1239,19 @@ doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign ·
     + cat_line())
 # The first letter to the warm list (Vault + SALT contacts who opened or clicked T1): who Sally is,
 # nine pieces to give, and a first nudge towards the holidays. None of T1's nine pieces repeat here.
-FIRST_GIFTS = [("C123", "Moon Tarot Pendant"), ("C102", "Always With You Medallion"), ("C113", "Longevity Amulet Locket"),
-               ("C034", "Personalized Gemstone Pendant"), ("C003", "Spinning Engraved Pendant"), ("R003", "Heirloom Date Ring"),
-               ("N006", "Necklaces", SITE + "/collections/necklaces"), ("R032", "Seamless Baguette Ring"), ("B007", "Sally Bangle")]
-FIRST_FOR = ["For the dreamer", "For someone you love", "For a wish that lasts",
-             "For her birthstone", "For a story only you know", "For a year to remember",
-             "To finish the look", "For a quiet sparkle", "For every day"]
+FIRST_GIFTS = [("C034", "Personalized Gemstone Pendant"), ("C102", "Always With You Medallion"), ("C113", "Longevity Amulet Locket"),
+               ("C123", "Moon Tarot Pendant"), ("C003", "Spinning Engraved Pendant"), ("R003", "Heirloom Date Ring"),
+               ("N030", "Pinky Promise Necklace"), ("R032", "Seamless Baguette Ring"), ("B007", "Sally Bangle")]
+FIRST_FOR = ["For her birthstone", "For someone you love", "For a wish that lasts",
+             "For the dreamer", "For a story only you know", "For a year to remember",
+             "For your best friend", "For a quiet sparkle", "For every day"]
 doc("camp-k2-sallys-edit-gifts.html", **EDIT, when="Next to send: the first letter to the warm list",
     card="Campaign · Sally’s Edit · gifts that hold a story · first letter to the warm list",
     title="Sally&rsquo;s Edit", subject="The gifts I’d give this season", preheader="Nine pieces that hold a story, chosen by Sally.",
     logic=["Audience: Vault list plus SALT contacts who opened or clicked T1. The first campaign the warm list receives.",
            "Send on a weekday morning, 10:00 Toronto time. Smart Sending on."],
     notes=["Introduction, nine giftable pieces with a line for whom, and the first nudge towards the holidays.",
-           "The nine are Sally's own picks (8 pieces and the Necklaces collection). No prices, no countdown."],
+           "The nine are Sally's own picks. No prices, no countdown."],
     body=masthead("", "")
     + hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", SITE + "/collections/talismans-medallions")
     + sally_note("I&rsquo;m Sally, the designer behind 7th &amp; Hill. Every piece is solid gold and made to mean something: "
