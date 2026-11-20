@@ -139,7 +139,7 @@ def hero(src, alt, href=SITE):
 def star(mt=0, mb=0, color=GOLD):
     """The 7th & Hill sunburst (from the book box), used as the brand's divider."""
     src = "sunburst-light.png" if color == GOLD_L else "sunburst-gold.png"
-    return f"""              <img src="{IMG}{src}" width="40" height="20" alt="" style="display:block; width:40px; height:20px; margin:{mt}px auto {mb}px; border:0;">
+    return f"""              <img src="{IMG}{src}" width="56" height="28" alt="" style="display:block; width:56px; height:28px; margin:{mt}px auto {mb}px; border:0;">
 """
 
 def dot(light=False):
@@ -454,7 +454,7 @@ def footer(reason):
           </tr>
           <tr>
             <td class="px" align="center" style="padding:24px 40px 30px;">
-              <img src="{IMG}sunburst-gold.png" width="40" height="20" alt="" style="display:block; width:40px; height:20px; margin:0 auto 12px; border:0;">
+              <img src="{IMG}sunburst-gold.png" width="56" height="28" alt="" style="display:block; width:56px; height:28px; margin:0 auto 12px; border:0;">
               <p class="display" style="margin:0 0 10px; font-family:{DISPLAY}; font-size:15px; line-height:20px; font-weight:400; letter-spacing:1.5px; text-transform:uppercase; color:{GREEN};">Modern Heirlooms.<br>Timeless Classics.</p>
               <p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:12px; line-height:18px; font-weight:400;"><a href="mailto:hello@7thandhilljewelry.ca" style="color:{INK}; text-decoration:none;">hello@7thandhilljewelry.ca</a></p>
               <p class="sans legal" style="margin:0; font-family:{SANS}; font-size:11px; line-height:17px; font-weight:400; color:#9A958B;">
