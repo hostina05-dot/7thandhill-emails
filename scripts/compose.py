@@ -1251,7 +1251,7 @@ doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign ·
 FIRST_GIFTS = [("C034", "Personalized Gemstone Pendant"), ("C102", "I Want To Be With You Always Medallion"), ("C113", "Longevity Amulet Locket"),
                ("C123", "Moon Tarot Pendant"), ("C003", "Spinning Engraved Pendant"), ("R003", "Heirloom Date Ring"),
                ("N030", "Pinky Promise Necklace"), ("R032", "Seamless Baguette Ring"), ("B007", "Sally Bangle")]
-FIRST_FOR = ["For her birthstone", "For someone you love", "For a wish that lasts",
+FIRST_FOR = ["For something personal", "For someone you love", "For a wish that lasts",
              "For the dreamer", "For a story only you know", "For a year to remember",
              "For your best friend", "For a quiet sparkle", "For every day"]
 doc("camp-k2-sallys-edit-gifts.html", **EDIT, when="Next to send: the first letter to the warm list",
@@ -1263,7 +1263,7 @@ doc("camp-k2-sallys-edit-gifts.html", **EDIT, when="Next to send: the first lett
            "The nine are Sally's own picks. No prices, no countdown."],
     body=masthead("", "")
     + hero("hero-pendant-book.jpg", "An enamel pendant resting on a gilded book", SITE + "/collections/talismans-medallions")
-    + sally_note("I&rsquo;m Sally, the designer behind 7th &amp; Hill. Every piece is solid gold and made to mean something: "
+    + sally_note("I&rsquo;m Sally, the designer behind 7th &amp; Hill. Every piece is made in solid 14 karat gold to mean something: "
                  "a name, a date, a small wish. With the holidays close, these are the nine I&rsquo;d give, and maybe one I&rsquo;d keep.")
     + grid("NINE TO GIVE · named pieces with who they are for", FIRST_GIFTS, captions=FIRST_FOR)
     + cta("Start a gift", SITE + "/collections/talismans-medallions", pad="12px 64px 16px")
