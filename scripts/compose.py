@@ -968,7 +968,7 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
     notes=["Second letter to the warm list, the day before Black Friday early access (S1, Wed Nov 25, 18:00). No teaser for it (Sally).",
            "Order-by dates: Exclusives (2 to 4 weeks) by Nov 30, the last day of the sale; in stock by Dec 17. Curated designs (6 to 8 weeks) can no longer arrive by the holidays, so they are offered for the new year.",
            "Neutral holiday wording on purpose: no trees, no Christmas."],
-    body=hero("hero-charms-on-books.jpg", "Six gold charms on chains hung over old leather books: an arrow, a horseshoe, a medallion, a moon tarot, an initial and a Loved tag", SITE)
+    body=hero("hero-pendants-books.jpg", "Two gold pendants on snake chains, hung over old leather books", SITE + "/collections/necklaces")
     + title_block("The only deadline we have", "For holiday gifts, the clock starts now",
         "Some pieces are ready to go, others are made for you over a few weeks. Here&rsquo;s when to order so yours arrives in time.")
     + facts_band([("In stock", "Order by Dec 17. Ships in 1 to 2 business days."),
