@@ -38,7 +38,10 @@ SHOTS = {
     "hero-locket-closeup.jpg":   ("locket-closeup.jpg",              "hero",    (0, 0.18, 1, 0.92)),
     "hero-pendant-book.jpg":     ("pendant-red-book.jpg",            "hero",    (0, 0.04, 1, 1)),
     "hero-necklaces-book.jpg":   ("necklaces-green-book.jpg",        "hero",    None),
-    "hero-charms-green-book.jpg": ("necklaces-green-book-hires.jpg", "hero",    (0, 0.24, 1, 0.94)),  # K3: charms draped over a book (Sally)
+    "hero-charms-green-book.jpg": ("necklaces-green-book-hires.jpg", "hero",    (0, 0.24, 1, 0.94)),
+    # K3: Sally's six charms hung over the book spines. A composite: the site's product photos of the six
+    # pieces, cut out, on the lower part of the books photo (no pendants there), with drawn snake chains.
+    "hero-charms-on-books.jpg":  ("charms-on-books.jpg",             "hero",    None),
     "hero-hand-rings.jpg":       ("hand-rings.jpg",                  "hero",    (0, 0.12, 1, 0.88)),
     "hero-archive-corner.jpg":   ("corner-7th-hill-1920s.jpg",       "hero",    None),
     "hero-archive-building.jpg": ("archive-st-vincent-building.jpg",  "hero",    (0, 0.08, 1, 0.70)),
@@ -69,7 +72,7 @@ PACKSHOTS = {
 
 
 # Photos kept bright and true, as on the site (Sally: the fireplace photo looked dark in the letters)
-LIGHT = {"hero-sally-fireplace.jpg", "sally-avatar.png"}
+LIGHT = {"hero-sally-fireplace.jpg", "sally-avatar.png", "hero-charms-on-books.jpg"}
 
 
 def grade(im: Image.Image, light=False) -> Image.Image:
