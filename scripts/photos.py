@@ -38,6 +38,7 @@ SHOTS = {
     "hero-locket-closeup.jpg":   ("locket-closeup.jpg",              "hero",    (0, 0.18, 1, 0.92)),
     "hero-pendant-book.jpg":     ("pendant-red-book.jpg",            "hero",    (0, 0.04, 1, 1)),
     "hero-necklaces-book.jpg":   ("necklaces-green-book.jpg",        "hero",    None),
+    "hero-charms-green-book.jpg": ("necklaces-green-book-hires.jpg", "hero",    (0, 0.24, 1, 0.94)),  # K3: charms draped over a book (Sally)
     "hero-hand-rings.jpg":       ("hand-rings.jpg",                  "hero",    (0, 0.12, 1, 0.88)),
     "hero-archive-corner.jpg":   ("corner-7th-hill-1920s.jpg",       "hero",    None),
     "hero-archive-building.jpg": ("archive-st-vincent-building.jpg",  "hero",    (0, 0.08, 1, 0.70)),
