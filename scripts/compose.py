@@ -1204,7 +1204,7 @@ doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:0
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
 doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
     card="Campaign · Black Friday · Fri Nov 27, 08:00", title="20% off everything",
-    subject="20% off everything", preheader="Black Friday, from today until Monday.",
+    subject="20% off all fine jewelry starts now", preheader="Black Friday, from today until Monday.",
     body=hero("hero-water-lilies.jpg", "A woman in a pale blue dress lying by a lily pond, wearing a heart charm necklace, a medallion and a gold bracelet")
     + night("OFFER · swap for each sale",
         eyebrow("Black Friday", mb=10, color=GOLD_L)
@@ -1219,7 +1219,7 @@ doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
 # S3 · the last word: a letter on the desk, short, pieces with names
 doc("camp-s3-last-day.html", **SALE, code="S3", when="Mon Nov 30",
     card="Campaign · last day of the sale · Mon Nov 30", title="Today is the last day",
-    subject="Today is the last day", preheader="20% off everything ends tonight.",
+    subject="Last day: 20% off all fine jewelry", preheader="The sale ends tonight at midnight.",
     logic=["Audience: opened S2 and did not buy."],
     body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter")
     + title_block("The last day", "Today is the last day",
