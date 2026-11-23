@@ -975,9 +975,10 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
                   ("7th &amp; Hill Exclusives", "Order by Nov 30. Made in 2 to 4 weeks."),
                   ("Curated designs", "Made in 6 to 8 weeks: a gift for the new year.")])
     + heading("Gifts that arrive in time", "A few to start with", pad="34px 40px 22px")
-    + checker("GIFTS · two to start with", [("C016", "Radiant Sunburst Heart"), ("R035", "Riviera Art Deco Ring")],
-              captions=["For someone you love", "For a little sparkle"])
-    + row3("GIFTS · three more", [("C018", "Moon &amp; Star Pendant"), ("C079", "Royal Crown Charm"), ("E009", "Clover Earrings")])
+    + checker("GIFTS · Sally's picks", [("C075", "Guiding Arrow Charm"), ("C055", "Clover Horseshoe Pendant"),
+                                        ("C102", "I Want To Be With You Always Medallion")],
+              captions=["For a new direction", "For good luck", "For someone you love"])
+    + row3("GIFTS · three more of Sally's picks", [("C123", "Moon Tarot Pendant"), ("C033", "Initial Enamel Pendant"), ("C025", "Loved Pendant")])
     + cta("Start a gift", SITE, pad="12px 64px 16px")
     + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 34px", size_=13, color=SOFT)
     + trust_strip())
