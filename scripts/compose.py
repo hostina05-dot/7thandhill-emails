@@ -320,6 +320,34 @@ def checker(name, ids):
           </tr>
 """
 
+def mosaic(name, big, smalls, caption="", side="left", pad="0 26px 26px"):
+    """One piece large with its line, two smaller pieces stacked beside it. Mirror it with side="right"
+    for the next pair, so the eye zigzags down the letter."""
+    pr = piece(big)
+    name_p = lambda q, size, mt: (f'<p class="sans tname" style="margin:{mt}px 0 0; font-family:{SANS}; font-size:{size}px; line-height:{size + 5}px; '
+                                  f'font-weight:400; color:{INK};"><a href="{q["url"]}" target="_blank" style="color:{INK}; text-decoration:none;">{q["name"]}</a></p>')
+    big_td = (f'<td class="mz-big" width="64%" valign="top" align="center" style="padding:0 {7 if side == "left" else 0}px 0 {0 if side == "left" else 7}px;">'
+              f'{pimg(big, 344)}{name_p(pr, 15, 12)}'
+              + (f'<p class="display tcap" style="margin:0; font-family:{DISPLAY}; font-size:16px; line-height:19px; font-style:italic; color:{GOLD};">{caption}</p>' if caption else "")
+              + f'<p class="sans t-sm" style="margin:10px 0 0; font-family:{SANS}; font-size:10px; line-height:14px; letter-spacing:2.5px; text-transform:uppercase;">'
+                f'<a href="{pr["url"]}" target="_blank" style="color:{INK}; text-decoration:none; border-bottom:1px solid {GOLD}; padding-bottom:2px;">View piece</a></p></td>')
+    small_cells = "".join(
+        f'<tr><td valign="top" align="center" style="padding:{0 if k == 0 else 14}px 0 0;">{pimg(n, 176)}{name_p(piece(n), 13, 8)}</td></tr>'
+        for k, n in enumerate(smalls))
+    small_td = (f'<td class="mz-small" width="36%" valign="top" style="padding:0 {0 if side == "left" else 7}px 0 {7 if side == "left" else 0}px;">'
+                f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">{small_cells}</table></td>')
+    cells = big_td + small_td if side == "left" else small_td + big_td
+    return f"""
+          <!-- ═══════════ BLOCK: {name} · one large piece, two smaller beside it ═══════════ -->
+          <tr>
+            <td class="pxs" align="center" style="padding:{pad};">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>{cells}</tr>
+              </table>
+            </td>
+          </tr>
+"""
+
 def row3(name, ids):
     cells = ""
     for n in ids:
@@ -945,8 +973,10 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
     + facts_band([("In stock", "Order by Dec 17. Ships in 1 to 2 business days."),
                   ("7th &amp; Hill Exclusives", "Order by Nov 30. Made in 2 to 4 weeks."),
                   ("Curated designs", "Made in 6 to 8 weeks: a gift for the new year.")])
-    + block("SPACER", "", pad="30px 0 0")
-    + grid("GIFTS", GIFTS, cols=2, captions=GIFT_FOR)
+    + heading("Gifts that arrive in time", "A few to start with", pad="34px 40px 22px")
+    + mosaic("GIFTS · the sunburst heart", ("C016", "Radiant Sunburst Heart"), [("C018", "Moon &amp; Star Pendant"), ("C079", "Royal Crown Charm")], caption="For someone you love", side="left")
+    + mosaic("GIFTS · the Riviera ring", ("R035", "Riviera Art Deco Ring"), [("E009", "Clover Earrings"), ("N011", "Jaguar Necklace")],
+             caption="For a little sparkle", side="right", pad="8px 26px 30px")
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
     + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 30px", size_=13, color=SOFT)
     + block("TEASER · Black Friday early access tomorrow",
