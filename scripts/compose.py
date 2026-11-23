@@ -1177,7 +1177,7 @@ doc("camp-k1-new-in-studio.html", status=DRAFT, code="K1", flow="Weekly campaign
 SALE_NOTES = ["Sale series: three letters, one look each (private note, the sale, the last word). For New Year, Valentine's,",
               "Mother's Day or a flash sale, reuse one of them and change the offer block and the pieces.",
               "Calm on purpose: no red, no countdown timers, no Shop now.",
-              "Pieces are placeholders: replace with pieces marked A 7th & Hill Exclusive."]
+              "Black Friday is 20% off everything on the site (Sally: no hunting for Exclusives). Set it up as one store-wide discount in Shopify."]
 
 def offer_light(big, small):
     """Offer on white, framed in gold: quieter than the dark band, for the private and last-day letters."""
@@ -1200,34 +1200,34 @@ doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:0
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
     + title_block("For the Vault, first", "Before anyone else")
     + sally_note("Black Friday opens to the Vault tonight, a little before everyone else. I wanted you to see these first.").replace("padding:28px 56px 34px", "padding:0 56px 30px")
-    + offer_light("20% off", "Every piece marked A 7th &amp; Hill Exclusive.<br>Each is made in 2 to 4 weeks, in time for the holidays.")
-    + grid("EXCLUSIVES", [26, 21, 14])
+    + offer_light("20% off everything", "Every piece on the site, from tonight until Monday.<br>In-stock pieces ship in 1 to 2 business days.")
+    + grid("PIECES", [26, 21, 14])
     + cta("Step inside", SHOP, pad="16px 64px 40px"))
 
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
 doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
-    card="Campaign · Black Friday · Fri Nov 27, 08:00", title="20% off our Exclusives",
-    subject="20% off our Exclusives", preheader="From today until Monday.",
+    card="Campaign · Black Friday · Fri Nov 27, 08:00", title="20% off everything",
+    subject="20% off everything", preheader="Black Friday, from today until Monday.",
     body=hero("hero-water-lilies.jpg", "A woman in a pale blue dress lying by a lily pond, wearing a heart charm necklace, a medallion and a gold bracelet")
     + night("OFFER · swap for each sale",
         eyebrow("Black Friday", mb=10, color=GOLD_L)
-        + h1("20% off our Exclusives", mb=12, color=IVORY, size_=37)
-        + p("From today until Monday, every piece marked A 7th &amp; Hill Exclusive. Each is made in 2 to 4 weeks, in time for the holidays.", mb=0, color=NDIM),
+        + h1("20% off everything", mb=12, color=IVORY, size_=37)
+        + p("From today until Monday, on every piece on the site. In-stock pieces ship in 1 to 2 business days, in time for the holidays.", mb=0, color=NDIM),
         pad="34px 56px 40px")
     + block("SPACER", "", pad="28px 0 0")
-    + collage("EXCLUSIVES", ("rings", 1), ("feature-hands.jpg", "Marquise Art Deco rings worn on the hand", P[26]["url"]), (13, 16, "pendants"), feature_side="left")
+    + collage("PIECES", ("rings", 1), ("feature-hands.jpg", "Marquise Art Deco rings worn on the hand", P[26]["url"]), (13, 16, "pendants"), feature_side="left")
     + cta("Step inside", SHOP)
     + trust_strip())
 
 # S3 · the last word: a letter on the desk, short, pieces with names
 doc("camp-s3-last-day.html", **SALE, code="S3", when="Mon Nov 30",
     card="Campaign · last day of the sale · Mon Nov 30", title="Today is the last day",
-    subject="Today is the last day", preheader="The 20% on our Exclusives ends tonight.",
+    subject="Today is the last day", preheader="20% off everything ends tonight.",
     logic=["Audience: opened S2 and did not buy."],
     body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter")
     + title_block("The last day", "Today is the last day",
-        "The 20% on our Exclusives ends tonight. If one has been on your mind, this is the moment.")
-    + offer_light("Until midnight", "20% off every piece marked A 7th &amp; Hill Exclusive.")
+        "20% off everything ends tonight. If a piece has been on your mind, this is the moment.")
+    + offer_light("Until midnight", "20% off every piece on the site.")
     + checker("STILL HERE", [21, 14, 1])
     + cta("Step inside", SHOP, pad="0 64px 40px"))
 
