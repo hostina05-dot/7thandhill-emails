@@ -27,6 +27,8 @@ CODES = {"Charm": "C", "Ring": "R", "Earring": "E", "Necklace": "N", "Chain": "C
          "Connector": "CN", "Lock": "L"}
 # The site's product type is sometimes wrong; the site's own collections decide instead.
 MAIN = {"bracelets": "Bracelet", "chains-2": "Chain", "necklaces": "Necklace", "earrings": "Earring", "rings": "Ring"}
+# wide, heavy pieces read too big at the usual size next to pendants: a smaller share of the square
+FILL_FIX = {"the-riviera-art-deco-cocktail-ring": 0.6}
 CENTRE = {"14k-solid-gold-extra-large-cascading-diamond-horn-charm"}  # whole pieces whose reflection reaches the photo's edge
 GROUP_FIX = {"the-1-1-oval-link-chain-5-2mm": "Chain"}  # in Bracelets and Chains on the site; it is a chain (Sally)
 SIZE, FILL = 600, 0.74  # the piece's longer side takes 74% of the square
@@ -51,7 +53,7 @@ def on_white(im):
     return lum.mean() > 228 and np.percentile(lum, 5) > 205 and (ring.max(1) - ring.min(1)).mean() < 14
 
 
-def moonlit_tile(im, w_out=SIZE, h_out=SIZE, centre=False):
+def moonlit_tile(im, w_out=SIZE, h_out=SIZE, centre=False, fill=None):
     """The piece on the moonlit backdrop; the square tile by default, any frame (a reel cover) on request."""
     a = np.asarray(flatten(im)).astype(np.float32)
     h, w, _ = a.shape
@@ -74,7 +76,7 @@ def moonlit_tile(im, w_out=SIZE, h_out=SIZE, centre=False):
     y0, y1 = (0 if top else y0), (h - 1 if bottom else y1)
     piece = Image.fromarray(a.astype(np.uint8)).crop((x0, y0, x1 + 1, y1 + 1))
     pw, ph = piece.size
-    k = min(w_out, h_out) * FILL / max(pw, ph)
+    k = min(w_out, h_out) * (fill or FILL) / max(pw, ph)
     if left and right: k = max(k, w_out / pw)
     if top and bottom: k = max(k, h_out / ph)
     piece = piece.resize((max(1, round(pw * k)), max(1, round(ph * k))), Image.LANCZOS)
@@ -215,7 +217,7 @@ def main(src):
             code = f"{pre}{count[pre]:03d}"
         name = f"{code}-{p['handle']}.jpg" if pick else ""
         if pick:
-            moonlit_tile(Image.open(pick), centre=p["handle"] in CENTRE).save(OUT / name, quality=82, optimize=True, progressive=True)
+            moonlit_tile(Image.open(pick), centre=p["handle"] in CENTRE, fill=FILL_FIX.get(p["handle"])).save(OUT / name, quality=82, optimize=True, progressive=True)
         rows.append({"code": code, "title": p["title"].title().replace("14K", "14k").replace("10K", "10k").replace("18K", "18k"), "type": p["product_type"], "group": group,
                      "url": url, "file": name, "note": "" if pick else "no photo on white, left out",
                      "available": "yes" if any(v["available"] for v in p["variants"]) else "no"})

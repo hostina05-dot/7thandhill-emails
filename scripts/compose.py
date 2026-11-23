@@ -295,8 +295,8 @@ def collage(name, small_pair, feature, row, feature_side="right"):
           </tr>
 """
 
-def checker(name, ids):
-    """Alternating rows: piece photo on one side, its name on the other (K2 layout)."""
+def checker(name, ids, captions=None):
+    """Alternating rows: piece photo on one side, its name on the other (K2 layout); optional gold line under the name."""
     assert not any(is_anim(i) for i in ids), f"{name}: named rows need named pieces"
     rows = ""
     for i, n in enumerate(ids):
@@ -304,7 +304,8 @@ def checker(name, ids):
         img = f"""                    <td width="50%" valign="middle" style="padding:0;">{pimg(n, 270)}</td>
 """
         txt = f"""                    <td class="ptext" width="50%" valign="middle" align="center" style="padding:10px 18px;">
-                      <p class="display pname" style="margin:0 0 12px; font-family:{DISPLAY}; font-size:22px; line-height:25px; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
+                      <p class="display pname" style="margin:0 0 {6 if captions else 12}px; font-family:{DISPLAY}; font-size:22px; line-height:25px; color:{INK};"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none;">{pr['name']}</a></p>
+                      {f'<p class="display tcap" style="margin:0 0 14px; font-family:{DISPLAY}; font-size:16px; line-height:19px; font-style:italic; color:{GOLD};">{captions[i]}</p>' if captions else ''}
                       <p class="sans t-sm" style="margin:0; font-family:{SANS}; font-size:10px; line-height:14px; letter-spacing:2.5px; text-transform:uppercase;"><a href="{pr['url']}" target="_blank" style="color:{INK}; text-decoration:none; border-bottom:1px solid {GOLD}; padding-bottom:2px;">View piece</a></p>
                     </td>
 """
@@ -974,9 +975,9 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
                   ("7th &amp; Hill Exclusives", "Order by Nov 30. Made in 2 to 4 weeks."),
                   ("Curated designs", "Made in 6 to 8 weeks: a gift for the new year.")])
     + heading("Gifts that arrive in time", "A few to start with", pad="34px 40px 22px")
-    + mosaic("GIFTS · the sunburst heart", ("C016", "Radiant Sunburst Heart"), [("C018", "Moon &amp; Star Pendant"), ("C079", "Royal Crown Charm")], caption="For someone you love", side="left")
-    + mosaic("GIFTS · the Riviera ring", ("R035", "Riviera Art Deco Ring"), [("E009", "Clover Earrings"), ("N011", "Jaguar Necklace")],
-             caption="For a little sparkle", side="right", pad="8px 26px 30px")
+    + checker("GIFTS · two to start with", [("C016", "Radiant Sunburst Heart"), ("R035", "Riviera Art Deco Ring")],
+              captions=["For someone you love", "For a little sparkle"])
+    + row3("GIFTS · three more", [("C018", "Moon &amp; Star Pendant"), ("C079", "Royal Crown Charm"), ("E009", "Clover Earrings")])
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
     + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 30px", size_=13, color=SOFT)
     + block("TEASER · Black Friday early access tomorrow",
