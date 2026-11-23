@@ -965,7 +965,7 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
     preheader="Order dates for every kind of piece.",
     status=READY,
     logic=["Audience: Vault list plus engaged SALT contacts."],
-    notes=["Second letter to the warm list, the day before Black Friday early access (S1, Wed Nov 25, 18:00).",
+    notes=["Second letter to the warm list, the day before Black Friday early access (S1, Wed Nov 25, 18:00). No teaser for it (Sally).",
            "Order-by dates: Exclusives (2 to 4 weeks) by Nov 30, the last day of the sale; in stock by Dec 17. Curated designs (6 to 8 weeks) can no longer arrive by the holidays, so they are offered for the new year.",
            "Neutral holiday wording on purpose: no trees, no Christmas."],
     body=hero("hero-pendants-books.jpg", "Two gold pendants on snake chains, hung over old leather books", SITE + "/collections/necklaces")
@@ -978,12 +978,8 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
     + checker("GIFTS · two to start with", [("C016", "Radiant Sunburst Heart"), ("R035", "Riviera Art Deco Ring")],
               captions=["For someone you love", "For a little sparkle"])
     + row3("GIFTS · three more", [("C018", "Moon &amp; Star Pendant"), ("C079", "Royal Crown Charm"), ("E009", "Clover Earrings")])
-    + cta("Start a gift", SHOP, pad="12px 64px 16px")
-    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 30px", size_=13, color=SOFT)
-    + block("TEASER · Black Friday early access tomorrow",
-            eyebrow("Black Friday", mb=6)
-            + p("Tomorrow evening, you&rsquo;ll get early access to our Black Friday, before anyone else. Keep an eye on your inbox.", mb=0),
-            pad="0 56px 34px")
+    + cta("Start a gift", SITE, pad="12px 64px 16px")
+    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 34px", size_=13, color=SOFT)
     + trust_strip())
 
 C = dict(status=DRAFT)
@@ -1259,7 +1255,7 @@ doc("camp-k4-gift-guide.html", status="Ready · check the pieces are in stock be
         "Every piece here is in stock or one of our Exclusives, so it can still arrive before the holidays.")
     + grid("GIFTS", [201, 13, 21, (28, "iLove Smartphone Charm")], cols=2,
            captions=["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"])
-    + cta("Start a gift", SHOP, pad="12px 64px 16px")
+    + cta("Start a gift", SITE, pad="12px 64px 16px")
     + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 34px", size_=13, color=SOFT)
     + trust_strip())
 
@@ -1293,7 +1289,7 @@ doc("camp-k2-sallys-edit-gifts.html", **EDIT, when="Next to send: the first lett
     + sally_note("I&rsquo;m Sally, the designer behind 7th &amp; Hill. Every piece is made in solid 14 karat gold to mean something: "
                  "a name, a date, a small wish. With the holidays close, these are the nine I&rsquo;d give, and maybe one I&rsquo;d keep.")
     + grid("NINE TO GIVE · named pieces with who they are for", FIRST_GIFTS, captions=FIRST_FOR)
-    + cta("Start a gift", SITE + "/collections/talismans-medallions", pad="12px 64px 16px")
+    + cta("Start a gift", SITE, pad="12px 64px 16px")
     + line("In-stock pieces ship in 1 to 2 business days. Your jewellery arrives in our luxurious book packaging featuring velvet lining.",
            pad="0 64px 34px", size_=13, color=SOFT)
     + cat_line())
@@ -1316,7 +1312,7 @@ doc("camp-lc-last-call.html", status=DRAFT, code="LC", flow="Campaign", pos="who
     + title_block("Last call", "Last call for in-stock pieces",
         "In-stock pieces ordered by Dec 17 ship in 1 to 2 business days and arrive in time for the holidays.")
     + collage("IN STOCK", (16, 13), ("feature-locket.jpg", "Talisman Keepsake Locket, worn", P[201]["url"]), ("rings", 28, 31))
-    + cta("Start a gift", SHOP, pad="6px 64px 16px")
+    + cta("Start a gift", SITE, pad="6px 64px 16px")
     + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 30px", size_=13, color=SOFT)
     + trust_strip())
 
