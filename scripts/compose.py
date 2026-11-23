@@ -1259,11 +1259,7 @@ doc("camp-k4-gift-guide.html", status="Ready · check the pieces are in stock be
     + grid("GIFTS", [201, 13, 21, (28, "iLove Smartphone Charm")], cols=2,
            captions=["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"])
     + cta("Start a gift", SHOP, pad="12px 64px 16px")
-    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 30px", size_=13, color=SOFT)
-    + block("TEASER · Black Friday early access tomorrow",
-            eyebrow("Black Friday", mb=6)
-            + p("Tomorrow evening, you&rsquo;ll get early access to our Black Friday, before anyone else. Keep an eye on your inbox.", mb=0),
-            pad="0 56px 34px")
+    + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 34px", size_=13, color=SOFT)
     + trust_strip())
 
 EDIT = dict(status=DRAFT, code="K2", flow="Campaign", pos="Sally’s Edit")
