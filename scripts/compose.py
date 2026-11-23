@@ -961,8 +961,8 @@ GIFT_FOR = ["For the one who keeps your secrets", "For your sister", "For yourse
 
 doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list", when="Tue Nov 24, 10:00",
     card="Campaign · holiday deadline · Tue Nov 24, 10:00",
-    title="For holiday gifts, the clock starts now", subject="For holiday gifts, the clock starts now",
-    preheader="Order dates for every kind of piece.",
+    title="For holiday gifts, the clock starts now", subject="Gifting this year? Here's when to order",
+    preheader="In-stock pieces ship in 1 to 2 days. Order by Dec 17 to have yours in time.",
     status=READY,
     logic=["Audience: Vault list plus engaged SALT contacts."],
     notes=["Second letter to the warm list, the day before Black Friday early access (S1, Wed Nov 25, 18:00). No teaser for it (Sally).",
@@ -1192,7 +1192,7 @@ SALE = dict(status=DRAFT, flow="Sale template", pos="Black Friday", notes=SALE_N
 # S1 · private: close-up photo, Sally's note, the offer framed in gold, three pieces
 doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:00",
     card="Campaign · Vault early access · Wed Nov 25, 18:00", title="Before anyone else",
-    subject="Before anyone else", preheader="Early access for the Vault.",
+    subject="You're in early: 20% off everything", preheader="Black Friday opens for you tonight, a day and a half before everyone else.",
     logic=["Audience: Vault list plus SALT contacts."],
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
     + title_block("For the Vault, first", "Before anyone else")
