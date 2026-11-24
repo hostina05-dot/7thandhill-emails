@@ -468,7 +468,7 @@ def cat_line():
           </tr>
 """
 
-def footer(reason):
+def footer(reason, fine=""):
     return f"""
           <!-- ═══════════ BLOCK: FOOTER (CASL: sender name, mailing address, contact, unsubscribe. The address is written here, not taken from Klaviyo settings, which hold Sally's home address) ═══════════ -->
           <tr>
@@ -485,6 +485,7 @@ def footer(reason):
             <td class="px" align="center" style="padding:24px 40px 30px;">
               <img src="{IMG}sunburst-gold.png" width="56" height="28" alt="" style="display:block; width:56px; height:28px; margin:0 auto 12px; border:0;">
               <p class="display" style="margin:0 0 10px; font-family:{DISPLAY}; font-size:15px; line-height:20px; font-weight:400; letter-spacing:1.5px; text-transform:uppercase; color:{GREEN};">Modern Heirlooms.<br>Timeless Classics.</p>
+              {f'<p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:12px; line-height:18px; font-weight:500; color:{INK};">{fine}</p>' if fine else ''}
               <p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:12px; line-height:18px; font-weight:400;"><a href="mailto:hello@7thandhilljewelry.ca" style="color:{INK}; text-decoration:none;">hello@7thandhilljewelry.ca</a></p>
               <p class="sans legal" style="margin:0; font-family:{SANS}; font-size:11px; line-height:17px; font-weight:400; color:#9A958B;">
                 7th &amp; Hill Jewelry &middot; Toronto, ON M4N 3N1, Canada<br>
@@ -495,6 +496,8 @@ def footer(reason):
           </tr>
 """
 
+CODE = "HOLIDAY20"                     # Black Friday code, typed at checkout (Shopify)
+EXCLUDE = "Some exclusions may apply."  # Sally: tennis necklaces and She Served, She Matters are not in the sale
 SUB = "You're receiving this because you subscribed at 7thandhilljewelry.ca or shopped with us."
 VAULT = "You're receiving this because you joined the 7H Vault at 7thandhilljewelry.ca."
 SALT_REASON = "You're receiving this as a former SALT. Fine Jewelry client of Sally's."
@@ -520,7 +523,7 @@ def no_widows(html):
     return re.sub(r">[^<>]*<", lambda m: re.sub(r"7th (&amp;|&) Hill", r"7th&nbsp;\1&nbsp;Hill", m.group(0)), html)
 
 def doc(fname, *, code, flow, pos, when, card, label=None, title, subject, preheader, body, status=READY,
-        reason=SUB, logic=(), notes=(), page=False, subject_b=None):
+        reason=SUB, logic=(), notes=(), page=False, subject_b=None, fine=""):
     """Write one letter. The comment header is what the preview reads: stage, card label, status, logic."""
     group = GROUPS[fname.split("-", 1)[0]]
     lines = [f"  {group} · {flow} · {code} ({pos}) · {when}",
@@ -535,7 +538,7 @@ def doc(fname, *, code, flow, pos, when, card, label=None, title, subject, prehe
     lines += ["  Images use relative paths (../assets/images/) for local preview.",
               f"  Ready-to-paste copy with hosted images: klaviyo/{fname}"]
     top = "<!--\n" + "\n".join(lines) + "\n-->\n"
-    html = top + (body if page else HEAD.replace("@@TITLE@@", title) + open_body(title, preheader) + topbar() + body + footer(reason) + CLOSE_BODY)
+    html = top + (body if page else HEAD.replace("@@TITLE@@", title) + open_body(title, preheader) + topbar() + body + footer(reason, fine) + CLOSE_BODY)
     html = no_widows(html)
     with open(os.path.join(ROOT, "templates", fname), "w") as fh:
         fh.write(html)
@@ -961,8 +964,8 @@ GIFT_FOR = ["For the one who keeps your secrets", "For your sister", "For yourse
 
 doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list", when="Tue Nov 24, 10:00",
     card="Campaign · holiday deadline · Tue Nov 24, 10:00",
-    title="For holiday gifts, the clock starts now", subject="Gifting this year? Here's when to order",
-    preheader="And tomorrow, 20% off everything.",
+    title="For holiday gifts, the clock starts now", subject="Gifting This Year? Here's When to Order ✨",
+    preheader="And tomorrow, 20% off fine jewelry.", fine=EXCLUDE,
     status=READY,
     logic=["Audience: Vault list plus engaged SALT contacts."],
     notes=["Second letter to the warm list, the day before Black Friday early access (S1, Wed Nov 25, 18:00). No teaser for it (Sally).",
@@ -1160,7 +1163,7 @@ doc("flow-an1-a-year-ago.html", **B, code="AN1", flow="Anniversary flow 15", pos
 
 doc("camp-k1-new-in-studio.html", status=DRAFT, code="K1", flow="Weekly campaign", pos="skeleton",
     when="Thu Dec 10", card="Campaign · New in the studio · Thu Dec 10",
-    title="New in the studio", subject="New in the studio", preheader="A few pieces that just left my workbench.",
+    title="New in the studio", subject="New in the Studio ✨", preheader="A few pieces that just left my workbench.",
     notes=["Pieces from the site's New Arrivals collection. For the next weeks swap the photo, the five pieces and the two lines."],
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
     + title_block("New in the studio", "Fresh from the workbench",
@@ -1174,42 +1177,53 @@ doc("camp-k1-new-in-studio.html", status=DRAFT, code="K1", flow="Weekly campaign
 SALE_NOTES = ["Sale series: three letters, one look each (private note, the sale, the last word). For New Year, Valentine's,",
               "Mother's Day or a flash sale, reuse one of them and change the offer block and the pieces.",
               "Calm on purpose: no red, no countdown timers, no Shop now.",
-              "Black Friday is 20% off everything on the site (Sally: no hunting for Exclusives). Set it up as one store-wide discount in Shopify."]
+              "Black Friday: 20% off with code HOLIDAY20 at checkout (Shopify, specific collections), from Wed Nov 25 evening until midnight Tue Dec 1.",
+              "Not included: tennis necklaces and the She Served, She Matters collection (charity); Mahjong waits for Chloe. Hence 'Some exclusions may apply'."]
 
-def offer_light(big, small):
+def code_box(dark=False):
+    """The sale code, framed in gold, to type at checkout."""
+    ink, line, note = (IVORY, GOLD_L, NDIM) if dark else (INK, GOLD, SOFT)
+    return (f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:16px auto 8px;"><tr>'
+            f'<td align="center" style="border:1px solid {line}; padding:11px 26px;"><p class="sans" style="margin:0; font-family:{SANS}; '
+            f'font-size:17px; line-height:20px; letter-spacing:4px; color:{ink};">{CODE}</p></td></tr></table>'
+            f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:12px; line-height:18px; color:{note};">Use code {CODE} at checkout. {EXCLUDE}</p>')
+
+def offer_light(big, small, code=False):
     """Offer on white, framed in gold: quieter than the dark band, for the private and last-day letters."""
     return block("OFFER · swap for each sale", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr><td align="center" style="border:1px solid {GOLD}; padding:26px 24px;">
                   {eyebrow("The offer", mb=8)}
                   <p class="display" style="margin:0 0 8px; font-family:{DISPLAY}; font-size:43px; line-height:44px; color:{INK};">{big}</p>
                   <p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:400; color:{BODY};">{small}</p>
+                  {code_box() if code else ""}
                 </td></tr>
               </table>
 """, pad="0 48px 32px")
 
-SALE = dict(status=DRAFT, flow="Sale template", pos="Black Friday", notes=SALE_NOTES)
+SALE = dict(status=READY, flow="Sale template", pos="Black Friday", notes=SALE_NOTES, fine=EXCLUDE)
 
 # S1 · private: close-up photo, Sally's note, the offer framed in gold, three pieces
 doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:00",
     card="Campaign · Vault early access · Wed Nov 25, 18:00", title="Before anyone else",
-    subject="You're in early: 20% off everything", preheader="Black Friday opens for you tonight, a day and a half before everyone else.",
+    subject="You're in Early: 20% Off Fine Jewelry ✨", preheader="Black Friday opens for you tonight, a day and a half before everyone else.",
     logic=["Audience: Vault list plus SALT contacts."],
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
     + title_block("For the Vault, first", "Before anyone else")
     + sally_note("Black Friday opens to the Vault tonight, a little before everyone else. I wanted you to see these first.").replace("padding:28px 56px 34px", "padding:0 56px 30px")
-    + offer_light("20% off everything", "Every piece on the site, from tonight until Monday.<br>In-stock pieces ship in 1 to 2 business days.")
+    + offer_light("20% off", "From tonight until midnight, December 1.", code=True)
     + grid("PIECES", [26, 21, 14])
     + cta("Step inside", SHOP, pad="16px 64px 40px"))
 
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
 doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
-    card="Campaign · Black Friday · Fri Nov 27, 08:00", title="20% off everything",
-    subject="20% off all fine jewelry starts now", preheader="Black Friday, from today until Monday.",
+    card="Campaign · Black Friday · Fri Nov 27, 08:00", title="20% off fine jewelry",
+    subject="20% Off Fine Jewelry Starts Now ✨", preheader="Black Friday, from today until midnight, December 1.",
     body=hero("hero-water-lilies.jpg", "A woman in a pale blue dress lying by a lily pond, wearing a heart charm necklace, a medallion and a gold bracelet")
     + night("OFFER · swap for each sale",
         eyebrow("Black Friday", mb=10, color=GOLD_L)
-        + h1("20% off everything", mb=12, color=IVORY, size_=37)
-        + p("From today until Monday, on every piece on the site. In-stock pieces ship in 1 to 2 business days, in time for the holidays.", mb=0, color=NDIM),
+        + h1("20% off fine jewelry", mb=12, color=IVORY, size_=37)
+        + p("From today until midnight, December 1.", mb=0, color=NDIM)
+        + code_box(dark=True),
         pad="34px 56px 40px")
     + block("SPACER", "", pad="28px 0 0")
     + collage("PIECES", ("rings", 1), ("feature-hands.jpg", "Marquise Art Deco rings worn on the hand", P[26]["url"]), (13, 16, "pendants"), feature_side="left")
@@ -1217,20 +1231,20 @@ doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
     + trust_strip())
 
 # S3 · the last word: a letter on the desk, short, pieces with names
-doc("camp-s3-last-day.html", **SALE, code="S3", when="Mon Nov 30",
-    card="Campaign · last day of the sale · Mon Nov 30", title="Today is the last day",
-    subject="Last day: 20% off all fine jewelry", preheader="The sale ends tonight at midnight.",
+doc("camp-s3-last-day.html", **SALE, code="S3", when="Tue Dec 1",
+    card="Campaign · last day of the sale · Tue Dec 1", title="Today is the last day",
+    subject="Last Day: 20% Off Fine Jewelry ✨", preheader="The sale ends tonight at midnight.",
     logic=["Audience: opened S2 and did not buy."],
     body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter")
     + title_block("The last day", "Today is the last day",
-        "20% off everything ends tonight. If a piece has been on your mind, this is the moment.")
-    + offer_light("Until midnight", "20% off every piece on the site.")
+        "Our 20% off ends tonight at midnight. If a piece has been on your mind, this is the moment.")
+    + offer_light("Until midnight", "20% off, today only.", code=True)
     + checker("STILL HERE", [21, 14, 1])
     + cta("Step inside", SHOP, pad="0 64px 40px"))
 
 doc("camp-dyo-design-your-own.html", status=DRAFT, code="DYO", flow="Campaign", pos="whole list",
     when="Tue Jan 12", card="Campaign · Design Your Own · Tue Jan 12, after the holidays",
-    title="Design your own", subject="Some pieces don't exist yet", preheader="Let's make yours together.",
+    title="Design your own", subject="Some Pieces Don't Exist Yet ✨", preheader="Let's make yours together.",
     body=hero("hero-necklaces-book.jpg", "Gold necklaces resting on an old green leather book")
     + title_block("Design your own", "Listen. Design. Adorn.",
         "Some pieces don&rsquo;t exist yet. We can make yours together, one on one.")
@@ -1249,7 +1263,7 @@ doc("camp-dyo-design-your-own.html", status=DRAFT, code="DYO", flow="Campaign", 
 
 doc("camp-k4-gift-guide.html", status="Ready · check the pieces are in stock before sending",
     code="K4", flow="Campaign", pos="whole list", when="Thu Dec 3", card="Campaign · gift guide · Thu Dec 3",
-    title="The 7H gift guide", subject="The 7H gift guide", preheader="Pieces that can still arrive in time.",
+    title="The 7H gift guide", subject="The 7H Gift Guide ✨", preheader="Pieces that can still arrive in time.",
     notes=["Show only pieces that can still arrive: in stock and 7th & Hill Exclusives. Grid below is a placeholder."],
     body=hero("hero-model-sweater.jpg", "A woman between old books wearing a gold enamel pendant, a heart charm necklace and a marquise ring, holding a 7th &amp; Hill bag")
     + title_block("The 7H gift guide", "Gifts that arrive in time",
@@ -1262,7 +1276,7 @@ doc("camp-k4-gift-guide.html", status="Ready · check the pieces are in stock be
 
 EDIT = dict(status=DRAFT, code="K2", flow="Campaign", pos="Sally’s Edit")
 doc("camp-k2-sallys-edit-dec8.html", **EDIT, when="Tue Dec 8", card="Campaign · Sally’s Edit · green library · Tue Dec 8",
-    title="Sally&rsquo;s Edit", subject="Sally's Edit: small talismans for every day", preheader="The pieces I kept reaching for this week.",
+    title="Sally&rsquo;s Edit", subject="Sally's Edit: Small Talismans for Every Day ✨", preheader="The pieces I kept reaching for this week.",
     notes=["The green library layout Sally chose. Reusable: swap the photo, the note and the pieces."],
     body=masthead("", "")
     + hero("hero-necklaces-book.jpg", "Gold necklaces laid across a green leather book", SITE + "/collections/necklaces")
@@ -1295,7 +1309,7 @@ doc("camp-k2-sallys-edit-gifts.html", **EDIT, when="Next to send: the first lett
            pad="0 64px 34px", size_=13, color=SOFT)
     + cat_line())
 doc("camp-k2-sallys-edit-spare.html", **EDIT, when="No date yet (spare layout)", card="Campaign · Sally’s Edit · spare layout, no date yet",
-    title="Sally&rsquo;s Edit", subject="Sally's Edit: the piece of the week", preheader="One piece, and the story behind it.",
+    title="Sally&rsquo;s Edit", subject="Sally's Edit: The Piece of the Week ✨", preheader="One piece, and the story behind it.",
     notes=["Alternative layout: one piece. Sally writes the two lines about it; nothing is invented for her."],
     body=masthead("", "")
     + hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn", SITE + "/collections/talismans-medallions")
@@ -1306,7 +1320,7 @@ doc("camp-k2-sallys-edit-spare.html", **EDIT, when="No date yet (spare layout)",
     + cat_line())
 
 doc("camp-lc-last-call.html", status=DRAFT, code="LC", flow="Campaign", pos="whole list", when="Tue Dec 15",
-    card="Campaign · last call · Tue Dec 15", title="Last call for in-stock pieces", subject="Last call for in-stock pieces",
+    card="Campaign · last call · Tue Dec 15", title="Last call for in-stock pieces", subject="Last Call for In-Stock Pieces ✨",
     preheader="Order by Dec 17 and it arrives in time.",
     notes=["Pieces: in-stock only (placeholders below)."],
     body=hero("hero-bookbox-library.jpg", "Green 7th &amp; Hill book boxes, lined in velvet, in a library")
@@ -1318,7 +1332,7 @@ doc("camp-lc-last-call.html", status=DRAFT, code="LC", flow="Campaign", pos="who
     + trust_strip())
 
 doc("camp-hn-holiday-note.html", status=DRAFT, code="HN", flow="Campaign", pos="whole list", when="Thu Dec 24",
-    card="Campaign · holiday note · Thu Dec 24", title="A holiday note from Sally", subject="A holiday note from Sally",
+    card="Campaign · holiday note · Thu Dec 24", title="A holiday note from Sally", subject="A Holiday Note from Sally ✨",
     preheader="Thank you, from the workbench.",
     notes=["No selling and no button to buy. Holiday wording for all clients."],
     body=hero("hero-sally-velvet.jpg", "Sally Brooks in black velvet")
