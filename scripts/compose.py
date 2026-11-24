@@ -962,22 +962,40 @@ doc("flow-p0-vault-popup.html", code="P0", flow="Site popup", pos="Klaviyo form,
 GIFTS = [201, 202, 203, (28, "iLove Smartphone Charm")]
 GIFT_FOR = ["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"]
 
+def code_box(dark=False):
+    """The sale code, framed in gold, to type at checkout."""
+    ink, line, note = (IVORY, GOLD_L, NDIM) if dark else (INK, GOLD, SOFT)
+    return (f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:16px auto 8px;"><tr>'
+            f'<td align="center" style="border:1px solid {line}; padding:11px 26px;"><p class="sans" style="margin:0; font-family:{SANS}; '
+            f'font-size:17px; line-height:20px; letter-spacing:4px; color:{ink};">{CODE}</p></td></tr></table>'
+            f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:12px; line-height:18px; color:{note};">Use code {CODE} at checkout. {EXCLUDE}</p>')
+
+def offer_light(big, small, code=False):
+    """Offer on white, framed in gold: quieter than the dark band, for the private and last-day letters."""
+    return block("OFFER · swap for each sale", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr><td align="center" style="border:1px solid {GOLD}; padding:26px 24px;">
+                  {eyebrow("The offer", mb=8)}
+                  <p class="display" style="margin:0 0 8px; font-family:{DISPLAY}; font-size:43px; line-height:44px; color:{INK};">{big}</p>
+                  <p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:400; color:{BODY};">{small}</p>
+                  {code_box() if code else ""}
+                </td></tr>
+              </table>
+""", pad="0 48px 32px")
+
 doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list", when="Tue Nov 24, 10:00",
-    card="Campaign · holiday deadline · Tue Nov 24, 10:00",
-    title="For holiday gifts, the clock starts now", subject="Gifting This Year? Here's When to Order ✨",
-    preheader="And tomorrow, 20% off fine jewelry.", fine=EXCLUDE,
+    card="Campaign · Black Friday opens for the VIP list · Tue Nov 24, 10:00",
+    title="20% off for Black Friday", subject="You’re on Sally’s VIP list: Enjoy 20% off Fine Jewelry for Black Friday ✨",
+    preheader="Use code HOLIDAY20 at checkout, until midnight, December 1.", fine=EXCLUDE,
     status=READY,
     logic=["Audience: Vault list plus engaged SALT contacts."],
-    notes=["Second letter to the warm list, the day before Black Friday early access (S1, Wed Nov 25, 18:00). No teaser for it (Sally).",
-           "Order-by dates: Exclusives (2 to 4 weeks) by Nov 30, the last day of the sale; in stock by Dec 17. Curated designs (6 to 8 weeks) can no longer arrive by the holidays, so they are offered for the new year.",
-           "Neutral holiday wording on purpose: no trees, no Christmas."],
+    notes=["The sale now opens with this letter: 20% off with code HOLIDAY20 until midnight Dec 1 (Sally).",
+           "Subject in Sally's words; the code is in the preview and in the letter.",
+           "The order-by dates band is out: there is no in-stock section on the site (Sally)."],
     body=hero("hero-pendants-books.jpg", "Two gold pendants on snake chains, hung over old leather books", SITE + "/collections/necklaces")
-    + title_block("The only deadline we have", "For holiday gifts, the clock starts now",
-        "Some pieces are ready to go, others are made for you over a few weeks. Here&rsquo;s when to order so yours arrives in time.")
-    + facts_band([("In stock", "Order by Dec 17. Ships in 1 to 2 business days."),
-                  ("7th &amp; Hill Exclusives", "Order by Nov 30. Made in 2 to 4 weeks."),
-                  ("Curated designs", "Made in 6 to 8 weeks: a gift for the new year.")])
-    + heading("Gifts that arrive in time", "A few to start with", pad="34px 40px 22px")
+    + title_block("For Sally&rsquo;s VIP list", "20% off for Black Friday",
+        "Our holiday sale starts today, for you first. A good moment to start your holiday gifts.")
+    + offer_light("20% off", "From today until midnight, December 1.", code=True)
+    + heading("Holiday gifts", "A few to start with", pad="6px 40px 22px")
     + checker("GIFTS · Sally's picks", [("C075", "Guiding Arrow Charm"), ("C055", "Clover Horseshoe Pendant"),
                                         ("C102", "I Want To Be With You Always Medallion")],
               captions=["For a new direction", "For good luck", "For someone you love"])
@@ -1179,26 +1197,6 @@ SALE_NOTES = ["Sale series: three letters, one look each (private note, the sale
               "Calm on purpose: no red, no countdown timers, no Shop now.",
               "Black Friday: 20% off with code HOLIDAY20 at checkout (Shopify, specific collections), from Wed Nov 25 evening until midnight Tue Dec 1.",
               "Not included: tennis necklaces and the She Served, She Matters collection (charity); Mahjong waits for Chloe. Hence 'Some exclusions may apply'."]
-
-def code_box(dark=False):
-    """The sale code, framed in gold, to type at checkout."""
-    ink, line, note = (IVORY, GOLD_L, NDIM) if dark else (INK, GOLD, SOFT)
-    return (f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:16px auto 8px;"><tr>'
-            f'<td align="center" style="border:1px solid {line}; padding:11px 26px;"><p class="sans" style="margin:0; font-family:{SANS}; '
-            f'font-size:17px; line-height:20px; letter-spacing:4px; color:{ink};">{CODE}</p></td></tr></table>'
-            f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:12px; line-height:18px; color:{note};">Use code {CODE} at checkout. {EXCLUDE}</p>')
-
-def offer_light(big, small, code=False):
-    """Offer on white, framed in gold: quieter than the dark band, for the private and last-day letters."""
-    return block("OFFER · swap for each sale", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tr><td align="center" style="border:1px solid {GOLD}; padding:26px 24px;">
-                  {eyebrow("The offer", mb=8)}
-                  <p class="display" style="margin:0 0 8px; font-family:{DISPLAY}; font-size:43px; line-height:44px; color:{INK};">{big}</p>
-                  <p class="sans" style="margin:0; font-family:{SANS}; font-size:14px; line-height:22px; font-weight:400; color:{BODY};">{small}</p>
-                  {code_box() if code else ""}
-                </td></tr>
-              </table>
-""", pad="0 48px 32px")
 
 SALE = dict(status=READY, flow="Sale template", pos="Black Friday", notes=SALE_NOTES, fine=EXCLUDE)
 
