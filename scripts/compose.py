@@ -962,13 +962,34 @@ doc("flow-p0-vault-popup.html", code="P0", flow="Site popup", pos="Klaviyo form,
 GIFTS = [201, 202, 203, (28, "iLove Smartphone Charm")]
 GIFT_FOR = ["For the one who keeps your secrets", "For your sister", "For yourself", "For the little ones"]
 
+DISCOUNT = SITE + "/discount/" + CODE   # Shopify: opens the site with the code already applied to the cart
+
+def code_link(ink, size=22):
+    """The code itself: a link that opens the site with the discount applied; the text can also be copied."""
+    return (f'<a href="{DISCOUNT}" target="_blank" style="font-family:{SANS}; font-size:{size}px; line-height:{size + 4}px; '
+            f'font-weight:500; letter-spacing:5px; color:{ink}; text-decoration:none;">{CODE}</a>')
+
 def code_box(dark=False):
-    """The sale code, framed in gold, to type at checkout."""
+    """The sale code, framed in gold (inside the dark band)."""
     ink, line, note = (IVORY, GOLD_L, NDIM) if dark else (INK, GOLD, SOFT)
-    return (f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:16px auto 8px;"><tr>'
-            f'<td align="center" style="border:1px solid {line}; padding:11px 26px;"><p class="sans" style="margin:0; font-family:{SANS}; '
-            f'font-size:17px; line-height:20px; letter-spacing:4px; color:{ink};">{CODE}</p></td></tr></table>'
-            f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:12px; line-height:18px; color:{note};">Use code {CODE} at checkout. {EXCLUDE}</p>')
+    return (f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:18px auto 10px;"><tr>'
+            f'<td align="center" style="border:1px dashed {line}; padding:12px 28px;">{code_link(ink)}</td></tr></table>'
+            f'<p class="sans" style="margin:0; font-family:{SANS}; font-size:12px; line-height:18px; color:{note};">'
+            f'Tap the code to shop with it applied, or enter it at checkout. {EXCLUDE}</p>')
+
+def code_card(line, pad="0 64px 30px"):
+    """Compact sale block on white: the code is the accent, one short line above it, the small print below."""
+    return block("SALE CODE · the code is the accent", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr><td align="center" style="border:1px solid {GOLD}; padding:18px 20px 16px;">
+                  {eyebrow("Your code", mb=8)}
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto 10px;"><tr>
+                    <td align="center" bgcolor="#F6F2EA" style="background-color:#F6F2EA; border:1px dashed {GOLD}; padding:10px 24px;">{code_link(INK)}</td>
+                  </tr></table>
+                  <p class="sans" style="margin:0 0 4px; font-family:{SANS}; font-size:14px; line-height:21px; color:{BODY};">{line}</p>
+                  <p class="sans" style="margin:0; font-family:{SANS}; font-size:11px; line-height:16px; color:{SOFT};">Tap the code to shop with it applied, or enter it at checkout. {EXCLUDE}</p>
+                </td></tr>
+              </table>
+""", pad=pad)
 
 def offer_light(big, small, code=False):
     """Offer on white, framed in gold: quieter than the dark band, for the private and last-day letters."""
@@ -994,13 +1015,13 @@ doc("camp-k3-holiday-deadline.html", code="K3", flow="Campaign", pos="whole list
     body=hero("hero-pendants-books.jpg", "Two gold pendants on snake chains, hung over old leather books", SITE + "/collections/necklaces")
     + title_block("For Sally&rsquo;s VIP list", "20% off for Black Friday",
         "Our holiday sale starts today, for you first. A good moment to start your holiday gifts.")
-    + offer_light("20% off", "From today until midnight, December 1.", code=True)
+    + code_card("20% off fine jewelry until midnight, December 1.")
     + heading("Holiday gifts", "A few to start with", pad="6px 40px 22px")
     + checker("GIFTS · Sally's picks", [("C075", "Guiding Arrow Charm"), ("C055", "Clover Horseshoe Pendant"),
                                         ("C102", "I Want To Be With You Always Medallion")],
               captions=["For a new direction", "For good luck", "For someone you love"])
     + row3("GIFTS · three more of Sally's picks", [("C123", "Moon Tarot Pendant"), ("C033", "Initial Enamel Pendant"), ("C025", "Loved Pendant")])
-    + cta("Start a gift", SITE, pad="12px 64px 16px")
+    + cta("Start a gift", DISCOUNT, pad="12px 64px 16px")
     + line("Your jewellery arrives in our luxurious book packaging featuring velvet lining.", pad="0 64px 34px", size_=13, color=SOFT)
     + trust_strip())
 
@@ -1208,9 +1229,9 @@ doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:0
     body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
     + title_block("For the Vault, first", "Before anyone else")
     + sally_note("Black Friday opens to the Vault tonight, a little before everyone else. I wanted you to see these first.").replace("padding:28px 56px 34px", "padding:0 56px 30px")
-    + offer_light("20% off", "From tonight until midnight, December 1.", code=True)
+    + code_card("20% off fine jewelry until midnight, December 1.")
     + grid("PIECES", [26, 21, 14])
-    + cta("Step inside", SHOP, pad="16px 64px 40px"))
+    + cta("Step inside", DISCOUNT + "?redirect=/collections", pad="16px 64px 40px"))
 
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
 doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
@@ -1225,7 +1246,7 @@ doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 08:00",
         pad="34px 56px 40px")
     + block("SPACER", "", pad="28px 0 0")
     + collage("PIECES", ("rings", 1), ("feature-hands.jpg", "Marquise Art Deco rings worn on the hand", P[26]["url"]), (13, 16, "pendants"), feature_side="left")
-    + cta("Step inside", SHOP)
+    + cta("Step inside", DISCOUNT + "?redirect=/collections")
     + trust_strip())
 
 # S3 · the last word: a letter on the desk, short, pieces with names
@@ -1236,9 +1257,9 @@ doc("camp-s3-last-day.html", **SALE, code="S3", when="Tue Dec 1",
     body=hero("hero-envelope-rings.jpg", "Two rings resting on a sealed letter")
     + title_block("The last day", "Today is the last day",
         "Our 20% off ends tonight at midnight. If a piece has been on your mind, this is the moment.")
-    + offer_light("Until midnight", "20% off, today only.", code=True)
+    + code_card("20% off ends tonight at midnight.")
     + checker("STILL HERE", [21, 14, 1])
-    + cta("Step inside", SHOP, pad="0 64px 40px"))
+    + cta("Step inside", DISCOUNT + "?redirect=/collections", pad="0 64px 40px"))
 
 doc("camp-dyo-design-your-own.html", status=DRAFT, code="DYO", flow="Campaign", pos="whole list",
     when="Tue Jan 12", card="Campaign · Design Your Own · Tue Jan 12, after the holidays",
