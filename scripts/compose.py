@@ -556,7 +556,7 @@ def masthead(issue, theme):
         h1("Sally&rsquo;s Edit", mb=16, size_=43)
         + goldline(mb=0), pad="26px 40px 26px")
 
-def sally_note(text):
+def sally_note(text, after=""):
     """Sally's short note with her round portrait; signed in the headline font."""
     return block("SALLY'S NOTE · 2 to 3 sentences, in Sally's voice", f"""              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
@@ -564,6 +564,7 @@ def sally_note(text):
                   <td valign="top" style="text-align:left;">
                     <p class="sans" style="margin:0 0 10px; font-family:{SANS}; font-size:15px; line-height:26px; font-weight:400; color:{BODY};">{text}</p>
                     <p class="display" style="margin:0; font-family:{DISPLAY}; font-size:24px; line-height:26px; color:{INK};">Sally</p>
+                    {f'<p class="display" style="margin:12px 0 0; font-family:{DISPLAY}; font-size:17px; line-height:22px; font-style:italic; color:{GOLD};">{after}</p>' if after else ''}
                   </td>
                 </tr>
               </table>
@@ -1223,14 +1224,17 @@ SALE = dict(status=READY, flow="Sale template", pos="Black Friday", notes=SALE_N
 
 # S1 · private: close-up photo, Sally's note, the offer framed in gold, three pieces
 doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:00",
-    card="Campaign · Vault early access · Wed Nov 25, 18:00", title="Before anyone else",
-    subject="You're in Early: 20% Off Fine Jewelry ✨", preheader="Black Friday opens for you tonight, a day and a half before everyone else.",
-    logic=["Audience: Vault list plus SALT contacts."],
-    body=hero("hero-locket-closeup.jpg", "A gold capsule locket set with diamonds, worn")
-    + title_block("For the Vault, first", "Before anyone else")
-    + sally_note("Black Friday opens to the Vault tonight, a little before everyone else. I wanted you to see these first.").replace("padding:28px 56px 34px", "padding:0 56px 30px")
+    card="Campaign · Black Friday is here · Wed Nov 25, 18:00", title="A little something to treasure",
+    subject="A little something to treasure—Black Friday is here. ✨", preheader="Find a piece to gift—or make your own.",
+    logic=["Audience: Vault list plus SALT contacts who opened or clicked T1 (same as K3)."],
+    body=hero("hero-locket-closeup.jpg", "The Talisman Keepsake Locket, a gold capsule set with diamonds, worn", SITE_SET["N006"]["url"])
+    + title_block("Black Friday", "A little something to treasure")
+    + sally_note("Our Black Friday event is here. Whether you&rsquo;re choosing a thoughtful gift or a piece you&rsquo;ve had your eye on, "
+                 "we hope you find something special to treasure for years to come.<br><br>"
+                 "Explore the collection and discover a piece to gift, keep, or make your own.",
+                 after="The necklace featured reveals a hidden compartment, perfect for cherishing personal keepsakes.").replace("padding:28px 56px 34px", "padding:0 56px 30px")
     + code_card("20% off fine jewelry until midnight, December 1.")
-    + grid("PIECES", [26, 21, 14])
+    + grid("PIECES", [18, 14, 21])
     + cta("Step inside", DISCOUNT + "?redirect=/collections", pad="16px 64px 40px"))
 
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
