@@ -1239,14 +1239,14 @@ doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:0
 
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
 doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 10:00",
-    card="Campaign · Black Friday · Fri Nov 27, 10:00", title="20% off fine jewelry",
-    subject="A Gift to Keep Forever: 20% Off Until December 1 ✨", preheader="Use code HOLIDAY20 at checkout. Some exclusions may apply.",
+    card="Campaign · Black Friday · Fri Nov 27, 10:00", title="Our Black Friday sale",
+    subject="I picked these with you in mind ✨", preheader="Our Black Friday sale is here: 20% off with code HOLIDAY20, until December 1.",
     logic=["Audience: Vault list plus SALT contacts who opened or clicked T1 (same as K3 and S1)."],
     body=hero("hero-water-lilies.jpg", "A woman in a pale blue dress lying by a lily pond, wearing a heart charm necklace, a medallion and a gold bracelet", DISCOUNT)
     + night("OFFER · swap for each sale",
         eyebrow("Black Friday", mb=10, color=GOLD_L)
-        + h1("20% off fine jewelry", mb=12, color=IVORY, size_=37)
-        + p("Until midnight, December 1.", mb=0, color=NDIM)
+        + h1("Our Black Friday sale", mb=12, color=IVORY, size_=37)
+        + p("20% off fine jewelry, until midnight, December 1.", mb=0, color=NDIM)
         + code_box(dark=True),
         pad="34px 56px 40px")
     + heading("Pieces to keep", "A few to start with", pad="34px 40px 22px")
