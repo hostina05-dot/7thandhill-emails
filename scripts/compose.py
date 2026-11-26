@@ -1238,8 +1238,8 @@ doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:0
     + cta("Step inside", DISCOUNT + "?redirect=/collections", pad="16px 64px 40px"))
 
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
-doc("camp-s2-black-friday.html", **SALE, code="S2", when="Thu Nov 26, 10:00",
-    card="Campaign · Black Friday · Thu Nov 26, 10:00", title="20% off fine jewelry",
+doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 10:00",
+    card="Campaign · Black Friday · Fri Nov 27, 10:00", title="20% off fine jewelry",
     subject="A Gift to Keep Forever: 20% Off Until December 1 ✨", preheader="Use code HOLIDAY20 at checkout. Some exclusions may apply.",
     logic=["Audience: Vault list plus SALT contacts who opened or clicked T1 (same as K3 and S1)."],
     body=hero("hero-water-lilies.jpg", "A woman in a pale blue dress lying by a lily pond, wearing a heart charm necklace, a medallion and a gold bracelet", DISCOUNT)
