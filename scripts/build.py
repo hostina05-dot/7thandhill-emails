@@ -52,7 +52,7 @@ OVERVIEW = [
      "(Fri Nov 20); no welcome flow for them. Anyone with no opens or clicks within 30 days is suppressed."),
     ("Campaigns · by date",
      "For the Vault list and engaged SALT contacts. The first, K2 Sally’s Edit, goes out on Fri, Nov 20, then K3 holiday dates (Tue Nov 24), "
-     "Black Friday (Nov 25, 27, Dec 1), the gift guide, the December letters, and Design Your Own after the holidays (Tue Jan 12)."),
+     "Black Friday (Nov 24, 25, 26, Dec 1), the gift guide, the December letters, and Design Your Own after the holidays (Tue Jan 12)."),
 ]
 
 SAMPLE = {
