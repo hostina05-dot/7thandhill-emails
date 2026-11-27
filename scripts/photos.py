@@ -51,7 +51,7 @@ SHOTS = {
     "feature-rings-table.jpg":   ("rings-table-bag.jpg",             "feature", (0, 0.20, 1, 0.95)),
     "feature-necklaces-books.jpg": ("necklaces-books.jpg",           "feature", None),
     "hero-pendants-books.jpg":   ("necklaces-books.jpg",             "hero",    (0, 0.10, 1, 0.80)),
-    "feature-compass.jpg":       ("compass-horn-velvet.jpg",         "feature", (0, 0.06, 1, 0.86)),
+    "feature-compass.jpg":       ("compass-horn-velvet-hires.jpg",   "feature", (0, 0.06, 1, 0.86)),
     # small squares of worn pieces, same size as product tiles (tile)
     "tile-talisman-locket.jpg":  ("locket-closeup.jpg",              "tile",    (0.10, 0.44, 0.90, 0.90)),
     # photos inside a block, no seal (story)
@@ -73,11 +73,19 @@ PACKSHOTS = {
 
 # Photos kept bright and true, as on the site (Sally: the fireplace photo looked dark in the letters)
 LIGHT = {"hero-sally-fireplace.jpg", "sally-avatar.png", "hero-charms-on-books.jpg"}
+# Gold kept cool and a little muted, not warmed (Sally: the compass and horn looked too yellow)
+NEUTRAL = {"feature-compass.jpg"}
 
 
-def grade(im: Image.Image, light=False) -> Image.Image:
+def grade(im: Image.Image, light=False, neutral=False) -> Image.Image:
     """Warm, slightly muted, matte: deep green-tinted shadows, soft warm highlights.
-    light=True keeps the photo's own brightness and only warms it a touch."""
+    light=True keeps the photo's own brightness and only warms it a touch;
+    neutral=True only mutes the colour a little and lifts the blacks, with no warm tint."""
+    if neutral:
+        a = np.asarray(im.convert("RGB")).astype(np.float32) / 255.0
+        lum = (0.299 * a[..., 0] + 0.587 * a[..., 1] + 0.114 * a[..., 2])[..., None]
+        a = 0.03 + (lum + (a - lum) * 0.80) * 0.94
+        return Image.fromarray((np.clip(a, 0, 1) * 255).astype(np.uint8))
     if light:
         a = np.asarray(im.convert("RGB")).astype(np.float32) / 255.0
         a = a * np.array([1.01, 1.0, 0.985])
@@ -178,7 +186,7 @@ def main():
             out.save(OUT / name, quality=82, optimize=True, progressive=True)
             print(f"{name:26} {out.size[0]}x{out.size[1]}")
             continue
-        im = grade(crop(Image.open(PHOTOS / src).convert("RGB"), box), light=name in LIGHT)
+        im = grade(crop(Image.open(PHOTOS / src).convert("RGB"), box), light=name in LIGHT, neutral=name in NEUTRAL)
         if kind == "avatar":  # round portrait with a cream ring, transparent corners
             size, ring, k = 168, 6, 4  # shown at 56px: three times sharper; circles drawn 4x and scaled down
             big = Image.new("RGBA", (size * k, size * k), (0, 0, 0, 0))

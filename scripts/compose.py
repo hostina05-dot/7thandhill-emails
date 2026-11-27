@@ -1240,7 +1240,8 @@ doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:0
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
 doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 10:00",
     card="Campaign · Black Friday · Fri Nov 27, 10:00", title="Our Black Friday sale",
-    subject="I picked these with you in mind ✨", preheader="Our Black Friday sale is here: 20% off with code HOLIDAY20, until December 1.",
+    subject="Sally picked these with you in mind (+ 20% off for Black Friday!) 🎁",
+    preheader="Our Black Friday Fine Jewelry Event is happening now—see what I pulled for you! ✨",
     logic=["Audience: Vault list plus SALT contacts who opened or clicked T1 (same as K3 and S1)."],
     body=hero("hero-water-lilies.jpg", "A woman in a pale blue dress lying by a lily pond, wearing a heart charm necklace, a medallion and a gold bracelet", DISCOUNT)
     + night("OFFER · swap for each sale",
@@ -1249,8 +1250,11 @@ doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 10:00",
         + p("20% off fine jewelry, until midnight, December 1.", mb=0, color=NDIM)
         + code_box(dark=True),
         pad="34px 56px 40px")
-    + heading("Pieces to keep", "A few to start with", pad="34px 40px 22px")
-    + collage("PIECES", ("rings", 1), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), (13, 16, "pendants"), feature_side="left")
+    # Sally's ten pieces (Nov 26): charms around her compass photo, then the rings and studs, then the last two with names
+    + heading("Sally’s picks", "A few I pulled for you", pad="34px 40px 22px")
+    + collage("PIECES", ("C101", "C115"), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), ("C071", "C074", "C120"), feature_side="left")
+    + mosaic("RINGS AND STUDS", "R011", ["R030", "E015"], side="right", pad="0 30px 30px")
+    + grid("TWO MORE", ["C114", "N002"], cols=2)
     + cta("Step inside", DISCOUNT + "?redirect=/collections")
     + trust_strip())
 
