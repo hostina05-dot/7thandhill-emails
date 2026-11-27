@@ -213,6 +213,11 @@ ANIM = {  # animated grid cells: cross-fade between pieces (GIF; Outlook for Win
     "earrings": ("anim-earrings.gif", "Earrings", SITE + "/collections/earrings"),
     "necklaces": ("anim-necklaces.gif", "Necklaces", SITE + "/collections/necklaces"),
     "w3-rings": ("anim-w3-rings.gif", "Marquise Art Deco Ring, Art Deco Sunburst Ring, Custom Date Ring", SITE + "/collections/rings"),
+    "s2-medallions": ("anim-s2-medallions.gif", "Life Is Beautiful Medallion, Radiant Clover Medallion", SITE + "/collections/talismans-medallions"),
+    "s2-charms": ("anim-s2-charms.gif", "The Good Thing Locket, Unexpected Journey Compass Charm", SITE + "/collections/talismans-medallions"),
+    "s2-rings": ("anim-s2-rings.gif", "Marquise Art Deco Enamel Ring, Deco Ballerina Oval Diamond Ring", SITE + "/collections/rings"),
+    "s2-sparkle": ("anim-s2-sparkle.gif", "Scattered Diamond Oval Necklace, Pear Shaped Lab Diamond Studs", SITE + "/collections/necklaces"),
+    "s2-pendants": ("anim-s2-pendants.gif", "Lovers Tarot Pendant, Enamel Art Deco Initial Pendant", SITE + "/collections/talismans-medallions"),
     "w3-hearts": ("anim-w3-hearts.gif", "Radiant Sunburst Heart, Hand &amp; Footprint Heart", SITE + "/collections/medium-charms-1"),
 }
 
@@ -1250,11 +1255,9 @@ doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 10:00",
         + p("20% off fine jewelry, until midnight, December 1.", mb=0, color=NDIM)
         + code_box(dark=True),
         pad="34px 56px 40px")
-    # Sally's ten pieces (Nov 26): charms around her compass photo, then the rings and studs, then the last two with names
+    # Sally's ten pieces (Nov 26), two per cell, cross-fading around her compass photo
     + heading("Sally’s picks", "A few I pulled for you", pad="34px 40px 22px")
-    + collage("PIECES", ("C101", "C115"), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), ("C071", "C074", "C120"), feature_side="left")
-    + mosaic("RINGS AND STUDS", "R011", ["R030", "E015"], side="right", pad="0 30px 30px")
-    + grid("TWO MORE", ["C114", "N002"], cols=2)
+    + collage("PIECES", ("s2-medallions", "s2-charms"), ("feature-compass.jpg", "A zodiac compass pendant and a pavé horn pendant on green velvet", SITE + "/collections/talismans-medallions"), ("s2-rings", "s2-sparkle", "s2-pendants"), feature_side="left")
     + cta("Step inside", DISCOUNT + "?redirect=/collections")
     + trust_strip())
 
