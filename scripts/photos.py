@@ -269,8 +269,8 @@ def tile(n):
     return Image.open(OUT / cat[str(n)]["img"]).convert("RGB")
 
 
-def cells(size=260, hold=24, fade=3):
-    """Each piece holds about 2.5 s, then fades into the next. lead = extra frames before the first fade,
+def cells(size=260, hold=24, fade=0):
+    """Each piece holds about 2.5 s, then cuts cleanly to the next (fade=0: no blended frames, so two pieces never overlap). lead = extra frames before the first fade,
     so two cells in one letter do not change at the same moment."""
     import json, subprocess, tempfile
     cat = json.load(open(ROOT / "assets" / "catalog.json"))
