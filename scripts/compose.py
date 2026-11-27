@@ -1244,15 +1244,16 @@ doc("camp-s1-vault-early-access.html", **SALE, code="S1", when="Wed Nov 25, 18:0
 
 # S2 · the sale: model photo, the offer in the dark band, a collage with moving cells
 doc("camp-s2-black-friday.html", **SALE, code="S2", when="Fri Nov 27, 10:00",
-    card="Campaign · Black Friday · Fri Nov 27, 10:00", title="Our Black Friday sale",
+    card="Campaign · Black Friday · Fri Nov 27, 10:00", title="20% OFF Black Friday Sale",
     subject="Sally picked these with you in mind (+ 20% off for Black Friday!) 🎁",
     preheader="Our Black Friday Fine Jewelry Event is happening now—see what I pulled for you! ✨",
     logic=["Audience: Vault list plus SALT contacts who opened or clicked T1 (same as K3 and S1)."],
     body=hero("hero-water-lilies.jpg", "A woman in a pale blue dress lying by a lily pond, wearing a heart charm necklace, a medallion and a gold bracelet", DISCOUNT)
     + night("OFFER · swap for each sale",
-        eyebrow("Black Friday", mb=10, color=GOLD_L)
-        + h1("Our Black Friday sale", mb=12, color=IVORY, size_=37)
-        + p("20% off fine jewelry, until midnight, December 1.", mb=0, color=NDIM)
+        # Sally's headline (Nov 27): 20% OFF in capitals, the shop's name under it
+        h1("20% OFF Black Friday Sale", mb=12, color=IVORY, size_=37)
+        + eyebrow("7th &amp; Hill Fine Jewelry", mb=14, color=GOLD_L)
+        + p("Until midnight, December 1.", mb=0, color=NDIM)
         + code_box(dark=True),
         pad="34px 56px 40px")
     # Sally's ten pieces (Nov 26), two per cell, cross-fading around her compass photo
